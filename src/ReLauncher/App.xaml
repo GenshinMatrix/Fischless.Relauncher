@@ -1,11 +1,17 @@
-﻿<Application
-    x:Class="Relauncher.App"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="clr-namespace:Relauncher">
+﻿<Application x:Class="Relauncher.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:Relauncher">
     <Application.Resources>
         <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries />
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Views/Controls/BorderlessButton.xaml" />
+                <ResourceDictionary Source="/Views/Controls/Card/CardActionStyle.xaml" />
+                <ResourceDictionary Source="/Views/Controls/Card/CardColorStyle.xaml" />
+                <ResourceDictionary Source="/Views/Controls/Card/CardControlStyle.xaml" />
+                <ResourceDictionary Source="/Views/Controls/Card/CardExpanderStyle.xaml" />
+                <ResourceDictionary Source="/Views/Controls/Card/CardStyle.xaml" />
+            </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Relauncher.Core.Loggers;
+using Relauncher.Core.Relaunchs;
 using Relauncher.Extensions;
 using Relauncher.Views;
 using System.Diagnostics;
@@ -31,11 +32,9 @@ public partial class App : System.Windows.Application
                 .CreateLogger();
 
             //ConfigurationManager.Setup(SpecialPathHelper.GetPath("config.yaml"));
-            //MuiLanguage.SetupLanguage(Configurations.Language.Get());
-            //DpiAwareHelper.SetProcessDpiAwareness();
+            _ = DpiAwareHelper.SetProcessDpiAwareness();
 
             services.AddSingleton(Log.Logger);
-            //services.AddSingleton<MainViewModel>();
             services.AddSingleton<MainWindow>();
         })
         .Build();
@@ -52,6 +51,7 @@ public partial class App : System.Windows.Application
             await _host.StartAsync();
             GetService<MainWindow>()?.Show();
             Log.Information("Welcome to reLauncher.");
+            _ = Task.Run(() => GenshinRelaunching.StartAsync());
         }
         catch (Exception ex)
         {

@@ -1,0 +1,39 @@
+﻿<Window x:Class="Relauncher.Views.MaskWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:local="clr-namespace:Relauncher.Views"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        Title="MaskWindow"
+        Width="800"
+        Height="450"
+        AllowsTransparency="True"
+        Background="Transparent"
+        ShowInTaskbar="False"
+        WindowStyle="None"
+        mc:Ignorable="d">
+    <Window.Resources>
+    </Window.Resources>
+    <Grid>
+        <Button HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Command="{Binding OpenSettingsCommand}"
+                Style="{StaticResource BorderlessButtonStyle}">
+            <Button.Content>
+                <Border Padding="5.5">
+                    <Image Width="16"
+                           Height="16"
+                           RenderOptions.BitmapScalingMode="Fant"
+                           Source="pack://application:,,,/Relauncher;component/Assets/Images/Crown.png">
+                        <Image.Effect>
+                            <DropShadowEffect BlurRadius="1"
+                                              Opacity="0.7"
+                                              ShadowDepth="0.6"
+                                              Color="Black" />
+                        </Image.Effect>
+                    </Image>
+                </Border>
+            </Button.Content>
+        </Button>
+    </Grid>
+</Window>

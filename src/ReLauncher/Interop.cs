@@ -9,30 +9,23 @@ public static class Interop
 {
     public static unsafe int? GetParentProcessId(int pid)
     {
-        var hProcess = Kernel32.OpenProcess(ACCESS_MASK.GENERIC_READ, false, (uint)pid);
+        using var hProcess = Kernel32.OpenProcess(ACCESS_MASK.GENERIC_READ, false, (uint)pid);
 
         if (hProcess == IntPtr.Zero)
         {
             return null!;
         }
 
-        try
-        {
-            NtDll.PROCESS_BASIC_INFORMATION pbi = new();
-            NTStatus status = NtDll.NtQueryInformationProcess(hProcess, NtDll.PROCESSINFOCLASS.ProcessBasicInformation, (nint)(&pbi), (uint)Marshal.SizeOf<NtDll.PROCESS_BASIC_INFORMATION>(), out var returnLength);
+        NtDll.PROCESS_BASIC_INFORMATION pbi = new();
+        NTStatus status = NtDll.NtQueryInformationProcess(hProcess, NtDll.PROCESSINFOCLASS.ProcessBasicInformation, (nint)(&pbi), (uint)Marshal.SizeOf<NtDll.PROCESS_BASIC_INFORMATION>(), out var returnLength);
 
-            if (status == NTStatus.STATUS_SUCCESS)
-            {
-                return (int)pbi.InheritedFromUniqueProcessId;
-            }
-            else
-            {
-                return null!;
-            }
-        }
-        finally
+        if (status == NTStatus.STATUS_SUCCESS)
         {
-            Kernel32.CloseHandle(hProcess.DangerousGetHandle());
+            return (int)pbi.InheritedFromUniqueProcessId;
+        }
+        else
+        {
+            return null!;
         }
     }
 
@@ -123,5 +116,25 @@ public static class Interop
         }
 
         return messageBuffer.ToString().Trim();
+    }
+
+    public static HRESULT DwmSetWindowAttribute(HWND hWnd, DwmApi.DWMWINDOWATTRIBUTE dwAttribute, int pvAttribute, int cbAttribute)
+    {
+        nint pvAttributePtr = Marshal.AllocHGlobal(sizeof(int));
+        Marshal.WriteInt32(pvAttributePtr, pvAttribute);
+
+        try
+        {
+            return DwmApi.DwmSetWindowAttribute(
+                hWnd,
+                dwAttribute,
+                pvAttributePtr,
+                cbAttribute
+            );
+        }
+        finally
+        {
+            Marshal.FreeHGlobal(pvAttributePtr);
+        }
     }
 }
