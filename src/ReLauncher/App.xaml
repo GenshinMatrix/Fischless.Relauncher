@@ -5,7 +5,7 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/Views/Controls/BorderlessButton.xaml" />
+                <ResourceDictionary Source="/Views/Controls/Button/ButtonStyle.xaml" />
                 <ResourceDictionary Source="/Views/Controls/Card/CardActionStyle.xaml" />
                 <ResourceDictionary Source="/Views/Controls/Card/CardColorStyle.xaml" />
                 <ResourceDictionary Source="/Views/Controls/Card/CardControlStyle.xaml" />

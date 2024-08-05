@@ -11,5 +11,7 @@
         Visibility="Hidden"
         WindowState="Minimized"
         mc:Ignorable="d">
-    <Grid />
+    <Grid>
+        <TextBlock Text="仅用于保持至少一个窗口存活" />
+    </Grid>
 </Window>
