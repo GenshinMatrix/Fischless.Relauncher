@@ -19,9 +19,10 @@ public partial class App : System.Windows.Application
     // https://docs.microsoft.com/dotnet/core/extensions/configuration
     // https://docs.microsoft.com/dotnet/core/extensions/logging
     private static readonly IHost _host = Host.CreateDefaultBuilder()
+        .UseElevated()
+        .UseSingleInstance(AppConfig.PackName)
         .ConfigureServices((context, services) =>
         {
-            RuntimeHelper.CheckSingleInstance(AppConfig.PackName);
             Log.Logger = LoggerConfiguration.CreateDefault()
                 .UseType(LoggerType.Async)
                 .UseLevel(LogLevel.Trace)

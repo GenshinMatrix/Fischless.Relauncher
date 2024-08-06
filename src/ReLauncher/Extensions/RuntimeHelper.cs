@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using Microsoft.Extensions.Hosting;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Security.Principal;
@@ -47,6 +48,25 @@ internal static class RuntimeHelper
         }, TaskCreationOptions.LongRunning));
     }
 
+    public static void EnsureElevated()
+    {
+        if (!IsElevated)
+        {
+            Restart();
+        }
+    }
+
+    public static string ReArguments()
+    {
+        string[] args = Environment.GetCommandLineArgs().Skip(1).ToArray();
+
+        for (int i = default; i < args.Length; i++)
+        {
+            args[i] = $@"""{args[i]}""";
+        }
+        return string.Join(" ", args);
+    }
+
     public static void Restart(string fileName = null!, string dir = null!, string args = null!, int? exitCode = null, bool forced = false)
     {
         _ = args;
@@ -60,6 +80,7 @@ internal static class RuntimeHelper
                     FileName = fileName ?? Path.Combine(dir ?? AppDomain.CurrentDomain.BaseDirectory, AppDomain.CurrentDomain.FriendlyName),
                     WorkingDirectory = dir ?? Environment.CurrentDirectory,
                     UseShellExecute = true,
+                    Verb = "runas"
                 },
             };
             process.Start();
@@ -73,5 +94,20 @@ internal static class RuntimeHelper
             Process.GetCurrentProcess().Kill();
         }
         Environment.Exit(exitCode ?? 'r' + 'e' + 's' + 't' + 'a' + 'r' + 't');
+    }
+}
+
+internal static class RuntimeExtension
+{
+    public static IHostBuilder UseElevated(this IHostBuilder app)
+    {
+        RuntimeHelper.EnsureElevated();
+        return app;
+    }
+
+    public static IHostBuilder UseSingleInstance(this IHostBuilder self, string instanceName, Action<bool> callback = null!)
+    {
+        RuntimeHelper.CheckSingleInstance(instanceName, callback);
+        return self;
     }
 }
