@@ -7,11 +7,10 @@
         Title="MainWindow"
         Width="800"
         Height="450"
+        AllowsTransparency="True"
+        Background="Transparent"
         ShowInTaskbar="False"
         Visibility="Hidden"
         WindowState="Minimized"
-        mc:Ignorable="d">
-    <Grid>
-        <TextBlock Text="仅用于保持至少一个窗口存活" />
-    </Grid>
-</Window>
+        WindowStyle="None"
+        mc:Ignorable="d" />

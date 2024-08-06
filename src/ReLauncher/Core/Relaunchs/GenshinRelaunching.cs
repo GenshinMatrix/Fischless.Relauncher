@@ -16,12 +16,13 @@ public static class GenshinRelaunching
 
         while (!(token?.IsCancellationRequested ?? false))
         {
-            ///
+            try
             {
-                Process? process = Process.GetProcessesByName("HYP").FirstOrDefault();
-
-                if (process != null)
+                ///
                 {
+                    Process? process = Process.GetProcessesByName("HYP").FirstOrDefault();
+
+                    if (process != null)
                     {
                         nint hWnd = window.Handle;
                         nint targetHWnd = process.MainWindowHandle;
@@ -42,39 +43,43 @@ public static class GenshinRelaunching
                             _ = User32.GetClientRect(targetHWnd, out RECT rect);
                             ;
                             _ = User32.SetWindowPos(hWnd, IntPtr.Zero, rect.Width - (int)DpiHelper.CalcDPI(176f), (int)DpiHelper.CalcDPI(9f), 100, 100, User32.SetWindowPosFlags.SWP_SHOWWINDOW);
+
+                            if (!Application.Current.Windows.OfType<GenshinSettingsWindow>().Any())
+                            {
+                                _ = User32.EnableWindow(targetHWnd, true);
+                            }
                         });
-
-                        if (!Application.Current.Windows.OfType<GenshinSettingsWindow>().Any())
-                        {
-                            _ = User32.EnableWindow(targetHWnd, true);
-                        }
                     }
                 }
-            }
 
-            ///
-            {
-                Process? process = Process.GetProcessesByName("Yuanshen").FirstOrDefault();
-
-                if (process != null)
+                ///
                 {
-                    int? parentProcessId = Interop.GetParentProcessId(process.Id);
+                    Process? process = Process.GetProcessesByName("Yuanshen").FirstOrDefault();
 
-                    if (parentProcessId != null)
+                    if (process != null)
                     {
-                        Process? parentProcess = Process.GetProcessById(parentProcessId.Value);
+                        int? parentProcessId = Interop.GetParentProcessId(process.Id);
 
-                        if (parentProcess.ProcessName == "HYP")
+                        if (parentProcessId != null)
                         {
-                            process.Kill();
-                            await GenshinLauncher.KillAsync(GenshinRelaunchMethod.Kill);
-                            await GenshinLauncher.LaunchAsync(delayMs: 1000, relaunchMethod: GenshinRelaunchMethod.Kill);
+                            Process? parentProcess = Process.GetProcessById(parentProcessId.Value);
+
+                            if (parentProcess.ProcessName == "HYP")
+                            {
+                                process.Kill();
+                                await GenshinLauncher.KillAsync(GenshinRelaunchMethod.Kill);
+                                await GenshinLauncher.LaunchAsync(delayMs: 1000, relaunchMethod: GenshinRelaunchMethod.Kill);
+                            }
                         }
                     }
                 }
             }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e);
+            }
 
-            Thread.Sleep(500);
+            Thread.Sleep(200);
         }
     }
 }
