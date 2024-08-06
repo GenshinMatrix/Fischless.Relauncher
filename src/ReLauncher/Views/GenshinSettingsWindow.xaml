@@ -5,6 +5,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:local="clr-namespace:Relauncher.Views"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
         Title="Window1"
         Width="800"
         Height="500"
@@ -57,11 +58,14 @@
                        FontSize="14"
                        Foreground="#87898B"
                        Text="启动设置" />
-            <controls:Card Grid.Row="1"
-                           Margin="0,12,0,0"
-                           Background="#303136">
-                <TextBlock Text="123" />
-            </controls:Card>
+            <ui:Card Grid.Row="1"
+                     Margin="0,12,0,0"
+                     Background="#303136">
+                <Grid>
+                    <TextBlock Text="123" />
+                    <ui:ToggleSwitch Content="133" />
+                </Grid>
+            </ui:Card>
         </Grid>
     </Grid>
 </Window>
