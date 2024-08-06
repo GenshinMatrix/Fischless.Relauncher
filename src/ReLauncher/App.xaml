@@ -8,8 +8,9 @@
             <ResourceDictionary.MergedDictionaries>
                 <ui:ThemesDictionary Theme="Dark" />
                 <ui:ControlsDictionary />
-                <ResourceDictionary Source="/Views/Controls/Button/ButtonStyle.xaml" />
+                <ResourceDictionary Source="/Views/Controls/Button/Button.xaml" />
             </ResourceDictionary.MergedDictionaries>
+            <FontFamily x:Key="SymbolThemeFontFamily">pack://application:,,,/Relauncher;component/Assets/Fonts/Segoe Fluent Icons.ttf#Segoe Fluent Icons</FontFamily>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

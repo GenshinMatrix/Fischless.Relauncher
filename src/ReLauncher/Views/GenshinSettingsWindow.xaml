@@ -52,20 +52,84 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <TextBlock Grid.Row="0"
                        Margin="4,4,0,0"
                        FontSize="14"
                        Foreground="#87898B"
                        Text="启动设置" />
-            <ui:Card Grid.Row="1"
-                     Margin="0,12,0,0"
-                     Background="#303136">
-                <Grid>
-                    <TextBlock Text="123" />
-                    <ui:ToggleSwitch Content="133" />
+            <ui:Card Grid.Row="1" Margin="0,12,0,0">
+                <Grid MinHeight="35">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <Grid Grid.Column="0" Margin="0,0,12,0">
+                        <TextBlock MinWidth="26"
+                                   Margin="4,0,0,0"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"
+                                   FontFamily="{DynamicResource SymbolThemeFontFamily}"
+                                   FontSize="18"
+                                   Text="{x:Static controls:FontSymbols.Attach}" />
+                    </Grid>
+                    <TextBlock Grid.Column="1"
+                               VerticalAlignment="Center"
+                               Text="开机自动运行米哈游重启动器" />
+                    <ui:ToggleSwitch Grid.Column="2" Margin="0,0,28,0" />
                 </Grid>
             </ui:Card>
+            <ui:CardExpander Grid.Row="2"
+                             Margin="0,4,0,0"
+                             Background="#303136">
+                <ui:CardExpander.Header>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <Grid Grid.Column="0" Margin="0,0,12,0">
+                            <TextBlock MinWidth="26"
+                                       Margin="4,0,0,0"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"
+                                       FontFamily="{DynamicResource SymbolThemeFontFamily}"
+                                       FontSize="18"
+                                       Text="{x:Static controls:FontSymbols.Unlock}" />
+                        </Grid>
+                        <Grid Grid.Column="1">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <TextBlock Grid.Row="0" Text="启动参数" />
+                            <TextBlock Grid.Row="1"
+                                       FontSize="13"
+                                       Foreground="#D0D0D0"
+                                       Text="在游戏启动时修改其默认行为" />
+                        </Grid>
+                        <Grid Grid.Column="2" Margin="0,0,12,0">
+                            <ui:ToggleSwitch />
+                        </Grid>
+                    </Grid>
+                </ui:CardExpander.Header>
+                <Grid>
+                    <ui:ToggleSwitch Content="133" />
+                </Grid>
+            </ui:CardExpander>
+            <TextBlock Grid.Row="3"
+                       Margin="4,16,0,0"
+                       FontSize="14"
+                       Foreground="#87898B"
+                       Text="进程联动" />
         </Grid>
     </Grid>
 </Window>

@@ -36,11 +36,13 @@
 	<ItemGroup>
 		<None Remove="Assets\Icons\*.ico" />
 		<None Remove="Assets\Images\*.png" />
+		<None Remove="Assets\Fonts\*.ttf" />
 	</ItemGroup>
 
 	<ItemGroup>
 		<Resource Include="Assets\Icons\*.ico" />
 		<Resource Include="Assets\Images\*.png" />
+		<Resource Include="Assets\Fonts\*.ttf" />
 	</ItemGroup>
 
 </Project>
