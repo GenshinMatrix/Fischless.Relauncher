@@ -24,8 +24,11 @@ public partial class GenshinSettingsWindow : Window
 
     protected override void OnClosed(EventArgs e)
     {
-        _ = User32.EnableWindow(TargetHWnd, true);
-        _ = User32.SetActiveWindow(TargetHWnd);
+        if (TargetHWnd != IntPtr.Zero)
+        {
+            _ = User32.EnableWindow(TargetHWnd, true);
+            _ = User32.SetActiveWindow(TargetHWnd);
+        }
     }
 
     protected override void OnSourceInitialized(EventArgs e)
@@ -34,15 +37,18 @@ public partial class GenshinSettingsWindow : Window
 
         _ = WindowBackdrop.ApplyBackdrop(this);
 
-        _ = User32.EnableWindow(TargetHWnd, false);
+        if (TargetHWnd != IntPtr.Zero)
+        {
+            _ = User32.EnableWindow(TargetHWnd, false);
 
-        _ = User32.GetWindowRect(TargetHWnd, out RECT pos);
-        _ = User32.GetClientRect(TargetHWnd, out RECT rect);
+            _ = User32.GetWindowRect(TargetHWnd, out RECT pos);
+            _ = User32.GetClientRect(TargetHWnd, out RECT rect);
 
-        int width = (int)DpiHelper.CalcDPI(Width);
-        int height = (int)DpiHelper.CalcDPI(Height);
+            int width = (int)DpiHelper.CalcDPI(Width);
+            int height = (int)DpiHelper.CalcDPI(Height);
 
-        _ = User32.SetWindowPos(Handle, IntPtr.Zero, (int)(pos.Left + ((rect.Width - width) / 2d)), (int)(pos.Top + ((rect.Height - height) / 2d)), width, height, User32.SetWindowPosFlags.SWP_SHOWWINDOW);
+            _ = User32.SetWindowPos(Handle, IntPtr.Zero, (int)(pos.Left + ((rect.Width - width) / 2d)), (int)(pos.Top + ((rect.Height - height) / 2d)), width, height, User32.SetWindowPosFlags.SWP_SHOWWINDOW);
+        }
     }
 
     private void OnMouseDown(object sender, MouseButtonEventArgs e)

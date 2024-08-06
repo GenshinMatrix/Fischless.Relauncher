@@ -33,6 +33,7 @@ public partial class App : System.Windows.Application
 
             //ConfigurationManager.Setup(SpecialPathHelper.GetPath("config.yaml"));
             _ = DpiAwareHelper.SetProcessDpiAwareness();
+            TrayIconManager.Setup();
 
             services.AddSingleton(Log.Logger);
             services.AddSingleton<MainWindow>();
