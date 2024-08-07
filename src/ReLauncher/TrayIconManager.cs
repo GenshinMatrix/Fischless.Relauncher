@@ -28,7 +28,12 @@ internal class TrayIconManager
         _icon.AddMenu("打开设置 (&O)", (_, _) =>
         {
             Application.Current.Windows.OfType<GenshinSettingsWindow>().ToList().ForEach(x => x.Close());
-            new GenshinSettingsWindow() { WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen }.Show();
+            new GenshinSettingsWindow()
+            {
+                Topmost = false,
+                ShowInTaskbar = true,
+                WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen,
+            }.Show();
         });
         _itemAutorun = (_icon.AddMenu("启动时自动运行 (&S)",
             (_, _) =>
