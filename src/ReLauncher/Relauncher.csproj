@@ -10,6 +10,9 @@
 		<AllowUnsafeBlocks>True</AllowUnsafeBlocks>
 		<LangVersion>12.0</LangVersion>
 		<ApplicationIcon>Assets\Icons\i2Q2r-284hK1yT3cSix-ir.ico</ApplicationIcon>
+		<AssemblyVersion>1.0.0</AssemblyVersion>
+		<FileVersion>1.0.0</FileVersion>
+		<Version>$(VersionPrefix)1.0.0</Version>
 	</PropertyGroup>
 
 	<ItemGroup>

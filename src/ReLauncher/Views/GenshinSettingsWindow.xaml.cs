@@ -5,7 +5,9 @@ using Relauncher.Views.Controls;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Interop;
+using System.Windows.Media;
 using Vanara.PInvoke;
+using Wpf.Ui.Controls;
 using MouseButtonState = System.Windows.Input.MouseButtonState;
 
 namespace Relauncher.Views;
@@ -35,7 +37,10 @@ public partial class GenshinSettingsWindow : Window
     {
         base.OnSourceInitialized(e);
 
-        _ = WindowBackdrop.ApplyBackdrop(this);
+        if (WindowBackdrop.IsSupported(WindowBackdropType.Mica))
+        {
+            WindowBackdrop.ApplyBackdrop(this, WindowBackdropType.Mica);
+        }
 
         if (TargetHWnd != IntPtr.Zero)
         {
