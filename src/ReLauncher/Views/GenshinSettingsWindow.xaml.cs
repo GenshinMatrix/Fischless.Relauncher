@@ -1,11 +1,10 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Relauncher.Helper;
-using Relauncher.Views.Controls;
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Interop;
-using System.Windows.Media;
 using Vanara.PInvoke;
 using Wpf.Ui.Controls;
 using MouseButtonState = System.Windows.Input.MouseButtonState;
@@ -24,8 +23,9 @@ public partial class GenshinSettingsWindow : Window
         InitializeComponent();
     }
 
-    protected override void OnClosed(EventArgs e)
+    protected override void OnClosing(CancelEventArgs e)
     {
+        base.OnClosing(e);
         if (TargetHWnd != IntPtr.Zero)
         {
             _ = User32.EnableWindow(TargetHWnd, true);
@@ -74,5 +74,11 @@ public partial class GenshinSettingsWindow : Window
     private void CloseWindow()
     {
         Close();
+    }
+
+    [RelayCommand]
+    private async Task IdentifyMonitorsAsync()
+    {
+        await IdentifyMonitorWindow.IdentifyAllMonitorsAsync(3).ConfigureAwait(false);
     }
 }

@@ -7,9 +7,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
         xmlns:ws="https://schemas.elecho.dev/wpfsuite"
-        Title="Window1"
+        Title="Genshin Client Settings"
         Width="800"
-        Height="500"
+        Height="620"
         Background="#212429"
         FontSize="14"
         Foreground="#FFFFFF"
@@ -25,9 +25,22 @@
                       ResizeBorderThickness="5" />
     </WindowChrome.WindowChrome>
     <Grid>
-        <TextBlock Margin="18"
-                   FontSize="16"
-                   Text="原神重启动器客户端" />
+        <ws:StackPanel Margin="18"
+                       HorizontalAlignment="Left"
+                       VerticalAlignment="Top"
+                       Orientation="Horizontal"
+                       Spacing="8">
+            <TextBlock FontSize="16" Text="原神重启动器客户端" />
+            <Button Height="26"
+                    Margin="0,-2,0,0"
+                    ToolTip="启动游戏">
+                <Button.Content>
+                    <TextBlock FontFamily="{DynamicResource SymbolThemeFontFamily}"
+                               FontSize="14"
+                               Text="{x:Static controls:FontSymbols.Play}" />
+                </Button.Content>
+            </Button>
+        </ws:StackPanel>
         <Button Margin="8"
                 HorizontalAlignment="Right"
                 VerticalAlignment="Top"
@@ -267,6 +280,7 @@
                                     <ws:StackPanel Orientation="Horizontal" Spacing="8">
                                         <Button Width="110"
                                                 Height="36"
+                                                Command="{Binding IdentifyMonitorsCommand}"
                                                 Content="识别显示器" />
                                         <ComboBox Grid.Column="1"
                                                   Width="150"
@@ -276,44 +290,6 @@
                                     </ws:StackPanel>
                                     <ui:ToggleSwitch />
                                 </ws:StackPanel>
-                            </Grid>
-                            <Separator />
-                            <Grid Margin="42,0,28,0">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="Auto" />
-                                </Grid.ColumnDefinitions>
-                                <Grid Grid.Column="0">
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="Auto" />
-                                        <RowDefinition Height="Auto" />
-                                    </Grid.RowDefinitions>
-                                    <TextBlock Grid.Row="0" Text="-force-low-power-device" />
-                                    <TextBlock Grid.Row="1"
-                                               FontSize="11"
-                                               Foreground="#D0D0D0"
-                                               Text="强制使用低功耗 GPU，例如选择集成 GPU" />
-                                </Grid>
-                                <ui:ToggleSwitch Grid.Column="1" />
-                            </Grid>
-                            <Separator />
-                            <Grid Margin="42,0,28,0">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="Auto" />
-                                </Grid.ColumnDefinitions>
-                                <Grid Grid.Column="0">
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="Auto" />
-                                        <RowDefinition Height="Auto" />
-                                    </Grid.RowDefinitions>
-                                    <TextBlock Grid.Row="0" Text="-useHDR" />
-                                    <TextBlock Grid.Row="1"
-                                               FontSize="11"
-                                               Foreground="#D0D0D0"
-                                               Text="强制启用高动态范围 HDR 显示" />
-                                </Grid>
-                                <ui:ToggleSwitch Grid.Column="1" />
                             </Grid>
                         </ws:StackPanel>
                     </Grid>
@@ -351,26 +327,48 @@
                             </Grid>
                         </Grid>
                     </ui:CardExpander.Header>
-                    <Grid Margin="42,0,28,0">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
-                        <Grid Grid.Column="0">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                            </Grid.RowDefinitions>
-                            <TextBlock Grid.Row="0" Text="解锁方式" />
-                            <TextBlock Grid.Row="1"
-                                       FontSize="11"
-                                       Foreground="#D0D0D0"
-                                       Text="更改解锁帧率的工作方式" />
+                    <ws:StackPanel Spacing="8">
+                        <Grid Margin="42,0,28,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <Grid Grid.Column="0">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <TextBlock Grid.Row="0" Text="解锁方式" />
+                                <TextBlock Grid.Row="1"
+                                           FontSize="11"
+                                           Foreground="#D0D0D0"
+                                           Text="更改解锁帧率的工作方式" />
+                            </Grid>
+                            <ComboBox Grid.Column="1" SelectedIndex="0">
+                                <ComboBoxItem Content="注入 (GenshinMatrix/Fischless)" />
+                                <ComboBoxItem Content="注入 (DGP-Studio/UnlockerIsland)" />
+                            </ComboBox>
                         </Grid>
-                        <ComboBox Grid.Column="1" SelectedIndex="0">
-                            <ComboBoxItem Content="注入" />
-                        </ComboBox>
-                    </Grid>
+                        <Separator />
+                        <Grid Margin="42,0,28,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <Grid Grid.Column="0">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <TextBlock Grid.Row="0" Text="显示帧率" />
+                                <TextBlock Grid.Row="1"
+                                           FontSize="11"
+                                           Foreground="#D0D0D0"
+                                           Text="游戏窗口内实时显示帧率 FPS" />
+                            </Grid>
+                            <ui:ToggleSwitch Grid.Column="1" />
+                        </Grid>
+                    </ws:StackPanel>
                 </ui:CardExpander>
                 <ui:Card>
                     <Grid MinHeight="35">
@@ -397,7 +395,7 @@
                             <TextBlock Grid.Row="1"
                                        FontSize="11"
                                        Foreground="#D0D0D0"
-                                       Text="在游戏启动时短暂禁止联网能加快启动速度" />
+                                       Text="启动时让游戏短暂禁止联网从而加快启动速度" />
                         </Grid>
                         <ui:ToggleSwitch Grid.Column="2" Margin="0,0,28,0" />
                     </Grid>
@@ -457,10 +455,11 @@
                                 <TextBlock.Inlines>
                                     <Run Text="高动态范围" />
                                     <InlineUIContainer>
-                                        <ws:Border Background="#21212121"
+                                        <ws:Border Background="#585A5E"
                                                    BorderBrush="#1E2025"
                                                    CornerRadius="4">
-                                            <TextBlock VerticalAlignment="Center"
+                                            <TextBlock Padding="4,0,4,0"
+                                                       VerticalAlignment="Center"
                                                        FontSize="11"
                                                        Text="HDR" />
                                         </ws:Border>
@@ -505,33 +504,118 @@
                                 <TextBlock Grid.Row="1"
                                            FontSize="11"
                                            Foreground="#D0D0D0"
-                                           Text="乘坐 3DM Loader 前往幽夜净土" />
+                                           Text="乘坐 3DMigoto Loader 前往幽夜净土" />
                             </Grid>
                             <Grid Grid.Column="2" Margin="0,0,12,0">
                                 <ui:ToggleSwitch />
                             </Grid>
                         </Grid>
                     </ui:CardExpander.Header>
-                    <Grid Margin="42,0,28,0">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
-                        <Grid Grid.Column="0">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                            </Grid.RowDefinitions>
-                            <TextBlock Grid.Row="0" Text="解锁方式" />
-                            <TextBlock Grid.Row="1"
-                                       FontSize="11"
-                                       Foreground="#D0D0D0"
-                                       Text="更改解锁帧率的工作方式" />
+                    <ws:StackPanel Spacing="8">
+                        <Grid Margin="42,0,28,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <Grid Grid.Column="0">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <TextBlock Grid.Row="0" Text="程序目录" />
+                                <TextBlock Grid.Row="1"
+                                           FontSize="11"
+                                           Foreground="#D0D0D0"
+                                           Text="选择 3DMigoto Loader.exe 所在目录" />
+                            </Grid>
+                            <ws:StackPanel Grid.Column="1"
+                                           Orientation="Horizontal"
+                                           Spacing="8">
+                                <TextBox MinWidth="300"
+                                         Margin="16,0,0,0"
+                                         HorizontalAlignment="Right" />
+                                <Button Height="35" ToolTip="选择目录">
+                                    <Button.Content>
+                                        <TextBlock HorizontalAlignment="Center"
+                                                   VerticalAlignment="Center"
+                                                   FontFamily="{DynamicResource SymbolThemeFontFamily}"
+                                                   FontSize="16"
+                                                   Text="{x:Static controls:FontSymbols.Folder}" />
+                                    </Button.Content>
+                                </Button>
+                                <Button Height="35" ToolTip="打开目录">
+                                    <Button.Content>
+                                        <TextBlock HorizontalAlignment="Center"
+                                                   VerticalAlignment="Center"
+                                                   FontFamily="{DynamicResource SymbolThemeFontFamily}"
+                                                   FontSize="16"
+                                                   Text="{x:Static controls:FontSymbols.OpenInNewWindow}" />
+                                    </Button.Content>
+                                </Button>
+                            </ws:StackPanel>
                         </Grid>
-                        <ComboBox Grid.Column="1" SelectedIndex="0">
-                            <ComboBoxItem Content="注入" />
-                        </ComboBox>
-                    </Grid>
+                        <Separator />
+                        <Grid Margin="42,0,28,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <Grid Grid.Column="0">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <TextBlock Grid.Row="0" Text="静默启动" />
+                                <TextBlock Grid.Row="1"
+                                           FontSize="11"
+                                           Foreground="#D0D0D0"
+                                           Text="指示是否隐藏进程控制台" />
+                            </Grid>
+                            <Grid Grid.Column="1">
+                                <ui:ToggleSwitch />
+                            </Grid>
+                        </Grid>
+                        <Separator />
+                        <Grid Margin="42,0,28,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <Grid Grid.Column="0">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <TextBlock Grid.Row="0" Text="永夜真梦" />
+                                <TextBlock Grid.Row="1"
+                                           FontSize="11"
+                                           Foreground="#D0D0D0"
+                                           Text="来自幽夜净土的模型管理器" />
+                            </Grid>
+                            <ws:StackPanel Grid.Column="1"
+                                           Orientation="Horizontal"
+                                           Spacing="8">
+                                <Button Height="35" ToolTip="打开链接">
+                                    <Button.Content>
+                                        <TextBlock HorizontalAlignment="Center"
+                                                   VerticalAlignment="Center"
+                                                   FontFamily="{DynamicResource SymbolThemeFontFamily}"
+                                                   FontSize="16"
+                                                   Text="{x:Static controls:FontSymbols.Link}" />
+                                    </Button.Content>
+                                </Button>
+                                <Button Height="35" ToolTip="打开程序">
+                                    <Button.Content>
+                                        <TextBlock HorizontalAlignment="Center"
+                                                   VerticalAlignment="Center"
+                                                   FontFamily="{DynamicResource SymbolThemeFontFamily}"
+                                                   FontSize="16"
+                                                   Text="{x:Static controls:FontSymbols.OpenInNewWindow}" />
+                                    </Button.Content>
+                                </Button>
+                            </ws:StackPanel>
+                        </Grid>
+                    </ws:StackPanel>
                 </ui:CardExpander>
                 <ui:Card>
                     <Grid MinHeight="35">
@@ -600,26 +684,125 @@
                             </Grid>
                         </Grid>
                     </ui:CardExpander.Header>
-                    <Grid Margin="42,0,28,0">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
-                        <Grid Grid.Column="0">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                            </Grid.RowDefinitions>
-                            <TextBlock Grid.Row="0" Text="解锁方式" />
-                            <TextBlock Grid.Row="1"
-                                       FontSize="11"
-                                       Foreground="#D0D0D0"
-                                       Text="更改解锁帧率的工作方式" />
+                    <ws:StackPanel Spacing="8">
+                        <Grid Margin="42,0,28,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <Grid Grid.Column="0">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <TextBlock Grid.Row="0" Text="无界游戏生效" />
+                                <TextBlock Grid.Row="1"
+                                           FontSize="11"
+                                           Foreground="#D0D0D0"
+                                           Text="用于单独测试无界效果" />
+                            </Grid>
+                            <ws:StackPanel Grid.Column="1"
+                                           Orientation="Horizontal"
+                                           Spacing="8">
+                                <Button Content="生效" />
+                                <Button Content="无效" />
+                            </ws:StackPanel>
                         </Grid>
-                        <ComboBox Grid.Column="1" SelectedIndex="0">
-                            <ComboBoxItem Content="注入" />
-                        </ComboBox>
-                    </Grid>
+                        <Separator />
+                        <Grid Margin="42,0,28,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <Grid Grid.Column="0">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <TextBlock Grid.Row="0" Text="置顶游戏生效" />
+                                <TextBlock Grid.Row="1"
+                                           FontSize="11"
+                                           Foreground="#D0D0D0"
+                                           Text="用于单独测试置顶效果" />
+                            </Grid>
+                            <ws:StackPanel Grid.Column="1"
+                                           Orientation="Horizontal"
+                                           Spacing="8">
+                                <Button Content="生效" />
+                                <Button Content="无效" />
+                            </ws:StackPanel>
+                        </Grid>
+                        <Separator />
+                        <Grid Margin="42,0,28,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <Grid Grid.Column="0">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <TextBlock Grid.Row="0" Text="窗口拖动生效" />
+                                <TextBlock Grid.Row="1"
+                                           FontSize="11"
+                                           Foreground="#D0D0D0"
+                                           Text="用于单独测试拖动效果" />
+                            </Grid>
+                            <ws:StackPanel Grid.Column="1"
+                                           Orientation="Horizontal"
+                                           Spacing="8">
+                                <Button Content="生效" />
+                                <Button Content="无效" />
+                            </ws:StackPanel>
+                        </Grid>
+                        <Separator />
+                        <Grid Margin="42,0,28,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <Grid Grid.Column="0">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <TextBlock Grid.Row="0" Text="恢复最大化按钮" />
+                                <TextBlock Grid.Row="1"
+                                           FontSize="11"
+                                           Foreground="#D0D0D0"
+                                           Text="用于单独测试窗口功能" />
+                            </Grid>
+                            <ws:StackPanel Grid.Column="1"
+                                           Orientation="Horizontal"
+                                           Spacing="8">
+                                <Button Content="设置" />
+                            </ws:StackPanel>
+                        </Grid>
+                        <Separator />
+                        <Grid Margin="42,0,28,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <Grid Grid.Column="0">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <TextBlock Grid.Row="0" Text="恢复到屏幕零点" />
+                                <TextBlock Grid.Row="1"
+                                           FontSize="11"
+                                           Foreground="#D0D0D0"
+                                           Text="用于单独测试窗口功能" />
+                            </Grid>
+                            <ws:StackPanel Grid.Column="1"
+                                           Orientation="Horizontal"
+                                           Spacing="8">
+                                <Button Content="设置" />
+                            </ws:StackPanel>
+                        </Grid>
+                    </ws:StackPanel>
                 </ui:CardExpander>
                 <ui:Card>
                     <Grid MinHeight="35">
@@ -677,6 +860,36 @@
                                        FontSize="13"
                                        Foreground="#D0D0D0"
                                        Text="当游戏窗口非前台状态时自动静音" />
+                        </Grid>
+                        <ui:ToggleSwitch Grid.Column="2" Margin="0,0,28,0" />
+                    </Grid>
+                </ui:Card>
+                <ui:Card>
+                    <Grid MinHeight="35">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <Grid Grid.Column="0" Margin="0,0,12,0">
+                            <TextBlock MinWidth="26"
+                                       Margin="4,0,0,0"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"
+                                       FontFamily="{DynamicResource SymbolThemeFontFamily}"
+                                       FontSize="18"
+                                       Text="{x:Static controls:FontSymbols.Click}" />
+                        </Grid>
+                        <Grid Grid.Column="1">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <TextBlock Grid.Row="0" Text="自动连点" />
+                            <TextBlock Grid.Row="1"
+                                       FontSize="13"
+                                       Foreground="#D0D0D0"
+                                       Text="设置不保存，仅本次运行有效" />
                         </Grid>
                         <ui:ToggleSwitch Grid.Column="2" Margin="0,0,28,0" />
                     </Grid>
