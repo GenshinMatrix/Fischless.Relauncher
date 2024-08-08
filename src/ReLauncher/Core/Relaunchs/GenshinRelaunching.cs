@@ -1,4 +1,5 @@
 ﻿using Relauncher.Helper;
+using Relauncher.Models;
 using Relauncher.Relaunchs;
 using Relauncher.Views;
 using System.Diagnostics;
@@ -18,7 +19,7 @@ public static class GenshinRelaunching
         {
             try
             {
-                ///
+                // HYP: Inject UI
                 {
                     Process? process = Process.GetProcessesByName("HYP").FirstOrDefault();
 
@@ -59,7 +60,7 @@ public static class GenshinRelaunching
                     }
                 }
 
-                ///
+                // HYP: Relaunch Genshin
                 {
                     Process? process = Process.GetProcessesByName("Yuanshen").FirstOrDefault();
 
@@ -79,6 +80,23 @@ public static class GenshinRelaunching
                             }
                         }
                     }
+                }
+
+                // Genshin: Inject UI
+                {
+                    if (Configurations.Genshin.Get().IsShowFps)
+                    {
+                        // TODO
+                    }
+                    else
+                    {
+                        // TODO
+                    }
+                }
+
+                // Genshin: Auto mute
+                {
+                    // TODO
                 }
             }
             catch (Exception e)
