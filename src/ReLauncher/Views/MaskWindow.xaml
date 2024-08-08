@@ -9,11 +9,11 @@
         Height="450"
         AllowsTransparency="True"
         Background="Transparent"
+        ShowActivated="False"
         ShowInTaskbar="False"
         WindowStyle="None"
         mc:Ignorable="d">
-    <Window.Resources>
-    </Window.Resources>
+    <Window.Resources />
     <Grid>
         <Button HorizontalAlignment="Left"
                 VerticalAlignment="Top"

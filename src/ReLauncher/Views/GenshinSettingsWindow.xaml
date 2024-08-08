@@ -10,6 +10,7 @@
         Title="Genshin Client Settings"
         Width="800"
         Height="620"
+        d:Height="2000"
         Background="#212429"
         FontSize="14"
         Foreground="#FFFFFF"
@@ -70,7 +71,7 @@
                            FontSize="14"
                            Foreground="#87898B"
                            Text="启动设置" />
-                <ui:CardExpander Background="#303136">
+                <ui:CardExpander>
                     <ui:CardExpander.Header>
                         <Grid>
                             <Grid.ColumnDefinitions>
@@ -294,7 +295,7 @@
                         </ws:StackPanel>
                     </Grid>
                 </ui:CardExpander>
-                <ui:CardExpander Background="#303136">
+                <ui:CardExpander>
                     <ui:CardExpander.Header>
                         <Grid>
                             <Grid.ColumnDefinitions>
@@ -482,7 +483,7 @@
                            FontSize="14"
                            Foreground="#87898B"
                            Text="进程联动" />
-                <ui:CardExpander Background="#303136">
+                <ui:CardExpander>
                     <ui:CardExpander.Header>
                         <Grid>
                             <Grid.ColumnDefinitions>
@@ -655,7 +656,7 @@
                            FontSize="14"
                            Foreground="#87898B"
                            Text="增强功能" />
-                <ui:CardExpander Background="#303136">
+                <ui:CardExpander>
                     <ui:CardExpander.Header>
                         <Grid>
                             <Grid.ColumnDefinitions>
@@ -699,11 +700,11 @@
                                     <RowDefinition Height="Auto" />
                                     <RowDefinition Height="Auto" />
                                 </Grid.RowDefinitions>
-                                <TextBlock Grid.Row="0" Text="无界游戏生效" />
+                                <TextBlock Grid.Row="0" Text="无界游戏" />
                                 <TextBlock Grid.Row="1"
                                            FontSize="11"
                                            Foreground="#D0D0D0"
-                                           Text="用于单独测试无界效果" />
+                                           Text="测试无界效果" />
                             </Grid>
                             <ws:StackPanel Grid.Column="1"
                                            Orientation="Horizontal"
@@ -723,11 +724,11 @@
                                     <RowDefinition Height="Auto" />
                                     <RowDefinition Height="Auto" />
                                 </Grid.RowDefinitions>
-                                <TextBlock Grid.Row="0" Text="置顶游戏生效" />
+                                <TextBlock Grid.Row="0" Text="置顶游戏" />
                                 <TextBlock Grid.Row="1"
                                            FontSize="11"
                                            Foreground="#D0D0D0"
-                                           Text="用于单独测试置顶效果" />
+                                           Text="测试置顶效果" />
                             </Grid>
                             <ws:StackPanel Grid.Column="1"
                                            Orientation="Horizontal"
@@ -747,11 +748,11 @@
                                     <RowDefinition Height="Auto" />
                                     <RowDefinition Height="Auto" />
                                 </Grid.RowDefinitions>
-                                <TextBlock Grid.Row="0" Text="窗口拖动生效" />
+                                <TextBlock Grid.Row="0" Text="窗口拖动" />
                                 <TextBlock Grid.Row="1"
                                            FontSize="11"
                                            Foreground="#D0D0D0"
-                                           Text="用于单独测试拖动效果" />
+                                           Text="测试拖动效果" />
                             </Grid>
                             <ws:StackPanel Grid.Column="1"
                                            Orientation="Horizontal"
@@ -775,7 +776,7 @@
                                 <TextBlock Grid.Row="1"
                                            FontSize="11"
                                            Foreground="#D0D0D0"
-                                           Text="用于单独测试窗口功能" />
+                                           Text="测试窗口功能" />
                             </Grid>
                             <ws:StackPanel Grid.Column="1"
                                            Orientation="Horizontal"
@@ -798,7 +799,7 @@
                                 <TextBlock Grid.Row="1"
                                            FontSize="11"
                                            Foreground="#D0D0D0"
-                                           Text="用于单独测试窗口功能" />
+                                           Text="测试窗口功能" />
                             </Grid>
                             <ws:StackPanel Grid.Column="1"
                                            Orientation="Horizontal"
@@ -808,66 +809,123 @@
                         </Grid>
                     </ws:StackPanel>
                 </ui:CardExpander>
-                <ui:Card>
-                    <Grid MinHeight="35">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
-                        <Grid Grid.Column="0" Margin="0,0,12,0">
-                            <TextBlock MinWidth="26"
-                                       Margin="4,0,0,0"
-                                       HorizontalAlignment="Center"
-                                       VerticalAlignment="Center"
-                                       FontFamily="{DynamicResource SymbolThemeFontFamily}"
-                                       FontSize="18"
-                                       Text="{x:Static controls:FontSymbols.Picture}" />
+                <ui:CardExpander>
+                    <ui:CardExpander.Header>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <Grid Grid.Column="0" Margin="0,0,12,0">
+                                <TextBlock MinWidth="26"
+                                           Margin="4,0,0,0"
+                                           HorizontalAlignment="Center"
+                                           VerticalAlignment="Center"
+                                           FontFamily="{DynamicResource SymbolThemeFontFamily}"
+                                           FontSize="18"
+                                           Text="{x:Static controls:FontSymbols.QuickNote}" />
+                            </Grid>
+                            <Grid Grid.Column="1">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <TextBlock Grid.Row="0" Text="快速截图" />
+                                <TextBlock Grid.Row="1"
+                                           FontSize="11"
+                                           Foreground="#D0D0D0"
+                                           Text="快捷键 Ctrl+C 将游戏截图复制到剪贴板" />
+                            </Grid>
+                            <Grid Grid.Column="2" Margin="0,0,12,0">
+                                <ui:ToggleSwitch />
+                            </Grid>
                         </Grid>
-                        <Grid Grid.Column="1">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                            </Grid.RowDefinitions>
-                            <TextBlock Grid.Row="0" Text="快速截图" />
-                            <TextBlock Grid.Row="1"
-                                       FontSize="13"
-                                       Foreground="#D0D0D0"
-                                       Text="快捷键 Ctrl+C 将游戏截图复制到剪贴板" />
+                    </ui:CardExpander.Header>
+                    <ws:StackPanel Spacing="8">
+                        <Grid Margin="42,0,28,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <Grid Grid.Column="0">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <TextBlock Grid.Row="0" Text="隐藏游戏 UID" />
+                                <TextBlock Grid.Row="1"
+                                           FontSize="11"
+                                           Foreground="#D0D0D0"
+                                           Text="截图中自动隐藏游戏 UID" />
+                            </Grid>
+                            <ws:StackPanel Grid.Column="1"
+                                           Orientation="Horizontal"
+                                           Spacing="8">
+                                <ui:ToggleSwitch />
+                            </ws:StackPanel>
                         </Grid>
-                        <ui:ToggleSwitch Grid.Column="2" Margin="0,0,28,0" />
-                    </Grid>
-                </ui:Card>
-                <ui:Card>
-                    <Grid MinHeight="35">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
-                        <Grid Grid.Column="0" Margin="0,0,12,0">
-                            <TextBlock MinWidth="26"
-                                       Margin="4,0,0,0"
-                                       HorizontalAlignment="Center"
-                                       VerticalAlignment="Center"
-                                       FontFamily="{DynamicResource SymbolThemeFontFamily}"
-                                       FontSize="18"
-                                       Text="{x:Static controls:FontSymbols.Mute}" />
+                    </ws:StackPanel>
+                </ui:CardExpander>
+
+                <ui:CardExpander>
+                    <ui:CardExpander.Header>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <Grid Grid.Column="0" Margin="0,0,12,0">
+                                <TextBlock MinWidth="26"
+                                           Margin="4,0,0,0"
+                                           HorizontalAlignment="Center"
+                                           VerticalAlignment="Center"
+                                           FontFamily="{DynamicResource SymbolThemeFontFamily}"
+                                           FontSize="18"
+                                           Text="{x:Static controls:FontSymbols.Mute}" />
+                            </Grid>
+                            <Grid Grid.Column="1">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <TextBlock Grid.Row="0" Text="自动静音" />
+                                <TextBlock Grid.Row="1"
+                                           FontSize="11"
+                                           Foreground="#D0D0D0"
+                                           Text="当游戏窗口非前台状态时自动静音" />
+                            </Grid>
+                            <Grid Grid.Column="2" Margin="0,0,12,0">
+                                <ui:ToggleSwitch />
+                            </Grid>
                         </Grid>
-                        <Grid Grid.Column="1">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                            </Grid.RowDefinitions>
-                            <TextBlock Grid.Row="0" Text="自动静音" />
-                            <TextBlock Grid.Row="1"
-                                       FontSize="13"
-                                       Foreground="#D0D0D0"
-                                       Text="当游戏窗口非前台状态时自动静音" />
+                    </ui:CardExpander.Header>
+                    <ws:StackPanel Spacing="8">
+                        <Grid Margin="42,0,28,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <Grid Grid.Column="0">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <TextBlock Grid.Row="0" Text="音量合成器" />
+                                <TextBlock Grid.Row="1"
+                                           FontSize="11"
+                                           Foreground="#D0D0D0"
+                                           Text="当游戏声音异常可以在此处手动控制静音" />
+                            </Grid>
+                            <ws:StackPanel Grid.Column="1"
+                                           Orientation="Horizontal"
+                                           Spacing="8">
+                                <Button Content="设置" />
+                            </ws:StackPanel>
                         </Grid>
-                        <ui:ToggleSwitch Grid.Column="2" Margin="0,0,28,0" />
-                    </Grid>
-                </ui:Card>
+                    </ws:StackPanel>
+                </ui:CardExpander>
                 <ui:Card>
                     <Grid MinHeight="35">
                         <Grid.ColumnDefinitions>
@@ -898,6 +956,7 @@
                         <ui:ToggleSwitch Grid.Column="2" Margin="0,0,28,0" />
                     </Grid>
                 </ui:Card>
+                <FrameworkElement Height="90" />
             </ws:StackPanel>
         </ScrollViewer>
     </Grid>

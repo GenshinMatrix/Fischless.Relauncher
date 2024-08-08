@@ -9,6 +9,7 @@
         Height="450"
         AllowsTransparency="True"
         Background="Transparent"
+        ShowActivated="False"
         ShowInTaskbar="False"
         Visibility="Hidden"
         WindowState="Minimized"
