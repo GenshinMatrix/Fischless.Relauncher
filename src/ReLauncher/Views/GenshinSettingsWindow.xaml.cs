@@ -5,11 +5,13 @@ using Relauncher.Helper;
 using Relauncher.Models;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Threading;
+using System.Diagnostics.CodeAnalysis;
+using System.IO;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Interop;
 using Vanara.PInvoke;
+using Windows.System;
 using Wpf.Ui.Controls;
 using MouseButtonState = System.Windows.Input.MouseButtonState;
 
@@ -82,8 +84,16 @@ public partial class GenshinSettingsWindow : Window
     }
 }
 
+[SuppressMessage("Performance", "CA1822:Mark members as static")]
 public partial class GenshinSettingsViewModel : ObservableObject
 {
+    [RelayCommand]
+    private async Task LaunchAsync()
+    {
+        // TODO
+        await Task.CompletedTask;
+    }
+
     [ObservableProperty]
     private bool isUseArguments = Configurations.Genshin.Get().IsUseArguments;
 
@@ -224,7 +234,7 @@ public partial class GenshinSettingsViewModel : ObservableObject
     }
 
     [ObservableProperty]
-    [Description("Monitor ID - 1 = Monitor Index")]
+    [Description("[TEMP] Monitor ID - 1 = Monitor Index")]
     [property: Description("-monitor")]
     private int monitor = Configurations.Genshin.Get().Monitor - 1;
 
@@ -237,11 +247,404 @@ public partial class GenshinSettingsViewModel : ObservableObject
     }
 
     [ObservableProperty]
+    [Description("[TEMP] Monitor Index + 1 = Monitor ID")]
     private ObservableCollection<string> monitors = new(IdentifyMonitorWindow.GetAllMonitors().Select((m, i) => (i + 1).ToString()));
 
     [RelayCommand]
     private async Task IdentifyMonitorsAsync()
     {
         await IdentifyMonitorWindow.IdentifyAllMonitorsAsync(3).ConfigureAwait(false);
+    }
+
+    [ObservableProperty]
+    private bool isUnlockFps = Configurations.Genshin.Get().IsUnlockFps;
+
+    partial void OnIsUnlockFpsChanged(bool value)
+    {
+        var config = Configurations.Genshin.Get();
+        config.IsUnlockFps = value;
+        Configurations.Genshin.Set(config);
+        ConfigurationManager.Save();
+    }
+
+    [ObservableProperty]
+    private int unlockFps = Configurations.Genshin.Get().UnlockFps;
+
+    partial void OnUnlockFpsChanged(int value)
+    {
+        var config = Configurations.Genshin.Get();
+        config.UnlockFps = value;
+        Configurations.Genshin.Set(config);
+        ConfigurationManager.Save();
+    }
+
+    [ObservableProperty]
+    private int unlockFpsMethod = Configurations.Genshin.Get().UnlockFpsMethod;
+
+    partial void OnUnlockFpsMethodChanged(int value)
+    {
+        var config = Configurations.Genshin.Get();
+        config.UnlockFpsMethod = value;
+        Configurations.Genshin.Set(config);
+        ConfigurationManager.Save();
+    }
+
+    [ObservableProperty]
+    private bool isShowFps = Configurations.Genshin.Get().IsShowFps;
+
+    partial void OnIsShowFpsChanged(bool value)
+    {
+        var config = Configurations.Genshin.Get();
+        config.IsShowFps = value;
+        Configurations.Genshin.Set(config);
+        ConfigurationManager.Save();
+    }
+
+    [ObservableProperty]
+    private bool isDisnetLaunching = Configurations.Genshin.Get().IsDisnetLaunching;
+
+    partial void OnIsDisnetLaunchingChanged(bool value)
+    {
+        var config = Configurations.Genshin.Get();
+        config.IsDisnetLaunching = value;
+        Configurations.Genshin.Set(config);
+        ConfigurationManager.Save();
+    }
+
+    [ObservableProperty]
+    private bool isDarkMode = Configurations.Genshin.Get().IsDarkMode;
+
+    partial void OnIsDarkModeChanged(bool value)
+    {
+        var config = Configurations.Genshin.Get();
+        config.IsDarkMode = value;
+        Configurations.Genshin.Set(config);
+        ConfigurationManager.Save();
+    }
+
+    [ObservableProperty]
+    private bool isUseHDR = Configurations.Genshin.Get().IsUseHDR;
+
+    partial void OnIsUseHDRChanged(bool value)
+    {
+        var config = Configurations.Genshin.Get();
+        config.IsUseHDR = value;
+        Configurations.Genshin.Set(config);
+        ConfigurationManager.Save();
+    }
+
+    [ObservableProperty]
+    private string reShadePath = Configurations.Genshin.Get().ReShadePath ?? string.Empty;
+
+    partial void OnReShadePathChanged(string value)
+    {
+        var config = Configurations.Genshin.Get();
+        config.ReShadePath = value;
+        Configurations.Genshin.Set(config);
+        ConfigurationManager.Save();
+    }
+
+    [RelayCommand]
+    private async Task SelectReShadePathAsync()
+    {
+        // TODO
+        await Task.CompletedTask;
+    }
+
+    [RelayCommand]
+    private async Task OpenLoaderFolderAsync()
+    {
+        if (Directory.Exists(ReShadePath))
+        {
+            _ = await Launcher.LaunchUriAsync(new Uri($"file://{ReShadePath}"));
+        }
+    }
+
+    [ObservableProperty]
+    private bool isUseReShade = Configurations.Genshin.Get().IsUseReShade;
+
+    partial void OnIsUseReShadeChanged(bool value)
+    {
+        var config = Configurations.Genshin.Get();
+        config.IsUseReShade = value;
+        Configurations.Genshin.Set(config);
+        ConfigurationManager.Save();
+    }
+
+    [ObservableProperty]
+    private bool isUseReShadeSlient = Configurations.Genshin.Get().IsUseReShadeSlient;
+
+    partial void OnIsUseReShadeSlientChanged(bool value)
+    {
+        var config = Configurations.Genshin.Get();
+        config.IsUseReShadeSlient = value;
+        Configurations.Genshin.Set(config);
+        ConfigurationManager.Save();
+    }
+
+    [RelayCommand]
+    private async Task OpenFischlessWebsiteAsync()
+    {
+        _ = await Launcher.LaunchUriAsync(new Uri("https://github.com/GenshinMatrix/Fischless"));
+    }
+
+    [RelayCommand]
+    private async Task LaunchFischlessAsync()
+    {
+        _ = await Launcher.LaunchUriAsync(new Uri("fischless://"));
+    }
+
+    [ObservableProperty]
+    private bool isUseBetterGI = Configurations.Genshin.Get().IsUseBetterGI;
+
+    partial void OnIsUseBetterGIChanged(bool value)
+    {
+        var config = Configurations.Genshin.Get();
+        config.IsUseBetterGI = value;
+        Configurations.Genshin.Set(config);
+        ConfigurationManager.Save();
+    }
+
+    [RelayCommand]
+    private async Task OpenBetterGIWebsiteAsync()
+    {
+        _ = await Launcher.LaunchUriAsync(new Uri("https://github.com/babalae/better-genshin-impact"));
+    }
+
+    [RelayCommand]
+    private async Task LaunchBetterGIAsync()
+    {
+        _ = await Launcher.LaunchUriAsync(new Uri("bettergi://"));
+    }
+
+    [ObservableProperty]
+    private bool isUseBorderless = Configurations.Genshin.Get().IsUseBorderless;
+
+    partial void OnIsUseBorderlessChanged(bool value)
+    {
+        var config = Configurations.Genshin.Get();
+        config.IsUseBorderless = value;
+        Configurations.Genshin.Set(config);
+        ConfigurationManager.Save();
+    }
+
+    [RelayCommand]
+    public async Task EnableWindowBorderlessAsync()
+    {
+        // TODO
+        await Task.CompletedTask;
+        //if (!await GILauncher.TryGetProcessAsync(async t =>
+        //{
+        //    if (!RuntimeHelper.IsElevated)
+        //    {
+        //        if (MessageBoxX.Question(MuiLanguage.Mui("UACRequestRestartHint")) == MessageBoxResult.Yes)
+        //        {
+        //            RuntimeHelper.RestartAsElevated();
+        //        }
+        //        return;
+        //    }
+
+        //    await Task.CompletedTask;
+
+        //    nint hWnd = t.MainWindowHandle;
+        //    hWnd.EnableWindowBorderless();
+        //}))
+        //{
+        //    // NO GAME PLAYING
+        //}
+    }
+
+    [RelayCommand]
+    public async Task DisableWindowBorderlessAsync()
+    {
+        // TODO
+        await Task.CompletedTask;
+        //if (!await GILauncher.TryGetProcessAsync(async t =>
+        //{
+        //    if (!RuntimeHelper.IsElevated)
+        //    {
+        //        if (MessageBoxX.Question(MuiLanguage.Mui("UACRequestRestartHint")) == MessageBoxResult.Yes)
+        //        {
+        //            RuntimeHelper.RestartAsElevated();
+        //        }
+        //        return;
+        //    }
+
+        //    await Task.CompletedTask;
+
+        //    nint hWnd = t.MainWindowHandle;
+        //    hWnd.DisableWindowBorderless();
+        //}))
+        //{
+        //    // NO GAME PLAYING
+        //}
+    }
+
+    [RelayCommand]
+    public async Task EnableWindowTopmostAsync()
+    {
+        // TODO
+        await Task.CompletedTask;
+        //if (!await GILauncher.TryGetProcessAsync(async t =>
+        //{
+        //    if (!RuntimeHelper.IsElevated)
+        //    {
+        //        if (MessageBoxX.Question(MuiLanguage.Mui("UACRequestRestartHint")) == MessageBoxResult.Yes)
+        //        {
+        //            RuntimeHelper.RestartAsElevated();
+        //        }
+        //        return;
+        //    }
+
+        //    await Task.CompletedTask;
+
+        //    nint hWnd = t.MainWindowHandle;
+        //    hWnd.EnableWindowTopmost();
+        //}))
+        //{
+        //    // NO GAME PLAYING
+        //}
+    }
+
+    [RelayCommand]
+    public async Task DisableWindowTopmostAsync()
+    {
+        // TODO
+        await Task.CompletedTask;
+        //if (!await GILauncher.TryGetProcessAsync(async t =>
+        //{
+        //    if (!RuntimeHelper.IsElevated)
+        //    {
+        //        if (MessageBoxX.Question(MuiLanguage.Mui("UACRequestRestartHint")) == MessageBoxResult.Yes)
+        //        {
+        //            RuntimeHelper.RestartAsElevated();
+        //        }
+        //        return;
+        //    }
+
+        //    await Task.CompletedTask;
+
+        //    nint hWnd = t.MainWindowHandle;
+        //    hWnd.DisableWindowTopmost();
+        //}))
+        //{
+        //    // NO GAME PLAYING
+        //}
+    }
+
+    [RelayCommand]
+    public void EnableWindowDragMove()
+    {
+        // TODO
+        //DragMoveProvider.IsEnabled = true;
+    }
+
+    [RelayCommand]
+    public void DisableWindowDragMove()
+    {
+        // TODO
+        //DragMoveProvider.IsEnabled = false;
+    }
+
+    [RelayCommand]
+    public async Task EnableWindowMaximizeBoxAsync()
+    {
+        // TODO
+        await Task.CompletedTask;
+        //if (!await GILauncher.TryGetProcessAsync(async t =>
+        //{
+        //    if (!RuntimeHelper.IsElevated)
+        //    {
+        //        if (MessageBoxX.Question(MuiLanguage.Mui("UACRequestRestartHint")) == MessageBoxResult.Yes)
+        //        {
+        //            RuntimeHelper.RestartAsElevated();
+        //        }
+        //        return;
+        //    }
+
+        //    await Task.CompletedTask;
+
+        //    nint hWnd = t.MainWindowHandle;
+        //    hWnd.EnableWindowMaximizeBox();
+        //}))
+        //{
+        //    // NO GAME PLAYING
+        //}
+    }
+
+    [RelayCommand]
+    public async Task RestoreWindowPositonAsync()
+    {
+        // TODO
+        await Task.CompletedTask;
+        //if (!await GILauncher.TryGetProcessAsync(async t =>
+        //{
+        //    if (!RuntimeHelper.IsElevated)
+        //    {
+        //        if (MessageBoxX.Question(MuiLanguage.Mui("UACRequestRestartHint")) == MessageBoxResult.Yes)
+        //        {
+        //            RuntimeHelper.RestartAsElevated();
+        //        }
+        //        return;
+        //    }
+
+        //    await Task.CompletedTask;
+
+        //    nint hWnd = t.MainWindowHandle;
+        //    hWnd.RestoreWindowPositon();
+        //}))
+        //{
+        //    // NO GAME PLAYING
+        //}
+    }
+
+    [ObservableProperty]
+    private bool isUseQuickScreenshot = Configurations.Genshin.Get().IsUseQuickScreenshot;
+
+    partial void OnIsUseQuickScreenshotChanged(bool value)
+    {
+        var config = Configurations.Genshin.Get();
+        config.IsUseQuickScreenshot = value;
+        Configurations.Genshin.Set(config);
+        ConfigurationManager.Save();
+    }
+
+    [ObservableProperty]
+    private bool isUseQuickScreenshotHideUID = Configurations.Genshin.Get().IsUseQuickScreenshotHideUID;
+
+    partial void OnIsUseQuickScreenshotHideUIDChanged(bool value)
+    {
+        var config = Configurations.Genshin.Get();
+        config.IsUseQuickScreenshotHideUID = value;
+        Configurations.Genshin.Set(config);
+        ConfigurationManager.Save();
+    }
+
+    [ObservableProperty]
+    private bool isUseAutoMute = Configurations.Genshin.Get().IsUseAutoMute;
+
+    partial void OnIsUseAutoMuteChanged(bool value)
+    {
+        var config = Configurations.Genshin.Get();
+        config.IsUseAutoMute = value;
+        Configurations.Genshin.Set(config);
+        ConfigurationManager.Save();
+    }
+
+    [RelayCommand]
+    public async Task LaunchWindowsSettingsAppsVolumeAsync()
+    {
+        _ = await Launcher.LaunchUriAsync(new Uri("ms-settings:apps-volume"));
+    }
+
+    [ObservableProperty]
+    private bool isUseAutoClick = Configurations.Genshin.Get().IsUseAutoClick;
+
+    partial void OnIsUseAutoClickChanged(bool value)
+    {
+        var config = Configurations.Genshin.Get();
+        config.IsUseAutoClick = value;
+        Configurations.Genshin.Set(config);
+        ConfigurationManager.Save();
     }
 }

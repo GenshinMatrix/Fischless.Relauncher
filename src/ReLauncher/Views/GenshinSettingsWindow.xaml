@@ -34,6 +34,7 @@
             <TextBlock FontSize="16" Text="原神重启动器客户端" />
             <Button Height="26"
                     Margin="0,-2,0,0"
+                    Command="{Binding LaunchCommand}"
                     ToolTip="启动游戏">
                 <Button.Content>
                     <TextBlock FontFamily="{DynamicResource SymbolThemeFontFamily}"
@@ -327,8 +328,12 @@
                                            Margin="0,0,12,0"
                                            Orientation="Horizontal"
                                            Spacing="36">
-                                <ui:NumberBox Width="150" />
-                                <ui:ToggleSwitch />
+                                <ui:NumberBox Width="150"
+                                              MaxDecimalPlaces="0"
+                                              Maximum="996"
+                                              Minimum="0"
+                                              Value="{Binding ViewModel.UnlockFps, Mode=TwoWay}" />
+                                <ui:ToggleSwitch IsChecked="{Binding ViewModel.IsUnlockFps, Mode=TwoWay}" />
                             </ws:StackPanel>
                         </Grid>
                     </ui:CardExpander.Header>
@@ -349,7 +354,7 @@
                                            Foreground="#D0D0D0"
                                            Text="更改解锁帧率的工作方式" />
                             </Grid>
-                            <ComboBox Grid.Column="1" SelectedIndex="0">
+                            <ComboBox Grid.Column="1" SelectedIndex="{Binding ViewModel.UnlockFpsMethod, Mode=TwoWay}">
                                 <ComboBoxItem Content="GenshinMatrix/Fischless" />
                                 <ComboBoxItem Content="DGP-Studio/UnlockerIsland" IsEnabled="False" />
                             </ComboBox>
@@ -371,7 +376,7 @@
                                            Foreground="#D0D0D0"
                                            Text="游戏窗口内实时显示帧率 FPS" />
                             </Grid>
-                            <ui:ToggleSwitch Grid.Column="1" />
+                            <ui:ToggleSwitch Grid.Column="1" IsChecked="{Binding ViewModel.IsShowFps, Mode=TwoWay}" />
                         </Grid>
                     </ws:StackPanel>
                 </ui:CardExpander>
@@ -402,7 +407,9 @@
                                        Foreground="#D0D0D0"
                                        Text="启动时让游戏短暂禁止联网从而加快启动速度" />
                         </Grid>
-                        <ui:ToggleSwitch Grid.Column="2" Margin="0,0,28,0" />
+                        <ui:ToggleSwitch Grid.Column="2"
+                                         Margin="0,0,28,0"
+                                         IsChecked="{Binding ViewModel.IsDisnetLaunching, Mode=TwoWay}" />
                     </Grid>
                 </ui:Card>
                 <ui:Card>
@@ -432,7 +439,9 @@
                                        Foreground="#D0D0D0"
                                        Text="游戏窗口启用深色模式" />
                         </Grid>
-                        <ui:ToggleSwitch Grid.Column="2" Margin="0,0,28,0" />
+                        <ui:ToggleSwitch Grid.Column="2"
+                                         Margin="0,0,28,0"
+                                         IsChecked="{Binding ViewModel.IsDarkMode, Mode=TwoWay}" />
                     </Grid>
                 </ui:Card>
                 <ui:Card>
@@ -476,7 +485,9 @@
                                        Foreground="#D0D0D0"
                                        Text="充分利用支持高动态范围的显示器获得更亮、更生动、更精细的画面" />
                         </Grid>
-                        <ui:ToggleSwitch Grid.Column="2" Margin="0,0,28,0" />
+                        <ui:ToggleSwitch Grid.Column="2"
+                                         Margin="0,0,28,0"
+                                         IsChecked="{Binding ViewModel.IsUseHDR, Mode=TwoWay}" />
                     </Grid>
                 </ui:Card>
                 <TextBlock Margin="4,8,0,4"
@@ -512,7 +523,7 @@
                                            Text="乘坐 3DMigoto Loader 前往幽夜净土" />
                             </Grid>
                             <Grid Grid.Column="2" Margin="0,0,12,0">
-                                <ui:ToggleSwitch />
+                                <ui:ToggleSwitch IsChecked="{Binding ViewModel.IsUseReShade, Mode=TwoWay}" />
                             </Grid>
                         </Grid>
                     </ui:CardExpander.Header>
@@ -538,8 +549,11 @@
                                            Spacing="8">
                                 <TextBox MinWidth="300"
                                          Margin="16,0,0,0"
-                                         HorizontalAlignment="Right" />
-                                <Button Height="35" ToolTip="选择目录">
+                                         HorizontalAlignment="Right"
+                                         Text="{Binding ViewModel.ReShadePath, Mode=TwoWay}" />
+                                <Button Height="35"
+                                        Command="{Binding SelectReShadePathCommand}"
+                                        ToolTip="选择目录">
                                     <Button.Content>
                                         <TextBlock HorizontalAlignment="Center"
                                                    VerticalAlignment="Center"
@@ -548,7 +562,9 @@
                                                    Text="{x:Static controls:FontSymbols.Folder}" />
                                     </Button.Content>
                                 </Button>
-                                <Button Height="35" ToolTip="打开目录">
+                                <Button Height="35"
+                                        Command="{Binding ViewModel.OpenLoaderFolderCommand}"
+                                        ToolTip="打开目录">
                                     <Button.Content>
                                         <TextBlock HorizontalAlignment="Center"
                                                    VerticalAlignment="Center"
@@ -577,7 +593,7 @@
                                            Text="指示是否隐藏进程控制台" />
                             </Grid>
                             <Grid Grid.Column="1">
-                                <ui:ToggleSwitch />
+                                <ui:ToggleSwitch IsChecked="{Binding ViewModel.IsUseReShadeSilent, Mode=TwoWay}" />
                             </Grid>
                         </Grid>
                         <Separator />
@@ -595,12 +611,14 @@
                                 <TextBlock Grid.Row="1"
                                            FontSize="11"
                                            Foreground="#D0D0D0"
-                                           Text="来自幽夜净土的模型管理器" />
+                                           Text="来自幽夜净土的模型管理器、MMD预览器" />
                             </Grid>
                             <ws:StackPanel Grid.Column="1"
                                            Orientation="Horizontal"
                                            Spacing="8">
-                                <Button Height="35" ToolTip="打开链接">
+                                <Button Height="35"
+                                        Command="{Binding ViewModel.OpenFischlessWebsiteCommand}"
+                                        ToolTip="打开链接">
                                     <Button.Content>
                                         <TextBlock HorizontalAlignment="Center"
                                                    VerticalAlignment="Center"
@@ -609,7 +627,9 @@
                                                    Text="{x:Static controls:FontSymbols.Link}" />
                                     </Button.Content>
                                 </Button>
-                                <Button Height="35" ToolTip="打开程序">
+                                <Button Height="35"
+                                        Command="{Binding ViewModel.LaunchFischlessCommand}"
+                                        ToolTip="打开程序">
                                     <Button.Content>
                                         <TextBlock HorizontalAlignment="Center"
                                                    VerticalAlignment="Center"
@@ -622,36 +642,85 @@
                         </Grid>
                     </ws:StackPanel>
                 </ui:CardExpander>
-                <ui:Card>
-                    <Grid MinHeight="35">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
-                        <Grid Grid.Column="0" Margin="0,0,12,0">
-                            <TextBlock MinWidth="26"
-                                       Margin="4,0,0,0"
-                                       HorizontalAlignment="Center"
-                                       VerticalAlignment="Center"
-                                       FontFamily="{DynamicResource SymbolThemeFontFamily}"
-                                       FontSize="18"
-                                       Text="{x:Static controls:FontSymbols.Input}" />
+                <ui:CardExpander>
+                    <ui:CardExpander.Header>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <Grid Grid.Column="0" Margin="0,0,12,0">
+                                <TextBlock MinWidth="26"
+                                           Margin="4,0,0,0"
+                                           HorizontalAlignment="Center"
+                                           VerticalAlignment="Center"
+                                           FontFamily="{DynamicResource SymbolThemeFontFamily}"
+                                           FontSize="18"
+                                           Text="{x:Static controls:FontSymbols.Input}" />
+                            </Grid>
+                            <Grid Grid.Column="1">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <TextBlock Grid.Row="0" Text="自动化任务" />
+                                <TextBlock Grid.Row="1"
+                                           FontSize="11"
+                                           Foreground="#D0D0D0"
+                                           Text="在游戏启动后尝试启动并使用 Better GI 进行自动化任务" />
+                            </Grid>
+                            <Grid Grid.Column="2" Margin="0,0,12,0">
+                                <ui:ToggleSwitch IsChecked="{Binding ViewModel.IsUseBetterGI, Mode=TwoWay}" />
+                            </Grid>
                         </Grid>
-                        <Grid Grid.Column="1">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                            </Grid.RowDefinitions>
-                            <TextBlock Grid.Row="0" Text="自动化任务" />
-                            <TextBlock Grid.Row="1"
-                                       FontSize="11"
-                                       Foreground="#D0D0D0"
-                                       Text="在游戏启动后尝试启动并使用 Better GI 进行自动化任务" />
+                    </ui:CardExpander.Header>
+                    <ws:StackPanel Spacing="8">
+                        <Grid Margin="42,0,28,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <Grid Grid.Column="0">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <TextBlock Grid.Row="0" Text="更好的原神" />
+                                <TextBlock Grid.Row="1"
+                                           FontSize="11"
+                                           Foreground="#D0D0D0"
+                                           Text="基于计算机视觉技术，意图让原神变的更好" />
+                            </Grid>
+                            <ws:StackPanel Grid.Column="1"
+                                           Orientation="Horizontal"
+                                           Spacing="8">
+                                <Button Height="35"
+                                        Command="{Binding ViewModel.OpenBetterGIWebsiteCommand}"
+                                        ToolTip="打开链接">
+                                    <Button.Content>
+                                        <TextBlock HorizontalAlignment="Center"
+                                                   VerticalAlignment="Center"
+                                                   FontFamily="{DynamicResource SymbolThemeFontFamily}"
+                                                   FontSize="16"
+                                                   Text="{x:Static controls:FontSymbols.Link}" />
+                                    </Button.Content>
+                                </Button>
+                                <Button Height="35"
+                                        Command="{Binding ViewModel.LaunchBetterGICommand}"
+                                        ToolTip="打开程序">
+                                    <Button.Content>
+                                        <TextBlock HorizontalAlignment="Center"
+                                                   VerticalAlignment="Center"
+                                                   FontFamily="{DynamicResource SymbolThemeFontFamily}"
+                                                   FontSize="16"
+                                                   Text="{x:Static controls:FontSymbols.OpenInNewWindow}" />
+                                    </Button.Content>
+                                </Button>
+                            </ws:StackPanel>
                         </Grid>
-                        <ui:ToggleSwitch Grid.Column="2" Margin="0,0,28,0" />
-                    </Grid>
-                </ui:Card>
+                    </ws:StackPanel>
+                </ui:CardExpander>
                 <TextBlock Margin="4,8,0,4"
                            FontSize="14"
                            Foreground="#87898B"
@@ -685,7 +754,7 @@
                                            Text="无边框游戏可获得窗口可拖动体验" />
                             </Grid>
                             <Grid Grid.Column="2" Margin="0,0,12,0">
-                                <ui:ToggleSwitch />
+                                <ui:ToggleSwitch IsChecked="{Binding ViewModel.IsUseBorderless, Mode=TwoWay}" />
                             </Grid>
                         </Grid>
                     </ui:CardExpander.Header>
@@ -709,8 +778,8 @@
                             <ws:StackPanel Grid.Column="1"
                                            Orientation="Horizontal"
                                            Spacing="8">
-                                <Button Content="生效" />
-                                <Button Content="无效" />
+                                <Button Command="{Binding EnableWindowBorderlessCommand}" Content="生效" />
+                                <Button Command="{Binding DisableWindowBorderlessCommand}" Content="无效" />
                             </ws:StackPanel>
                         </Grid>
                         <Separator />
@@ -733,8 +802,8 @@
                             <ws:StackPanel Grid.Column="1"
                                            Orientation="Horizontal"
                                            Spacing="8">
-                                <Button Content="生效" />
-                                <Button Content="无效" />
+                                <Button Command="{Binding EnableWindowTopmostCommand}" Content="生效" />
+                                <Button Command="{Binding DisableWindowTopmostCommand}" Content="无效" />
                             </ws:StackPanel>
                         </Grid>
                         <Separator />
@@ -757,8 +826,8 @@
                             <ws:StackPanel Grid.Column="1"
                                            Orientation="Horizontal"
                                            Spacing="8">
-                                <Button Content="生效" />
-                                <Button Content="无效" />
+                                <Button Command="{Binding ViewModel.EnableWindowDragMoveCommand}" Content="生效" />
+                                <Button Command="{Binding ViewModel.DisableWindowDragMoveCommand}" Content="无效" />
                             </ws:StackPanel>
                         </Grid>
                         <Separator />
@@ -781,7 +850,7 @@
                             <ws:StackPanel Grid.Column="1"
                                            Orientation="Horizontal"
                                            Spacing="8">
-                                <Button Content="设置" />
+                                <Button Command="{Binding ViewModel.EnableWindowMaximizeBoxCommand}" Content="设置" />
                             </ws:StackPanel>
                         </Grid>
                         <Separator />
@@ -804,7 +873,7 @@
                             <ws:StackPanel Grid.Column="1"
                                            Orientation="Horizontal"
                                            Spacing="8">
-                                <Button Content="设置" />
+                                <Button Command="{Binding ViewModel.RestoreWindowPositonCommand}" Content="设置" />
                             </ws:StackPanel>
                         </Grid>
                     </ws:StackPanel>
@@ -835,10 +904,10 @@
                                 <TextBlock Grid.Row="1"
                                            FontSize="11"
                                            Foreground="#D0D0D0"
-                                           Text="快捷键 Ctrl+C 将游戏截图复制到剪贴板" />
+                                           Text="快捷键 Ctrl+C 复制游戏截图到剪贴板" />
                             </Grid>
                             <Grid Grid.Column="2" Margin="0,0,12,0">
-                                <ui:ToggleSwitch />
+                                <ui:ToggleSwitch IsChecked="{Binding ViewModel.IsUseQuickScreenshot, Mode=TwoWay}" />
                             </Grid>
                         </Grid>
                     </ui:CardExpander.Header>
@@ -862,12 +931,11 @@
                             <ws:StackPanel Grid.Column="1"
                                            Orientation="Horizontal"
                                            Spacing="8">
-                                <ui:ToggleSwitch />
+                                <ui:ToggleSwitch IsChecked="{Binding ViewModel.IsUseQuickScreenshotHideUID, Mode=TwoWay}" />
                             </ws:StackPanel>
                         </Grid>
                     </ws:StackPanel>
                 </ui:CardExpander>
-
                 <ui:CardExpander>
                     <ui:CardExpander.Header>
                         <Grid>
@@ -897,7 +965,7 @@
                                            Text="当游戏窗口非前台状态时自动静音" />
                             </Grid>
                             <Grid Grid.Column="2" Margin="0,0,12,0">
-                                <ui:ToggleSwitch />
+                                <ui:ToggleSwitch IsChecked="{Binding ViewModel.IsUseAutoMute, Mode=TwoWay}" />
                             </Grid>
                         </Grid>
                     </ui:CardExpander.Header>
@@ -921,12 +989,12 @@
                             <ws:StackPanel Grid.Column="1"
                                            Orientation="Horizontal"
                                            Spacing="8">
-                                <Button Content="设置" />
+                                <Button Command="{Binding ViewModel.LaunchWindowsSettingsAppsVolumeCommand}" Content="设置" />
                             </ws:StackPanel>
                         </Grid>
                     </ws:StackPanel>
                 </ui:CardExpander>
-                <ui:Card>
+                <ui:Card IsEnabled="False">
                     <Grid MinHeight="35">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
@@ -953,7 +1021,9 @@
                                        Foreground="#D0D0D0"
                                        Text="设置不保存，仅本次运行有效" />
                         </Grid>
-                        <ui:ToggleSwitch Grid.Column="2" Margin="0,0,28,0" />
+                        <ui:ToggleSwitch Grid.Column="2"
+                                         Margin="0,0,28,0"
+                                         IsChecked="{Binding ViewModel.IsUseAutoClick, Mode=TwoWay}" />
                     </Grid>
                 </ui:Card>
                 <FrameworkElement Height="90" />
