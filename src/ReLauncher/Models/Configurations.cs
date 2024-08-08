@@ -6,5 +6,5 @@ namespace Relauncher.Models;
 [Obfuscation]
 public static class Configurations
 {
-    public static ConfigurationDefinition<string> Language { get; } = new(nameof(Language), string.Empty);
+    public static ConfigurationDefinition<GenshinConfigurations> Genshin { get; } = new(nameof(GenshinConfigurations), new());
 }

@@ -99,11 +99,11 @@
                                            Text="在游戏启动时修改其默认行为" />
                             </Grid>
                             <Grid Grid.Column="2" Margin="0,0,12,0">
-                                <ui:ToggleSwitch />
+                                <ui:ToggleSwitch IsChecked="{Binding ViewModel.IsUseArguments, Mode=TwoWay}" />
                             </Grid>
                         </Grid>
                     </ui:CardExpander.Header>
-                    <Grid>
+                    <Grid IsEnabled="{Binding ViewModel.IsUseArguments}">
                         <ws:StackPanel Spacing="8">
                             <Grid Margin="42,0,28,0">
                                 <Grid.ColumnDefinitions>
@@ -121,7 +121,7 @@
                                                Foreground="#D0D0D0"
                                                Text="全屏独占模式与游戏内浏览器不兼容，切屏等操作也能使游戏闪退" />
                                 </Grid>
-                                <ui:ToggleSwitch Grid.Column="1" />
+                                <ui:ToggleSwitch Grid.Column="1" IsChecked="{Binding ViewModel.IsUseWindowModeExclusive, Mode=TwoWay}" />
                             </Grid>
                             <Separator />
                             <Grid Margin="42,0,28,0">
@@ -140,7 +140,7 @@
                                                Foreground="#D0D0D0"
                                                Text="覆盖默认的全屏状态" />
                                 </Grid>
-                                <ui:ToggleSwitch Grid.Column="1" />
+                                <ui:ToggleSwitch Grid.Column="1" IsChecked="{Binding ViewModel.IsScreenFullscreen, Mode=TwoWay}" />
                             </Grid>
                             <Separator />
                             <Grid Margin="42,0,28,0">
@@ -159,7 +159,7 @@
                                                Foreground="#D0D0D0"
                                                Text="将窗口创建为弹出窗口，不带边框" />
                                 </Grid>
-                                <ui:ToggleSwitch Grid.Column="1" />
+                                <ui:ToggleSwitch Grid.Column="1" IsChecked="{Binding ViewModel.IsPopupwindow, Mode=TwoWay}" />
                             </Grid>
                             <Separator />
                             <Grid Margin="42,0,28,0">
@@ -178,7 +178,7 @@
                                                Foreground="#D0D0D0"
                                                Text="启用内置触摸布局，不会响应键鼠输入" />
                                 </Grid>
-                                <ui:ToggleSwitch Grid.Column="1" />
+                                <ui:ToggleSwitch Grid.Column="1" IsChecked="{Binding ViewModel.IsPlatformTypeCloudThirdPartyMobile, Mode=TwoWay}" />
                             </Grid>
                             <Separator />
                             <Grid Margin="42,0,28,0">
@@ -200,8 +200,9 @@
                                 <ComboBox Grid.Column="1"
                                           Width="150"
                                           Margin="0,0,77,0"
-                                          SelectedIndex="0">
-                                    <ComboBoxItem Content="快捷设置分辨率" />
+                                          SelectedIndex="0"
+                                          SelectedValue="{Binding ViewModel.ScreenPresetValue}">
+                                    <ComboBoxItem Content="快捷设置分辨率" Visibility="Collapsed" />
                                     <ComboBoxItem Content="3840:2160" />
                                     <ComboBoxItem Content="2560:1600" />
                                     <ComboBoxItem Content="2560:1440" />
@@ -229,8 +230,8 @@
                                 <ws:StackPanel Grid.Column="1"
                                                Orientation="Horizontal"
                                                Spacing="36">
-                                    <ui:TextBox Width="150" />
-                                    <ui:ToggleSwitch />
+                                    <ui:NumberBox Width="150" Value="{Binding ViewModel.ScreenWidth, Mode=TwoWay}" />
+                                    <ui:ToggleSwitch IsChecked="{Binding ViewModel.IsScreenWidth, Mode=TwoWay}" />
                                 </ws:StackPanel>
                             </Grid>
                             <Separator />
@@ -253,8 +254,8 @@
                                 <ws:StackPanel Grid.Column="1"
                                                Orientation="Horizontal"
                                                Spacing="36">
-                                    <ui:TextBox Width="150" />
-                                    <ui:ToggleSwitch />
+                                    <ui:NumberBox Width="150" Value="{Binding ViewModel.ScreenHeight, Mode=TwoWay}" />
+                                    <ui:ToggleSwitch IsChecked="{Binding ViewModel.IsScreenHeight, Mode=TwoWay}" />
                                 </ws:StackPanel>
                             </Grid>
                             <Separator />
@@ -280,15 +281,14 @@
                                     <ws:StackPanel Orientation="Horizontal" Spacing="8">
                                         <Button Width="110"
                                                 Height="36"
-                                                Command="{Binding IdentifyMonitorsCommand}"
+                                                Command="{Binding ViewModel.IdentifyMonitorsCommand}"
                                                 Content="识别显示器" />
                                         <ComboBox Grid.Column="1"
                                                   Width="150"
-                                                  SelectedIndex="0">
-                                            <ComboBoxItem Content="1" />
-                                        </ComboBox>
+                                                  ItemsSource="{Binding ViewModel.Monitors}"
+                                                  SelectedIndex="{Binding ViewModel.Monitor}" />
                                     </ws:StackPanel>
-                                    <ui:ToggleSwitch />
+                                    <ui:ToggleSwitch IsChecked="{Binding ViewModel.IsMonitor, Mode=TwoWay}" />
                                 </ws:StackPanel>
                             </Grid>
                         </ws:StackPanel>
@@ -322,9 +322,13 @@
                                            Foreground="#D0D0D0"
                                            Text="请在游戏内关闭「垂直同步」选项，需要高性能的显卡以支持更高的帧率" />
                             </Grid>
-                            <Grid Grid.Column="2" Margin="0,0,12,0">
+                            <ws:StackPanel Grid.Column="2"
+                                           Margin="0,0,12,0"
+                                           Orientation="Horizontal"
+                                           Spacing="36">
+                                <ui:NumberBox Width="150" />
                                 <ui:ToggleSwitch />
-                            </Grid>
+                            </ws:StackPanel>
                         </Grid>
                     </ui:CardExpander.Header>
                     <ws:StackPanel Spacing="8">
@@ -345,8 +349,8 @@
                                            Text="更改解锁帧率的工作方式" />
                             </Grid>
                             <ComboBox Grid.Column="1" SelectedIndex="0">
-                                <ComboBoxItem Content="注入 (GenshinMatrix/Fischless)" />
-                                <ComboBoxItem Content="注入 (DGP-Studio/UnlockerIsland)" />
+                                <ComboBoxItem Content="GenshinMatrix/Fischless" />
+                                <ComboBoxItem Content="DGP-Studio/UnlockerIsland" IsEnabled="False" />
                             </ComboBox>
                         </Grid>
                         <Separator />

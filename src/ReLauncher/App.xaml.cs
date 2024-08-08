@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Relauncher.Core.Configs;
 using Relauncher.Core.Loggers;
 using Relauncher.Core.Relaunchs;
 using Relauncher.Extensions;
@@ -32,7 +33,7 @@ public partial class App : System.Windows.Application
                 )
                 .CreateLogger();
 
-            //ConfigurationManager.Setup(SpecialPathHelper.GetPath("config.yaml"));
+            ConfigurationManager.Setup(SpecialPathHelper.GetPath("config.yaml"));
             _ = DpiAwareHelper.SetProcessDpiAwareness();
             TrayIconManager.GetInstance();
 

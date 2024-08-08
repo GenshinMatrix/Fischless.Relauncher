@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using Relauncher.Extensions;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Windows;
@@ -22,7 +23,7 @@ public partial class IdentifyMonitorWindow : Window
         Width = displayArea.MonitorArea.Width / displayArea.ScaleX * 0.13d;
         Height = displayArea.MonitorArea.Height / displayArea.ScaleY * 0.13d;
         Top = (displayArea.MonitorArea.Top + 32) / displayArea.ScaleY;
-        Left = (displayArea.MonitorArea.Left + 40) / displayArea.ScaleX ;
+        Left = (displayArea.MonitorArea.Left + 40) / displayArea.ScaleX;
     }
 
     protected override void OnSourceInitialized(EventArgs e)
@@ -33,6 +34,9 @@ public partial class IdentifyMonitorWindow : Window
         {
             WindowBackdrop.ApplyBackdrop(this, WindowBackdropType.Mica);
         }
+
+        this.HideFromAltTab();
+        this.SetLayeredWindow(true);
     }
 
     public static async ValueTask IdentifyAllMonitorsAsync(int secondsDelay)

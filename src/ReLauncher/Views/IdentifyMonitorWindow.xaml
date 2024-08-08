@@ -10,6 +10,7 @@
         Height="45"
         Background="Black"
         Foreground="#FFFFFF"
+        ShowActivated="False"
         ShowInTaskbar="False"
         SizeToContent="Height"
         Topmost="True"
