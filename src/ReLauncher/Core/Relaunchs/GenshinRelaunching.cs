@@ -50,6 +50,13 @@ public static class GenshinRelaunching
                             }
                         });
                     }
+                    else
+                    {
+                        window.Dispatcher.Invoke(() =>
+                        {
+                            window.Visibility = Visibility.Collapsed;
+                        });
+                    }
                 }
 
                 ///
