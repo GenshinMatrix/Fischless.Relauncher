@@ -1,4 +1,5 @@
 ﻿using Relauncher.Relaunchs;
+using Relauncher.Threading;
 using System.Diagnostics;
 using System.IO;
 
@@ -175,6 +176,29 @@ internal class GenshinLauncher
                 GenshinRegistry.ProdOVERSEA = option.Account.Prod;
             }
         }
+
+        FluentProcess netsh1 = FluentProcess.Create()
+            .FileName("netsh")
+            .Arguments(@$"advfirewall firewall add rule name=""DIS_GENSHIN_NETWORK"" dir=out action=block program=""{fileName}""")
+            .CreateNoWindow()
+            .UseShellExecute(false)
+            .Verb("runas")
+            .Start()
+            .WaitForExit();
+
+        _ = Task.Run(async () =>
+        {
+            await Task.Delay(5000);
+
+            FluentProcess netsh2 = FluentProcess.Create()
+                .FileName("netsh")
+                .Arguments(@"advfirewall firewall delete rule name=""DIS_GENSHIN_NETWORK""")
+                .CreateNoWindow()
+                .UseShellExecute(false)
+                .Verb("runas")
+                .Start()
+                .WaitForExit();
+        });
 
         Process? gameProcess = Process.Start(new ProcessStartInfo()
         {

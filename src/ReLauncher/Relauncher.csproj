@@ -35,6 +35,7 @@
 		<PackageReference Include="NotifyIconEx" Version="1.1.1" />
 		<PackageReference Include="WPF-UI" Version="3.0.5" />
 		<PackageReference Include="EleCho.WpfSuite" Version="0.6.2" />
+		<PackageReference Include="PresentMonFps" Version="2.0.4" />
 	</ItemGroup>
 
 	<ItemGroup>

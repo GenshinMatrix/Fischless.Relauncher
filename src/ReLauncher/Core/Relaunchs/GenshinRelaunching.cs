@@ -13,98 +13,139 @@ public static class GenshinRelaunching
 {
     public static async Task StartAsync(GenshinLauncherOption? option = null, CancellationToken? token = null)
     {
-        MaskWindow window = MaskWindow.CreateWindow();
+        MaskWindow maskWin = MaskWindow.CreateWindow();
+        FpsWindow fpsWin = FpsWindow.CreateWindow();
 
-        while (!(token?.IsCancellationRequested ?? false))
+        await Task.Run(async () =>
         {
-            try
+            var tokenSource = new CancellationTokenSource();
+
+            while (!(token?.IsCancellationRequested ?? false))
             {
-                // HYP: Inject UI
+                try
                 {
-                    Process? process = Process.GetProcessesByName("HYP").FirstOrDefault();
-
-                    if (process != null)
+                    // HYP: Inject UI
                     {
-                        nint hWnd = window.Handle;
-                        nint targetHWnd = process.MainWindowHandle;
+                        Process? process = Process.GetProcessesByName("HYP").FirstOrDefault();
 
-                        if (hWnd == IntPtr.Zero)
+                        if (process != null)
                         {
-                            window = MaskWindow.CreateWindow();
-                            hWnd = window.Handle;
+                            nint hWnd = maskWin.Handle;
+                            nint targetHWnd = process.MainWindowHandle;
+
+                            if (hWnd == IntPtr.Zero)
+                            {
+                                maskWin = MaskWindow.CreateWindow();
+                                hWnd = maskWin.Handle;
+                            }
+
+                            maskWin.Dispatcher.Invoke(() =>
+                            {
+                                maskWin.Visibility = Visibility.Visible;
+                                if (User32.GetParent(hWnd) != targetHWnd)
+                                {
+                                    _ = User32.SetParent(hWnd, targetHWnd);
+                                }
+                                _ = User32.GetClientRect(targetHWnd, out RECT rect);
+                                _ = User32.SetWindowPos(hWnd, IntPtr.Zero, rect.Width - (int)DpiHelper.CalcDPI(176f), (int)DpiHelper.CalcDPI(9f), 100, 100, User32.SetWindowPosFlags.SWP_SHOWWINDOW);
+
+                                if (!Application.Current.Windows.OfType<GenshinSettingsWindow>().Any())
+                                {
+                                    _ = User32.EnableWindow(targetHWnd, true);
+                                }
+                            });
                         }
-
-                        window.Dispatcher.Invoke(() =>
+                        else
                         {
-                            window.Visibility = Visibility.Visible;
-                            if (User32.GetParent(hWnd) != targetHWnd)
+                            maskWin.Dispatcher.Invoke(() =>
                             {
-                                _ = User32.SetParent(hWnd, targetHWnd);
-                            }
-                            _ = User32.GetClientRect(targetHWnd, out RECT rect);
-                            ;
-                            _ = User32.SetWindowPos(hWnd, IntPtr.Zero, rect.Width - (int)DpiHelper.CalcDPI(176f), (int)DpiHelper.CalcDPI(9f), 100, 100, User32.SetWindowPosFlags.SWP_SHOWWINDOW);
-
-                            if (!Application.Current.Windows.OfType<GenshinSettingsWindow>().Any())
-                            {
-                                _ = User32.EnableWindow(targetHWnd, true);
-                            }
-                        });
-                    }
-                    else
-                    {
-                        window.Dispatcher.Invoke(() =>
-                        {
-                            window.Visibility = Visibility.Collapsed;
-                        });
-                    }
-                }
-
-                // HYP: Relaunch Genshin
-                {
-                    Process? process = Process.GetProcessesByName("Yuanshen").FirstOrDefault();
-
-                    if (process != null)
-                    {
-                        int? parentProcessId = Interop.GetParentProcessId(process.Id);
-
-                        if (parentProcessId != null)
-                        {
-                            Process? parentProcess = Process.GetProcessById(parentProcessId.Value);
-
-                            if (parentProcess.ProcessName == "HYP")
-                            {
-                                process.Kill();
-                                await GenshinLauncher.KillAsync(GenshinRelaunchMethod.Kill);
-                                await GenshinLauncher.LaunchAsync(delayMs: 1000, relaunchMethod: GenshinRelaunchMethod.Kill);
-                            }
+                                maskWin.Visibility = Visibility.Collapsed;
+                            });
                         }
                     }
-                }
 
-                // Genshin: Inject UI
-                {
-                    if (Configurations.Genshin.Get().IsShowFps)
+                    // HYP: Relaunch Genshin
+                    {
+                        Process? process = Process.GetProcessesByName("Yuanshen").FirstOrDefault();
+
+                        if (process != null)
+                        {
+                            int? parentProcessId = Interop.GetParentProcessId(process.Id);
+
+                            if (parentProcessId != null)
+                            {
+                                try
+                                {
+                                    Process? parentProcess = Process.GetProcessesByName("HYP").FirstOrDefault();
+
+                                    if (parentProcess?.Id == parentProcessId.Value)
+                                    {
+                                        process.Kill();
+                                        await GenshinLauncher.KillAsync(GenshinRelaunchMethod.Kill);
+                                        await GenshinLauncher.LaunchAsync(delayMs: 1000, relaunchMethod: GenshinRelaunchMethod.Kill);
+                                    }
+                                }
+                                catch
+                                {
+                                    ///
+                                }
+                            }
+                        }
+                    }
+
+                    // Genshin: Inject UI
+                    {
+                        if (Configurations.Genshin.Get().IsShowFps)
+                        {
+                            Process? process = Process.GetProcessesByName("Yuanshen").FirstOrDefault();
+
+                            if (process != null)
+                            {
+                                nint hWnd = fpsWin.Handle;
+                                nint targetHWnd = process.MainWindowHandle;
+
+                                if (hWnd == IntPtr.Zero)
+                                {
+                                    fpsWin = FpsWindow.CreateWindow();
+                                    hWnd = fpsWin.Handle;
+                                }
+
+                                fpsWin.Dispatcher.Invoke(() =>
+                                {
+                                    fpsWin.Pid = (uint)process.Id;
+                                    fpsWin.Visibility = Visibility.Visible;
+                                    if (User32.GetParent(hWnd) != targetHWnd)
+                                    {
+                                        _ = User32.SetParent(hWnd, targetHWnd);
+                                    }
+                                    _ = User32.GetClientRect(targetHWnd, out RECT rect);
+                                    float x = DpiHelper.GetScale(targetHWnd).X;
+                                    _ = User32.SetWindowPos(hWnd, IntPtr.Zero, 0, 0, (int)(rect.Width * x), (int)(rect.Height * x), User32.SetWindowPosFlags.SWP_SHOWWINDOW);
+                                });
+                            }
+                        }
+                        else
+                        {
+                            fpsWin.Dispatcher.Invoke(() =>
+                            {
+                                fpsWin.Pid = 0;
+                                fpsWin.Visibility = Visibility.Collapsed;
+                            });
+                        }
+                    }
+
+                    // Genshin: Auto mute
                     {
                         // TODO
                     }
-                    else
-                    {
-                        // TODO
-                    }
                 }
-
-                // Genshin: Auto mute
+                catch (Exception e)
                 {
-                    // TODO
+                    Debug.WriteLine(e);
                 }
-            }
-            catch (Exception e)
-            {
-                Debug.WriteLine(e);
-            }
 
-            Thread.Sleep(200);
-        }
+                Thread.Sleep(200);
+            }
+        });
     }
 }

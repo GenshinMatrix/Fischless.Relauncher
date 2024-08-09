@@ -54,7 +54,7 @@ public partial class App : System.Windows.Application
             await _host.StartAsync();
             GetService<MainWindow>()?.Show();
             Log.Information("Welcome to reLauncher.");
-            _ = Task.Run(() => GenshinRelaunching.StartAsync());
+            _ = GenshinRelaunching.StartAsync();
         }
         catch (Exception ex)
         {

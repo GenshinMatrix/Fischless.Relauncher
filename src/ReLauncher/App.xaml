@@ -10,6 +10,7 @@
                 <ui:ControlsDictionary />
                 <ResourceDictionary Source="/Views/Controls/Button/Button.xaml" />
             </ResourceDictionary.MergedDictionaries>
+            <FontFamily x:Key="DelugeLEDFontFamily">pack://application:,,,/Relauncher;component/Assets/Fonts/deluge-led.ttf#Deluge LED</FontFamily>
             <FontFamily x:Key="SymbolThemeFontFamily">pack://application:,,,/Relauncher;component/Assets/Fonts/Segoe Fluent Icons.ttf#Segoe Fluent Icons</FontFamily>
         </ResourceDictionary>
     </Application.Resources>

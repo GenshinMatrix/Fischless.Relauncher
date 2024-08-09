@@ -26,6 +26,21 @@ public static class DpiHelper
         return new(scaleX / 96f, scaleY / 96f);
     }
 
+    public static DpiScaleF GetScale(nint hWnd = 0)
+    {
+        if (hWnd != IntPtr.Zero)
+        {
+            HMONITOR hMonitor = User32.MonitorFromWindow(hWnd, User32.MonitorFlags.MONITOR_DEFAULTTONEAREST);
+            SHCore.GetDpiForMonitor(hMonitor, SHCore.MONITOR_DPI_TYPE.MDT_EFFECTIVE_DPI, out uint dpiX, out uint dpiY);
+            return new DpiScaleF(dpiX / 96f, dpiY / 96f);
+        }
+
+        using User32.SafeReleaseHDC hdc = User32.GetDC(hWnd);
+        float scaleX = Gdi32.GetDeviceCaps(hdc, Gdi32.DeviceCap.LOGPIXELSX);
+        float scaleY = Gdi32.GetDeviceCaps(hdc, Gdi32.DeviceCap.LOGPIXELSY);
+        return new(scaleX / 96f, scaleY / 96f);
+    }
+
     public static double CalcDPI(double src) => Math.Ceiling(src * ScaleX);
 
     public static float CalcDPI(float src) => (float)Math.Ceiling(src * ScaleX);
@@ -51,7 +66,7 @@ public static class DpiHelper
     public static float CalcDPiY(float src) => (float)Math.Ceiling(src * (1f / ScaleY));
 }
 
-internal readonly struct DpiScaleF(float x = 1f, float y = 1f)
+public readonly struct DpiScaleF(float x = 1f, float y = 1f)
 {
     private readonly float x = x;
     public float X => x;
