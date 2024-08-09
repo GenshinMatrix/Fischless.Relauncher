@@ -1,8 +1,11 @@
-﻿using Relauncher.Helper;
+﻿using Relauncher.Extensions;
+using Relauncher.Helper;
 using Relauncher.Models;
 using Relauncher.Relaunchs;
 using Relauncher.Views;
 using System.Diagnostics;
+using System.Reflection.Metadata;
+using System.Runtime.InteropServices;
 using System.Windows;
 using Vanara.PInvoke;
 using Application = System.Windows.Application;
@@ -131,6 +134,18 @@ public static class GenshinRelaunching
                                 fpsWin.Pid = 0;
                                 fpsWin.Visibility = Visibility.Collapsed;
                             });
+                        }
+                    }
+
+                    // Genshin: Dark mode
+                    {
+                        Process? process = Process.GetProcessesByName("Yuanshen").FirstOrDefault();
+
+                        if (process != null && process.MainWindowHandle != IntPtr.Zero)
+                        {
+                            // TODO: Check if the window is already rounded
+                            //WindowBackdropExtension.SetRoundedCorners(process.MainWindowHandle, false);
+                            WindowBackdropExtension.ApplyWindowDarkMode(process.MainWindowHandle, Configurations.Genshin.Get().IsDarkMode);
                         }
                     }
 
