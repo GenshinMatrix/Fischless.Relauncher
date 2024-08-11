@@ -3,7 +3,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using Vanara.PInvoke;
 
-namespace Relauncher;
+namespace Relauncher.Win32;
 
 public static class Interop
 {
@@ -116,6 +116,23 @@ public static class Interop
         }
 
         return messageBuffer.ToString().Trim();
+    }
+
+    public static HRESULT DwmGetWindowAttribute(HWND hWnd, DwmApi.DWMWINDOWATTRIBUTE dwAttribute, out int pvAttribute, int cbAttribute)
+    {
+        unsafe
+        {
+            fixed (int* pvAttributePtr = &pvAttribute)
+            {
+                HRESULT result = DwmApi.DwmGetWindowAttribute(
+                    hWnd,
+                    dwAttribute,
+                    (nint)pvAttributePtr,
+                    cbAttribute
+                );
+                return result;
+            }
+        }
     }
 
     public static HRESULT DwmSetWindowAttribute(HWND hWnd, DwmApi.DWMWINDOWATTRIBUTE dwAttribute, int pvAttribute, int cbAttribute)

@@ -1,22 +1,11 @@
-﻿using System.Runtime.InteropServices;
+﻿using Relauncher.Win32;
+using System.Runtime.InteropServices;
 using Vanara.PInvoke;
-using Wpf.Ui.Interop;
 
 namespace Relauncher.Extensions;
 
 internal static class WindowBackdropExtension
 {
-    public enum DwmWindowCornerPreference : uint
-    {
-        DWMWCP_DEFAULT = 0,
-        DWMWCP_DONOTROUND = 1,
-        DWMWCP_ROUND = 2,
-        DWMWCP_ROUNDSMALL = 3
-    }
-
-    [DllImport("dwmapi.dll", PreserveSig = true)]
-    public static extern int DwmSetWindowAttribute(nint hwnd, DwmApi.DWMWINDOWATTRIBUTE attr, ref int attrValue, int attrSize);
-
     public static bool SetRoundedCorners(nint hWnd, bool enable = true)
     {
         if (hWnd == IntPtr.Zero)
@@ -29,10 +18,25 @@ internal static class WindowBackdropExtension
             return false;
         }
 
-        // TODO: Check if the window is already rounded
-        int preference = enable ? (int)DwmWindowCornerPreference.DWMWCP_ROUND : (int)DwmWindowCornerPreference.DWMWCP_DONOTROUND;
-        int hr = DwmSetWindowAttribute(hWnd, DwmApi.DWMWINDOWATTRIBUTE.DWMWA_WINDOW_CORNER_PREFERENCE, ref preference, sizeof(int));
-        return hr >= 0;
+        if (Environment.OSVersion.Version.Build < 22000)
+        {
+            return false;
+        }
+
+        HRESULT result = Interop.DwmGetWindowAttribute(hWnd, DwmApi.DWMWINDOWATTRIBUTE.DWMWA_WINDOW_CORNER_PREFERENCE, out int sourcePerf, Marshal.SizeOf(typeof(int)));
+
+        int targetPerf = enable ? (int)DwmApi.DWM_WINDOW_CORNER_PREFERENCE.DWMWCP_ROUND : (int)DwmApi.DWM_WINDOW_CORNER_PREFERENCE.DWMWCP_DONOTROUND;
+
+        if (result == HRESULT.S_OK)
+        {
+            if (sourcePerf == targetPerf)
+            {
+                return true;
+            }
+        }
+
+        result = Interop.DwmSetWindowAttribute(hWnd, DwmApi.DWMWINDOWATTRIBUTE.DWMWA_WINDOW_CORNER_PREFERENCE, targetPerf, Marshal.SizeOf(typeof(int)));
+        return result == HRESULT.S_OK;
     }
 
     public static bool ApplyWindowDarkMode(nint hWnd, bool isDarkMode)
@@ -47,38 +51,35 @@ internal static class WindowBackdropExtension
             return false;
         }
 
-        // TODO: Remove unsafe
-        unsafe
+        if (Environment.OSVersion.Version.Build < 17763)
         {
-            DwmApi.DWMWINDOWATTRIBUTE attribute = DwmApi.DWMWINDOWATTRIBUTE.DWMWA_USE_IMMERSIVE_DARK_MODE;
-            int isDarkModeEnabled;
-            nint isDarkModeEnabledPtr = (nint)(&isDarkModeEnabled);
-            var result = DwmApi.DwmGetWindowAttribute(hWnd, attribute, isDarkModeEnabledPtr, Marshal.SizeOf(typeof(int)));
+            return false;
+        }
 
-            if (result == 0)
+        HRESULT result = Interop.DwmGetWindowAttribute(hWnd, DwmApi.DWMWINDOWATTRIBUTE.DWMWA_USE_IMMERSIVE_DARK_MODE, out int isDarkModeEnabled, Marshal.SizeOf(typeof(int)));
+
+        if (result == HRESULT.S_OK)
+        {
+            if (isDarkMode && isDarkModeEnabled != 0)
             {
-                if (isDarkMode && isDarkModeEnabled != 0)
-                {
-                    return true;
-                }
-                else if (!isDarkMode && isDarkModeEnabled == 0)
-                {
-                    return true;
-                }
+                return true;
+            }
+            else if (!isDarkMode && isDarkModeEnabled == 0)
+            {
+                return true;
             }
         }
 
-        if (isDarkMode)
+        if (Environment.OSVersion.Version.Build >= 22523)
         {
-            // TODO: Inlined method
-            UnsafeNativeMethods.ApplyWindowDarkMode(hWnd);
+            result = Interop.DwmSetWindowAttribute(hWnd, DwmApi.DWMWINDOWATTRIBUTE.DWMWA_USE_IMMERSIVE_DARK_MODE, isDarkMode ? 1 : 0, Marshal.SizeOf(typeof(int)));
+            return result == HRESULT.S_OK;
         }
         else
         {
-            // TODO: Inlined method
-            UnsafeNativeMethods.RemoveWindowDarkMode(hWnd);
+            const DwmApi.DWMWINDOWATTRIBUTE DMWA_USE_IMMERSIVE_DARK_MODE_OLD = DwmApi.DWMWINDOWATTRIBUTE.DWMWA_USE_IMMERSIVE_DARK_MODE - 1;
+            result = Interop.DwmSetWindowAttribute(hWnd, DMWA_USE_IMMERSIVE_DARK_MODE_OLD, isDarkMode ? 1 : 0, Marshal.SizeOf(typeof(int)));
+            return result == HRESULT.S_OK;
         }
-
-        return true;
     }
 }

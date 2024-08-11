@@ -380,70 +380,64 @@
                         </Grid>
                     </ws:StackPanel>
                 </ui:CardExpander>
-                <ui:Card>
-                    <Grid MinHeight="35">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
-                        <Grid Grid.Column="0" Margin="0,0,12,0">
-                            <TextBlock MinWidth="26"
-                                       Margin="4,0,0,0"
-                                       HorizontalAlignment="Center"
-                                       VerticalAlignment="Center"
-                                       FontFamily="{DynamicResource SymbolThemeFontFamily}"
-                                       FontSize="18"
-                                       Text="{x:Static controls:FontSymbols.NetworkOffline}" />
+                <ui:CardExpander>
+                    <ui:CardExpander.Header>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <Grid Grid.Column="0" Margin="0,0,12,0">
+                                <TextBlock MinWidth="26"
+                                           Margin="4,0,0,0"
+                                           HorizontalAlignment="Center"
+                                           VerticalAlignment="Center"
+                                           FontFamily="{DynamicResource SymbolThemeFontFamily}"
+                                           FontSize="18"
+                                           Text="{x:Static controls:FontSymbols.NetworkOffline}" />
+                            </Grid>
+                            <Grid Grid.Column="1">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <TextBlock Grid.Row="0" Text="离线启动" />
+                                <TextBlock Grid.Row="1"
+                                           FontSize="11"
+                                           Foreground="#D0D0D0"
+                                           Text="启动时让游戏短暂禁止联网从而加快启动速度" />
+                            </Grid>
+                            <Grid Grid.Column="2" Margin="0,0,12,0">
+                                <ui:ToggleSwitch IsChecked="{Binding ViewModel.IsDisnetLaunching, Mode=TwoWay}" />
+                            </Grid>
                         </Grid>
-                        <Grid Grid.Column="1">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                            </Grid.RowDefinitions>
-                            <TextBlock Grid.Row="0" Text="离线启动" />
-                            <TextBlock Grid.Row="1"
-                                       FontSize="11"
-                                       Foreground="#D0D0D0"
-                                       Text="启动时让游戏短暂禁止联网从而加快启动速度" />
+                    </ui:CardExpander.Header>
+                    <ws:StackPanel Spacing="8">
+                        <Grid Margin="42,0,28,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <Grid Grid.Column="0">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <TextBlock Grid.Row="0" Text="恢复联网" />
+                                <TextBlock Grid.Row="1"
+                                           FontSize="11"
+                                           Foreground="#D0D0D0"
+                                           Text="当游戏网络异常可以在此处手动恢复联网" />
+                            </Grid>
+                            <ws:StackPanel Grid.Column="1"
+                                           Orientation="Horizontal"
+                                           Spacing="8">
+                                <Button Command="{Binding ViewModel.RestoreDisnetCommand}" Content="设置" />
+                            </ws:StackPanel>
                         </Grid>
-                        <ui:ToggleSwitch Grid.Column="2"
-                                         Margin="0,0,28,0"
-                                         IsChecked="{Binding ViewModel.IsDisnetLaunching, Mode=TwoWay}" />
-                    </Grid>
-                </ui:Card>
-                <ui:Card>
-                    <Grid MinHeight="35">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
-                        <Grid Grid.Column="0" Margin="0,0,12,0">
-                            <TextBlock MinWidth="26"
-                                       Margin="4,0,0,0"
-                                       HorizontalAlignment="Center"
-                                       VerticalAlignment="Center"
-                                       FontFamily="{DynamicResource SymbolThemeFontFamily}"
-                                       FontSize="18"
-                                       Text="{x:Static controls:FontSymbols.QuietHours}" />
-                        </Grid>
-                        <Grid Grid.Column="1">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                            </Grid.RowDefinitions>
-                            <TextBlock Grid.Row="0" Text="深色模式" />
-                            <TextBlock Grid.Row="1"
-                                       FontSize="11"
-                                       Foreground="#D0D0D0"
-                                       Text="游戏窗口启用深色模式" />
-                        </Grid>
-                        <ui:ToggleSwitch Grid.Column="2"
-                                         Margin="0,0,28,0"
-                                         IsChecked="{Binding ViewModel.IsDarkMode, Mode=TwoWay}" />
-                    </Grid>
-                </ui:Card>
+                    </ws:StackPanel>
+                </ui:CardExpander>
                 <ui:Card>
                     <Grid MinHeight="35">
                         <Grid.ColumnDefinitions>
@@ -725,6 +719,70 @@
                            FontSize="14"
                            Foreground="#87898B"
                            Text="增强功能" />
+                <ui:Card>
+                    <Grid MinHeight="35">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <Grid Grid.Column="0" Margin="0,0,12,0">
+                            <TextBlock MinWidth="26"
+                                       Margin="4,0,0,0"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"
+                                       FontFamily="{DynamicResource SymbolThemeFontFamily}"
+                                       FontSize="18"
+                                       Text="{x:Static controls:FontSymbols.QuietHours}" />
+                        </Grid>
+                        <Grid Grid.Column="1">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <TextBlock Grid.Row="0" Text="深色模式" />
+                            <TextBlock Grid.Row="1"
+                                       FontSize="11"
+                                       Foreground="#D0D0D0"
+                                       Text="游戏窗口启用深色模式" />
+                        </Grid>
+                        <ui:ToggleSwitch Grid.Column="2"
+                                         Margin="0,0,28,0"
+                                         IsChecked="{Binding ViewModel.IsDarkMode, Mode=TwoWay}" />
+                    </Grid>
+                </ui:Card>
+                <ui:Card>
+                    <Grid MinHeight="35">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <Grid Grid.Column="0" Margin="0,0,12,0">
+                            <TextBlock MinWidth="26"
+                                       Margin="4,0,0,0"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"
+                                       FontFamily="{DynamicResource SymbolThemeFontFamily}"
+                                       FontSize="18"
+                                       Text="{x:Static controls:FontSymbols.AppIconDefault}" />
+                        </Grid>
+                        <Grid Grid.Column="1">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <TextBlock Grid.Row="0" Text="直角窗口" />
+                            <TextBlock Grid.Row="1"
+                                       FontSize="11"
+                                       Foreground="#D0D0D0"
+                                       Text="Windows 11 下游戏窗口启用直角窗口" />
+                        </Grid>
+                        <ui:ToggleSwitch Grid.Column="2"
+                                         Margin="0,0,28,0"
+                                         IsChecked="{Binding ViewModel.IsSquareCorner, Mode=TwoWay}" />
+                    </Grid>
+                </ui:Card>
                 <ui:CardExpander>
                     <ui:CardExpander.Header>
                         <Grid>
@@ -893,7 +951,7 @@
                                            VerticalAlignment="Center"
                                            FontFamily="{DynamicResource SymbolThemeFontFamily}"
                                            FontSize="18"
-                                           Text="{x:Static controls:FontSymbols.QuickNote}" />
+                                           Text="{x:Static controls:FontSymbols.Picture}" />
                             </Grid>
                             <Grid Grid.Column="1">
                                 <Grid.RowDefinitions>

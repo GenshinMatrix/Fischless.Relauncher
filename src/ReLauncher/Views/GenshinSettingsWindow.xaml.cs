@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.Input;
 using Relauncher.Core.Configs;
 using Relauncher.Helper;
 using Relauncher.Models;
+using Relauncher.Threading;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
@@ -307,6 +308,33 @@ public partial class GenshinSettingsViewModel : ObservableObject
     {
         var config = Configurations.Genshin.Get();
         config.IsDisnetLaunching = value;
+        Configurations.Genshin.Set(config);
+        ConfigurationManager.Save();
+    }
+
+    [RelayCommand]
+    private async Task RestoreDisnetAsync()
+    {
+        await Task.Run(() =>
+        {
+            FluentProcess netsh2 = FluentProcess.Create()
+                .FileName("netsh")
+                .Arguments(@"advfirewall firewall delete rule name=""DIS_GENSHIN_NETWORK""")
+                .CreateNoWindow()
+                .UseShellExecute(false)
+                .Verb("runas")
+                .Start()
+                .WaitForExit();
+        });
+    }
+
+    [ObservableProperty]
+    private bool isSquareCorner = Configurations.Genshin.Get().IsSquareCorner;
+
+    partial void OnIsSquareCornerChanged(bool value)
+    {
+        var config = Configurations.Genshin.Get();
+        config.IsSquareCorner = value;
         Configurations.Genshin.Set(config);
         ConfigurationManager.Save();
     }

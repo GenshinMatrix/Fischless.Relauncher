@@ -3,9 +3,8 @@ using Relauncher.Helper;
 using Relauncher.Models;
 using Relauncher.Relaunchs;
 using Relauncher.Views;
+using Relauncher.Win32;
 using System.Diagnostics;
-using System.Reflection.Metadata;
-using System.Runtime.InteropServices;
 using System.Windows;
 using Vanara.PInvoke;
 using Application = System.Windows.Application;
@@ -143,9 +142,8 @@ public static class GenshinRelaunching
 
                         if (process != null && process.MainWindowHandle != IntPtr.Zero)
                         {
-                            // TODO: Check if the window is already rounded
-                            //WindowBackdropExtension.SetRoundedCorners(process.MainWindowHandle, false);
-                            WindowBackdropExtension.ApplyWindowDarkMode(process.MainWindowHandle, Configurations.Genshin.Get().IsDarkMode);
+                            _ = WindowBackdropExtension.SetRoundedCorners(process.MainWindowHandle, !Configurations.Genshin.Get().IsSquareCorner);
+                            _ = WindowBackdropExtension.ApplyWindowDarkMode(process.MainWindowHandle, Configurations.Genshin.Get().IsDarkMode);
                         }
                     }
 

@@ -50,6 +50,8 @@ public class GenshinConfigurations
 
     public bool IsDarkMode { get; set; } = false;
 
+    public bool IsSquareCorner { get; set; } = false;
+
     public bool IsUseHDR { get; set; } = false;
 
     public string? ReShadePath { get; set; } = null;
