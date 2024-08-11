@@ -436,7 +436,7 @@
                         </Grid>
                     </ws:StackPanel>
                 </ui:CardExpander>
-                <ui:Card>
+                <ui:Card IsEnabled="False">
                     <Grid MinHeight="35">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
@@ -781,7 +781,7 @@
                                          IsChecked="{Binding ViewModel.IsSquareCorner, Mode=TwoWay}" />
                     </Grid>
                 </ui:Card>
-                <ui:CardExpander>
+                <ui:CardExpander IsEnabled="False">
                     <ui:CardExpander.Header>
                         <Grid>
                             <Grid.ColumnDefinitions>
@@ -934,7 +934,7 @@
                         </Grid>
                     </ws:StackPanel>
                 </ui:CardExpander>
-                <ui:CardExpander>
+                <ui:CardExpander IsEnabled="False">
                     <ui:CardExpander.Header>
                         <Grid>
                             <Grid.ColumnDefinitions>
@@ -960,7 +960,7 @@
                                 <TextBlock Grid.Row="1"
                                            FontSize="11"
                                            Foreground="#D0D0D0"
-                                           Text="快捷键 Ctrl+C 复制游戏截图到剪贴板" />
+                                           Text="快捷键「Ctrl+C」复制游戏截图到剪贴板" />
                             </Grid>
                             <Grid Grid.Column="2" Margin="0,0,12,0">
                                 <ui:ToggleSwitch IsChecked="{Binding ViewModel.IsUseQuickScreenshot, Mode=TwoWay}" />
@@ -992,7 +992,7 @@
                         </Grid>
                     </ws:StackPanel>
                 </ui:CardExpander>
-                <ui:CardExpander>
+                <ui:CardExpander IsEnabled="False">
                     <ui:CardExpander.Header>
                         <Grid>
                             <Grid.ColumnDefinitions>
@@ -1073,9 +1073,9 @@
                             </Grid.RowDefinitions>
                             <TextBlock Grid.Row="0" Text="自动连点" />
                             <TextBlock Grid.Row="1"
-                                       FontSize="13"
+                                       FontSize="11"
                                        Foreground="#D0D0D0"
-                                       Text="设置不保存，仅本次运行有效" />
+                                       Text="快捷键「6」，设置不保存，仅本次运行有效" />
                         </Grid>
                         <ui:ToggleSwitch Grid.Column="2"
                                          Margin="0,0,28,0"
