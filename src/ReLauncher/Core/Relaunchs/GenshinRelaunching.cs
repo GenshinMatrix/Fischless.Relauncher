@@ -45,24 +45,34 @@ public static class GenshinRelaunching
 
                             maskWin.Dispatcher.Invoke(() =>
                             {
-                                if (User32.GetParent(hWnd) != targetHWnd)
-                                {
-                                    _ = User32.SetParent(hWnd, targetHWnd);
-                                }
-                                maskWin.Visibility = Visibility.Visible;
-                                _ = User32.GetClientRect(targetHWnd, out RECT rect);
-                                _ = User32.SetWindowPos(hWnd, IntPtr.Zero, rect.Width - (int)DpiHelper.CalcDPI(176f), (int)DpiHelper.CalcDPI(9f), 100, 100, User32.SetWindowPosFlags.SWP_SHOWWINDOW);
+                                User32.WINDOWPLACEMENT placement = default;
+                                _ = User32.GetWindowPlacement(targetHWnd, ref placement);
 
-                                if (!Application.Current.Windows.OfType<GenshinSettingsWindow>().Any())
+                                if (placement.showCmd != ShowWindowCommand.SW_HIDE)
                                 {
-                                    _ = User32.EnableWindow(targetHWnd, true);
+                                    if (User32.GetParent(hWnd) != targetHWnd)
+                                    {
+                                        _ = User32.SetParent(hWnd, targetHWnd);
+                                    }
+                                    maskWin.Visibility = Visibility.Visible;
+                                    _ = User32.GetClientRect(targetHWnd, out RECT rect);
+                                    _ = User32.SetWindowPos(hWnd, IntPtr.Zero, rect.Width - (int)DpiHelper.CalcDPI(176f), (int)DpiHelper.CalcDPI(9f), 100, 100, User32.SetWindowPosFlags.SWP_SHOWWINDOW);
+
+                                    if (!Application.Current.Windows.OfType<GenshinSettingsWindow>().Any())
+                                    {
+                                        _ = User32.EnableWindow(targetHWnd, true);
+                                    }
+                                    else
+                                    {
+                                        foreach (var win in Application.Current.Windows.OfType<GenshinSettingsWindow>())
+                                        {
+                                            _ = User32.SetWindowPos(targetHWnd, win.Handle, 0, 0, 0, 0, User32.SetWindowPosFlags.SWP_NOSIZE | User32.SetWindowPosFlags.SWP_NOMOVE | User32.SetWindowPosFlags.SWP_NOACTIVATE | User32.SetWindowPosFlags.SWP_SHOWWINDOW);
+                                        }
+                                    }
                                 }
                                 else
                                 {
-                                    foreach (var win in Application.Current.Windows.OfType<GenshinSettingsWindow>())
-                                    {
-                                        _ = User32.SetWindowPos(targetHWnd, win.Handle, 0, 0, 0, 0, User32.SetWindowPosFlags.SWP_NOSIZE | User32.SetWindowPosFlags.SWP_NOMOVE | User32.SetWindowPosFlags.SWP_NOACTIVATE | User32.SetWindowPosFlags.SWP_SHOWWINDOW);
-                                    }
+                                    maskWin.Close();
                                 }
                             });
                         }
