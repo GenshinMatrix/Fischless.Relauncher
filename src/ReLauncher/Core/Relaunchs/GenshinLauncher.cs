@@ -1,7 +1,12 @@
-﻿using Relauncher.Relaunchs;
+﻿using Relauncher.Extensions;
+using Relauncher.Relaunchs;
 using Relauncher.Threading;
+using Relauncher.Win32;
 using System.Diagnostics;
 using System.IO;
+using System.Threading;
+using Vanara.PInvoke;
+using Windows.System;
 
 namespace Relauncher.Core.Relaunchs;
 
@@ -162,52 +167,138 @@ internal class GenshinLauncher
 
         _ = TryGetGamePath(option.GamePath!, out string fileName);
 
-        if (string.IsNullOrEmpty(option?.Account?.Server) || option.Account.Server == RegionCN)
+        if (option.Account != null)
         {
-            if (!string.IsNullOrEmpty(option?.Account?.Prod))
+            if (string.IsNullOrEmpty(option.Account.Server) || option.Account.Server == RegionCN)
             {
-                GenshinRegistry.ProdCN = option.Account.Prod;
+                if (!string.IsNullOrEmpty(option.Account?.Prod))
+                {
+                    GenshinRegistry.ProdCN = option.Account.Prod;
+                }
+            }
+            else if (option.Account.Server == RegionOVERSEA)
+            {
+                if (!string.IsNullOrEmpty(option.Account.Prod))
+                {
+                    GenshinRegistry.ProdOVERSEA = option.Account.Prod;
+                }
             }
         }
-        else if (option?.Account?.Server == RegionOVERSEA)
+
+        if (option.Advance != null)
         {
-            if (!string.IsNullOrEmpty(option?.Account?.Prod))
+            if (option.Advance.IsUseHDR)
             {
-                GenshinRegistry.ProdOVERSEA = option.Account.Prod;
+                // TODO
             }
         }
 
-        FluentProcess netsh1 = FluentProcess.Create()
-            .FileName("netsh")
-            .Arguments(@$"advfirewall firewall add rule name=""DIS_GENSHIN_NETWORK"" dir=out action=block program=""{fileName}""")
-            .CreateNoWindow()
-            .UseShellExecute(false)
-            .Verb("runas")
-            .Start()
-            .WaitForExit();
-
-        _ = Task.Run(async () =>
+        if (option.Linkage != null)
         {
-            await Task.Delay(5000);
+            if (option.Linkage.IsUseReShade)
+            {
+                if (Directory.Exists(option.Linkage.ReShadePath))
+                {
+                    string? configPath = Path.Combine(option.Linkage.ReShadePath, "d3dx.ini");
 
-            FluentProcess netsh2 = FluentProcess.Create()
-                .FileName("netsh")
-                .Arguments(@"advfirewall firewall delete rule name=""DIS_GENSHIN_NETWORK""")
-                .CreateNoWindow()
-                .UseShellExecute(false)
-                .Verb("runas")
-                .Start()
-                .WaitForExit();
-        });
+                    if (File.Exists(configPath))
+                    {
+                        string[] profile = Interop.GetIniValues(configPath, "Loader", "target");
 
-        Process? gameProcess = Process.Start(new ProcessStartInfo()
+                        if (profile.Length != 0)
+                        {
+                            if (!(profile[0]?.Trim()?.Equals(fileName, StringComparison.OrdinalIgnoreCase) ?? false))
+                            {
+                                // Loader's ini format needs a space before the file name.
+                                _ = Interop.SetIniValues(configPath, "Loader", "target", " " + fileName);
+                            }
+                        }
+                    }
+
+                    using FluentProcess loader = FluentProcess.Create()
+                        .FileName(Path.Combine(option.Linkage.ReShadePath, "3DMigoto Loader.exe"))
+                        .WorkingDirectory(option.Linkage.ReShadePath)
+                        .Verb("runas");
+
+                    if (option.Linkage.IsUseReShadeSilent)
+                    {
+                        _ = loader.CreateNoWindow()
+                            .UseShellExecute(false)
+                            .RedirectStandardOutput();
+                    }
+
+                    _ = loader.Start();
+
+                    nint hWnd = await Task.Run(() =>
+                    {
+                        nint hWnd = IntPtr.Zero;
+
+                        if (SpinWait.SpinUntil(() => loader.MainWindowHandle != IntPtr.Zero, 3000))
+                        {
+                            hWnd = loader.MainWindowHandle;
+                        }
+                        return hWnd;
+                    });
+
+                    if (option.Linkage.IsUseReShadeSilent)
+                    {
+                        if (hWnd != IntPtr.Zero)
+                        {
+                            _ = User32.ShowWindow(hWnd, ShowWindowCommand.SW_HIDE);
+                        }
+                    }
+
+                    // Tactical avoidance
+                    await Task.Delay(500);
+                }
+            }
+        }
+
+        if (option.Advance != null)
+        {
+            if (option.Advance.IsDisnetLaunching)
+            {
+                using FluentProcess netsh1 = FluentProcess.Create()
+                    .FileName("netsh")
+                    .Arguments($"advfirewall firewall add rule name=\"DIS_GENSHIN_NETWORK\" dir=out action=block program=\"{fileName}\"")
+                    .CreateNoWindow()
+                    .UseShellExecute(false)
+                    .Verb("runas")
+                    .Start()
+                    .WaitForExit();
+
+                _ = Task.Run(async () =>
+                {
+                    await Task.Delay(5000);
+
+                    using FluentProcess netsh2 = FluentProcess.Create()
+                        .FileName("netsh")
+                        .Arguments("advfirewall firewall delete rule name=\"DIS_GENSHIN_NETWORK\"")
+                        .CreateNoWindow()
+                        .UseShellExecute(false)
+                        .Verb("runas")
+                        .Start()
+                        .WaitForExit();
+                });
+            }
+        }
+
+        using Process? gameProcess = Process.Start(new ProcessStartInfo()
         {
             UseShellExecute = true,
             FileName = fileName,
-            Arguments = option!.ToString(), // TODO
+            Arguments = option.Arguments?.ToArguments(),
             WorkingDirectory = option.WorkingDirectory ?? new FileInfo(fileName).DirectoryName,
             Verb = "runas",
         });
+
+        if (option.Linkage != null)
+        {
+            if (option.Linkage.IsUseBetterGI)
+            {
+                await Launcher.LaunchUriAsync(new Uri("bettergi://start"));
+            }
+        }
 
 #if false // Not stabled to unlock.
         if (launchParameter.Fps > 60)

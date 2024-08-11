@@ -37,6 +37,6 @@ public partial class MaskWindow : Window
 
     public static MaskWindow CreateWindow()
     {
-        return UIDispatcherHelper.Invoke(() => new MaskWindow() { Visibility = Visibility.Visible });
+        return UIDispatcherHelper.Invoke(() => new MaskWindow());
     }
 }

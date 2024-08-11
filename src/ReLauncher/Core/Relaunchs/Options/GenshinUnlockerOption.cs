@@ -1,5 +1,4 @@
 ﻿using Relauncher.Relaunchs.Abstraction;
-using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 
 namespace Relauncher.Relaunchs;
@@ -10,8 +9,7 @@ public sealed class GenshinUnlockerOption : IGameUnlockerOption
 
     public bool IsUnlockFps { get; set; } = false;
 
-    [Description("UnlockFps")]
-    public int? TargetFps { get; set; } = 120;
+    public int? UnlockFps { get; set; } = 120;
 
     public int UnlockFpsMethod { get; set; } = 0;
 

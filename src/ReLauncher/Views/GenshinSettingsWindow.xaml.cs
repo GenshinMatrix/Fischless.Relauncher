@@ -1,8 +1,11 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Microsoft.WindowsAPICodePack.Dialogs;
 using Relauncher.Core.Configs;
+using Relauncher.Core.Relaunchs;
 using Relauncher.Helper;
 using Relauncher.Models;
+using Relauncher.Relaunchs;
 using Relauncher.Threading;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -91,8 +94,48 @@ public partial class GenshinSettingsViewModel : ObservableObject
     [RelayCommand]
     private async Task LaunchAsync()
     {
-        // TODO
-        await Task.CompletedTask;
+        GenshinConfigurations config = Configurations.Genshin.Get();
+        GenshinLauncherOption option = new()
+        {
+            GamePath = null,
+            WorkingDirectory = null,
+            Account = null!, // TODO: Not supported
+            Arguments = new GenshinArgumentsOption()
+            {
+                IsUseArguments = config.IsUseArguments,
+                IsUseWindowModeExclusive = config.IsUseWindowModeExclusive,
+                IsScreenFullscreen = config.IsScreenFullscreen,
+                IsPopupwindow = config.IsPopupwindow,
+                IsPlatformTypeCloudThirdPartyMobile = config.IsPlatformTypeCloudThirdPartyMobile,
+                IsScreenWidth = config.IsScreenWidth,
+                ScreenWidth = config.ScreenWidth,
+                IsScreenHeight = config.IsScreenHeight,
+                ScreenHeight = config.ScreenHeight,
+                IsMonitor = config.IsMonitor,
+                Monitor = config.Monitor,
+            },
+            Advance = new GenshinAdvanceOption()
+            {
+                IsDisnetLaunching = config.IsDisnetLaunching,
+                IsUseHDR = config.IsUseHDR,
+            },
+            Linkage = new GenshinLinkageOption()
+            {
+                ReShadePath = config.ReShadePath,
+                IsUseReShade = config.IsUseReShade,
+                IsUseReShadeSilent = config.IsUseReShadeSilent,
+                IsUseBetterGI = config.IsUseBetterGI,
+            },
+            Region = null,
+            Unlocker = new GenshinUnlockerOption()
+            {
+                IsUnlockFps = config.IsUnlockFps,
+                UnlockFps = config.UnlockFps,
+                UnlockFpsMethod = config.UnlockFpsMethod,
+            },
+        };
+
+        await GenshinLauncher.LaunchAsync(delayMs: 1000, relaunchMethod: GenshinRelaunchMethod.Kill, option: option);
     }
 
     [ObservableProperty]
@@ -319,7 +362,7 @@ public partial class GenshinSettingsViewModel : ObservableObject
         {
             FluentProcess netsh2 = FluentProcess.Create()
                 .FileName("netsh")
-                .Arguments(@"advfirewall firewall delete rule name=""DIS_GENSHIN_NETWORK""")
+                .Arguments("advfirewall firewall delete rule name=\"DIS_GENSHIN_NETWORK\"")
                 .CreateNoWindow()
                 .UseShellExecute(false)
                 .Verb("runas")
@@ -375,8 +418,92 @@ public partial class GenshinSettingsViewModel : ObservableObject
     [RelayCommand]
     private async Task SelectReShadePathAsync()
     {
-        // TODO
-        await Task.CompletedTask;
+        GenshinConfigurations config = Configurations.Genshin.Get();
+
+        GenshinSettingsWindow? owner = null;
+        using DeferManager defer = new();
+        bool topmost = false;
+
+        if (System.Windows.Application.Current.Windows.OfType<GenshinSettingsWindow>() is { } wins)
+        {
+            if (wins.Any(w => w.Topmost))
+            {
+                topmost = true;
+                _ = wins.Select(w => w.Topmost = false).Any();
+            }
+            owner = wins.FirstOrDefault();
+        }
+
+        if (topmost)
+        {
+            defer.Defer(() =>
+            {
+                if (System.Windows.Application.Current.Windows.OfType<GenshinSettingsWindow>() is { } wins)
+                {
+                    _ = wins.Select(w => w.Topmost = true).Any();
+                }
+            });
+        }
+
+        if (Directory.Exists(config.ReShadePath))
+        {
+            var uiMessageBox = new Wpf.Ui.Controls.MessageBox()
+            {
+                Title = "提示",
+                Content =
+                    $"""
+                    当前已正确设定 3DMigoto 目录“{config.ReShadePath}”。
+                    您是否需要重新设定？
+                    """,
+                PrimaryButtonText = "是",
+                CloseButtonText = "否",
+                IsSecondaryButtonEnabled = false,
+                PrimaryButtonAppearance = ControlAppearance.Info,
+                WindowStartupLocation = WindowStartupLocation.CenterOwner,
+                Owner = owner,
+            };
+
+            var result = await uiMessageBox.ShowDialogAsync();
+
+            if (result != Wpf.Ui.Controls.MessageBoxResult.Primary)
+            {
+                return;
+            }
+        }
+
+        CommonOpenFileDialog dialog = new()
+        {
+            Title = "选择 3DMigoto 目录",
+            IsFolderPicker = true,
+            RestoreDirectory = true,
+            InitialDirectory = config.ReShadePath,
+            DefaultDirectory = config.ReShadePath,
+        };
+
+        if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
+        {
+            string selectedDirectory = dialog.FileName;
+
+            if (!File.Exists(Path.Combine(selectedDirectory, "3DMigoto Loader.exe")))
+            {
+                var uiMessageBox = new Wpf.Ui.Controls.MessageBox()
+                {
+                    Title = "错误",
+                    Content = "选择的目录下 3DMigoto Loader.exe 不存在",
+                    CloseButtonText = "确定",
+                    IsPrimaryButtonEnabled = false,
+                    IsSecondaryButtonEnabled = false,
+                    PrimaryButtonAppearance = ControlAppearance.Info,
+                    WindowStartupLocation = WindowStartupLocation.CenterOwner,
+                    Owner = owner,
+                };
+
+                _ = await uiMessageBox.ShowDialogAsync();
+                return;
+            }
+
+            ReShadePath = selectedDirectory;
+        }
     }
 
     [RelayCommand]
@@ -400,12 +527,12 @@ public partial class GenshinSettingsViewModel : ObservableObject
     }
 
     [ObservableProperty]
-    private bool isUseReShadeSlient = Configurations.Genshin.Get().IsUseReShadeSlient;
+    private bool isUseReShadeSilent = Configurations.Genshin.Get().IsUseReShadeSilent;
 
-    partial void OnIsUseReShadeSlientChanged(bool value)
+    partial void OnIsUseReShadeSilentChanged(bool value)
     {
         var config = Configurations.Genshin.Get();
-        config.IsUseReShadeSlient = value;
+        config.IsUseReShadeSilent = value;
         Configurations.Genshin.Set(config);
         ConfigurationManager.Save();
     }

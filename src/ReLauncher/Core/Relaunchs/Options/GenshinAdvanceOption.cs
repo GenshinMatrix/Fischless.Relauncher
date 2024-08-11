@@ -1,4 +1,4 @@
-﻿namespace Relauncher.Relaunchs;
+﻿namespace Relauncher.Core.Relaunchs;
 
 public sealed class GenshinAdvanceOption
 {

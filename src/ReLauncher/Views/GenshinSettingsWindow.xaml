@@ -3,7 +3,6 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:controls="clr-namespace:Relauncher.Views.Controls"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:local="clr-namespace:Relauncher.Views"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
         xmlns:ws="https://schemas.elecho.dev/wpfsuite"
@@ -16,7 +15,6 @@
         Foreground="#FFFFFF"
         MouseDown="OnMouseDown"
         ShowInTaskbar="False"
-        Topmost="True"
         WindowStartupLocation="Manual"
         mc:Ignorable="d">
     <WindowChrome.WindowChrome>
@@ -34,7 +32,7 @@
             <TextBlock FontSize="16" Text="原神重启动器客户端" />
             <Button Height="26"
                     Margin="0,-2,0,0"
-                    Command="{Binding LaunchCommand}"
+                    Command="{Binding ViewModel.LaunchCommand}"
                     ToolTip="启动游戏">
                 <Button.Content>
                     <TextBlock FontFamily="{DynamicResource SymbolThemeFontFamily}"
@@ -546,7 +544,7 @@
                                          HorizontalAlignment="Right"
                                          Text="{Binding ViewModel.ReShadePath, Mode=TwoWay}" />
                                 <Button Height="35"
-                                        Command="{Binding SelectReShadePathCommand}"
+                                        Command="{Binding ViewModel.SelectReShadePathCommand}"
                                         ToolTip="选择目录">
                                     <Button.Content>
                                         <TextBlock HorizontalAlignment="Center"

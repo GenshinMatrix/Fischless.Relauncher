@@ -2,6 +2,7 @@
 using System.Runtime.InteropServices;
 using System.Text;
 using Vanara.PInvoke;
+using YamlDotNet.Core.Tokens;
 
 namespace Relauncher.Win32;
 
@@ -153,5 +154,25 @@ public static class Interop
         {
             Marshal.FreeHGlobal(pvAttributePtr);
         }
+    }
+
+    public static string[] GetIniValues(string filePath, string section, string key)
+    {
+        const int bufferSize = 1024;
+        StringBuilder buffer = new(bufferSize);
+        uint charsRead = Kernel32.GetPrivateProfileString(section, key, string.Empty, buffer, bufferSize, filePath);
+
+        if (charsRead == 0)
+        {
+            return [];
+        }
+
+        return buffer.ToString().Split('\0', StringSplitOptions.RemoveEmptyEntries);
+    }
+
+    public static bool SetIniValues(string filePath, string section, string key, string value)
+    {
+        bool result = Kernel32.WritePrivateProfileString(section, key, value, filePath);
+        return result;
     }
 }

@@ -53,6 +53,6 @@ public partial class FpsWindow : Window
 
     public static FpsWindow CreateWindow(uint pid = 0)
     {
-        return UIDispatcherHelper.Invoke(() => new FpsWindow() { Visibility = Visibility.Visible, Pid = pid });
+        return UIDispatcherHelper.Invoke(() => new FpsWindow() { Pid = pid });
     }
 }

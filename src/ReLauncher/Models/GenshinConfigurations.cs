@@ -58,7 +58,7 @@ public class GenshinConfigurations
 
     public bool IsUseReShade { get; set; } = false;
 
-    public bool IsUseReShadeSlient { get; set; } = false;
+    public bool IsUseReShadeSilent { get; set; } = false;
 
     public bool IsUseBetterGI { get; set; } = false;
 
