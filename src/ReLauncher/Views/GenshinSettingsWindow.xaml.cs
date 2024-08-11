@@ -419,30 +419,11 @@ public partial class GenshinSettingsViewModel : ObservableObject
     private async Task SelectReShadePathAsync()
     {
         GenshinConfigurations config = Configurations.Genshin.Get();
-
         GenshinSettingsWindow? owner = null;
-        using DeferManager defer = new();
-        bool topmost = false;
 
         if (System.Windows.Application.Current.Windows.OfType<GenshinSettingsWindow>() is { } wins)
         {
-            if (wins.Any(w => w.Topmost))
-            {
-                topmost = true;
-                _ = wins.Select(w => w.Topmost = false).Any();
-            }
             owner = wins.FirstOrDefault();
-        }
-
-        if (topmost)
-        {
-            defer.Defer(() =>
-            {
-                if (System.Windows.Application.Current.Windows.OfType<GenshinSettingsWindow>() is { } wins)
-                {
-                    _ = wins.Select(w => w.Topmost = true).Any();
-                }
-            });
         }
 
         if (Directory.Exists(config.ReShadePath))
