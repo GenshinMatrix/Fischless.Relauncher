@@ -10,7 +10,13 @@ public sealed class GenshinLauncherOption : IGameLauncherOption
 
     public GenshinAccount? Account { get; set; } = null;
 
+    public GenshinArgumentsOption? Arguments { get; set; } = null;
+
+    public GenshinAdvanceOption? Advance { get; set; } = null;
+
+    public GenshinLinkageOption? Linkage { get; set; } = null;
+
     public GenshinGameRegion? Region { get; set; } = null;
 
-    public IUnlockerOption Unlocker { get; set; } = UnlockerOption.Default.Value;
+    public IGameUnlockerOption Unlocker { get; set; } = GenshinUnlockerOption.Default.Value;
 }

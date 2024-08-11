@@ -28,7 +28,7 @@ public static class GenshinRelaunching
                 {
                     // HYP: Inject UI
                     {
-                        Process? process = Process.GetProcessesByName("HYP").FirstOrDefault();
+                        using Process? process = Process.GetProcessesByName("HYP").FirstOrDefault();
 
                         if (process != null)
                         {
@@ -68,7 +68,7 @@ public static class GenshinRelaunching
 
                     // HYP: Relaunch Genshin
                     {
-                        Process? process = Process.GetProcessesByName("Yuanshen").FirstOrDefault();
+                        using Process? process = Process.GetProcessesByName("Yuanshen").FirstOrDefault();
 
                         if (process != null)
                         {
@@ -78,12 +78,11 @@ public static class GenshinRelaunching
                             {
                                 try
                                 {
-                                    Process? parentProcess = Process.GetProcessesByName("HYP").FirstOrDefault();
+                                    using Process? parentProcess = Process.GetProcessesByName("HYP").FirstOrDefault();
 
                                     if (parentProcess?.Id == parentProcessId.Value)
                                     {
                                         process.Kill();
-                                        await GenshinLauncher.KillAsync(GenshinRelaunchMethod.Kill);
                                         await GenshinLauncher.LaunchAsync(delayMs: 1000, relaunchMethod: GenshinRelaunchMethod.Kill);
                                     }
                                 }
@@ -99,7 +98,7 @@ public static class GenshinRelaunching
                     {
                         if (Configurations.Genshin.Get().IsShowFps)
                         {
-                            Process? process = Process.GetProcessesByName("Yuanshen").FirstOrDefault();
+                            using Process? process = Process.GetProcessesByName("Yuanshen").FirstOrDefault();
 
                             if (process != null)
                             {
@@ -138,7 +137,7 @@ public static class GenshinRelaunching
 
                     // Genshin: Dark mode
                     {
-                        Process? process = Process.GetProcessesByName("Yuanshen").FirstOrDefault();
+                        using Process? process = Process.GetProcessesByName("Yuanshen").FirstOrDefault();
 
                         if (process != null && process.MainWindowHandle != IntPtr.Zero)
                         {

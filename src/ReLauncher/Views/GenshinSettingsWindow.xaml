@@ -809,7 +809,7 @@
                                 <TextBlock Grid.Row="1"
                                            FontSize="11"
                                            Foreground="#D0D0D0"
-                                           Text="无边框游戏可获得窗口可拖动体验" />
+                                           Text="配合 -popupwindow 使用无边框游戏可获得窗口可拖动体验" />
                             </Grid>
                             <Grid Grid.Column="2" Margin="0,0,12,0">
                                 <ui:ToggleSwitch IsChecked="{Binding ViewModel.IsUseBorderless, Mode=TwoWay}" />
