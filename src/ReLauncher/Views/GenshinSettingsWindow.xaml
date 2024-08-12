@@ -436,7 +436,7 @@
                         </Grid>
                     </ws:StackPanel>
                 </ui:CardExpander>
-                <ui:Card IsEnabled="False">
+                <ui:Card>
                     <Grid MinHeight="35">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />

@@ -37,6 +37,29 @@ public static partial class GenshinRegistry
         set => SetStringToRegedit(GenshinRegistryKeys.DATA, value, GenshinGameRegion.OVERSEA);
     }
 
+    public static int HDR_CN
+    {
+        get => GetWindowsHDR(GenshinGameRegion.CN);
+        set => SetWindowsHDR(GenshinGameRegion.CN, value);
+    }
+
+    public static int HDR_OVERSEA
+    {
+        get => GetWindowsHDR(GenshinGameRegion.OVERSEA);
+        set => SetWindowsHDR(GenshinGameRegion.OVERSEA, value);
+    }
+
+    public static void SetWindowsHDR(GenshinGameRegion type, int value)
+    {
+        Registry.SetValue(type.GetRegKeyName(), GenshinRegistryKeys.HDR, value);
+    }
+
+    public static int GetWindowsHDR(GenshinGameRegion type)
+    {
+        object? value = Registry.GetValue(type.GetRegKeyName(), GenshinRegistryKeys.HDR, 0);
+        return (int)value!;
+    }
+
     public static string GetStringFromRegedit(string key, GenshinGameRegion type = GenshinGameRegion.CN)
     {
         if (RuntimeHelper.IsElevated)
@@ -164,6 +187,8 @@ public sealed class GenshinRegistryKeys
 
     public const string OVERSEA = "Genshin Impact";
     public const string PROD_OVERSEA = "MIHOYOSDK_ADL_PROD_OVERSEA_h1158948810";
+
+    public const string HDR = "WINDOWS_HDR_ON_h3132281285";
 
     public const string CNCloud = "云·原神";
     public const string PROD_CNCloud = "MIHOYOSDK_ADL_0";

@@ -1,10 +1,8 @@
-﻿using Relauncher.Extensions;
-using Relauncher.Relaunchs;
+﻿using Relauncher.Relaunchs;
 using Relauncher.Threading;
 using Relauncher.Win32;
 using System.Diagnostics;
 using System.IO;
-using System.Threading;
 using Vanara.PInvoke;
 using Windows.System;
 
@@ -189,7 +187,14 @@ internal class GenshinLauncher
         {
             if (option.Advance.IsUseHDR)
             {
-                // TODO
+                if (Path.GetFileNameWithoutExtension(fileName).EndsWith("Genshin Impact"))
+                {
+                    GenshinRegistry.HDR_OVERSEA = 1;
+                }
+                else
+                {
+                    GenshinRegistry.HDR_CN = 1;
+                }
             }
         }
 
