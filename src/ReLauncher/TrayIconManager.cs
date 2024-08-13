@@ -1,4 +1,9 @@
-﻿using Relauncher.Extensions;
+﻿using CommunityToolkit.Mvvm.Messaging;
+using Relauncher.Core.Configs;
+using Relauncher.Core.Relaunchs;
+using Relauncher.Extensions;
+using Relauncher.Models;
+using Relauncher.Models.Messages;
 using Relauncher.Views;
 using System.Diagnostics;
 using System.Reflection;
@@ -13,7 +18,8 @@ internal class TrayIconManager
 
     private readonly NotifyIcon _icon = null!;
 
-    private readonly ToolStripMenuItem _itemAutorun = null!;
+    private readonly ToolStripMenuItem? _itemAutoRun = null;
+    private readonly ToolStripMenuItem? _itemAutoMute = null;
 
     private TrayIconManager()
     {
@@ -35,18 +41,33 @@ internal class TrayIconManager
                 WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen,
             }.Show();
         });
-        _itemAutorun = (_icon.AddMenu("启动时自动运行 (&S)",
+        (_itemAutoMute = _icon.AddMenu("自动静音 (&M)",
+            (_, _) =>
+            {
+                var config = Configurations.Genshin.Get();
+                GenshinMuter.AutoMute = config.IsUseAutoMute = _itemAutoMute!.Checked;
+                Configurations.Genshin.Set(config);
+                ConfigurationManager.Save();
+                WeakReferenceMessenger.Default.Send(new AutoMuteChangedMessage());
+            }) as ToolStripMenuItem)!.CheckOnClick = true;
+        _itemAutoRun = _icon.AddMenu("启动时自动运行 (&S)",
             (_, _) =>
             {
                 if (AutoStartupHelper.IsAutorun())
                     AutoStartupHelper.RemoveAutorunShortcut();
                 else
                     AutoStartupHelper.CreateAutorunShortcut();
-            }) as ToolStripMenuItem)!;
+            }) as ToolStripMenuItem;
         _icon.AddMenu("重启 (&R)", (_, _) => RuntimeHelper.Restart(forced: true));
         _icon.AddMenu("退出 (&E)", (_, _) => Application.Current.Shutdown());
 
-        _icon.ContextMenuStrip.Opened += (_, _) => _itemAutorun.Checked = AutoStartupHelper.IsAutorun();
+        _icon.ContextMenuStrip.Opened += (_, _) =>
+        {
+            _itemAutoRun!.Checked = AutoStartupHelper.IsAutorun();
+            _itemAutoMute!.Checked = Configurations.Genshin.Get().IsUseAutoMute;
+        };
+
+        GenshinMuter.AutoMute = Configurations.Genshin.Get().IsUseAutoMute;
     }
 
     public static TrayIconManager GetInstance()

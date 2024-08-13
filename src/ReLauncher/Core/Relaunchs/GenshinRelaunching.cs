@@ -226,7 +226,16 @@ public static class GenshinRelaunching
 
                     // Genshin: Auto mute
                     {
-                        // TODO
+                        if (Configurations.Genshin.Get().IsUseAutoMute)
+                        {
+                            using Process? process = Process.GetProcessesByName("Yuanshen").FirstOrDefault();
+                            HWND hWnd = User32.GetForegroundWindow();
+
+                            if (process != null && hWnd != IntPtr.Zero)
+                            {
+                                await GenshinMuter.MuteGameAsync(process.MainWindowHandle != hWnd);
+                            }
+                        }
                     }
                 }
                 catch (Exception e)

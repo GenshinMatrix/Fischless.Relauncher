@@ -992,7 +992,7 @@
                         </Grid>
                     </ws:StackPanel>
                 </ui:CardExpander>
-                <ui:CardExpander IsEnabled="False">
+                <ui:CardExpander>
                     <ui:CardExpander.Header>
                         <Grid>
                             <Grid.ColumnDefinitions>

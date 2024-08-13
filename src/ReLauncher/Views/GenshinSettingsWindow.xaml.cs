@@ -1,10 +1,13 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.WindowsAPICodePack.Dialogs;
+using NAudio.CoreAudioApi;
 using Relauncher.Core.Configs;
 using Relauncher.Core.Relaunchs;
 using Relauncher.Helper;
 using Relauncher.Models;
+using Relauncher.Models.Messages;
 using Relauncher.Relaunchs;
 using Relauncher.Threading;
 using System.Collections.ObjectModel;
@@ -89,8 +92,22 @@ public partial class GenshinSettingsWindow : Window
 }
 
 [SuppressMessage("Performance", "CA1822:Mark members as static")]
-public partial class GenshinSettingsViewModel : ObservableObject
+public partial class GenshinSettingsViewModel : ObservableObject, IDisposable
 {
+    public GenshinSettingsViewModel()
+    {
+        WeakReferenceMessenger.Default.Register<AutoMuteChangedMessage>(this, (_, _) =>
+        {
+            isUseAutoMute = Configurations.Genshin.Get().IsUseAutoMute;
+            OnPropertyChanged(nameof(IsUseAutoMute));
+        });
+    }
+
+    public void Dispose()
+    {
+        WeakReferenceMessenger.Default.UnregisterAll(this);
+    }
+
     [RelayCommand]
     private async Task LaunchAsync()
     {
@@ -762,7 +779,7 @@ public partial class GenshinSettingsViewModel : ObservableObject
     partial void OnIsUseAutoMuteChanged(bool value)
     {
         var config = Configurations.Genshin.Get();
-        config.IsUseAutoMute = value;
+        GenshinMuter.AutoMute = config.IsUseAutoMute = value;
         Configurations.Genshin.Set(config);
         ConfigurationManager.Save();
     }
