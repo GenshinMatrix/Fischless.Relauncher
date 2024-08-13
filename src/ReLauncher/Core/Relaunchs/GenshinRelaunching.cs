@@ -237,13 +237,26 @@ public static class GenshinRelaunching
                             }
                         }
                     }
+
+                    // Genshin: Auto click
+                    {
+                        if (Configurations.Genshin.Get().IsUseAutoClick && GenshinClicker.IsUseAutoClick)
+                        {
+                            using Process? process = Process.GetProcessesByName("Yuanshen").FirstOrDefault();
+
+                            if (process != null)
+                            {
+                                GenshinClicker.LeftButtonClickBackground(process.MainWindowHandle);
+                            }
+                        }
+                    }
                 }
                 catch (Exception e)
                 {
                     Debug.WriteLine(e);
                 }
 
-                Thread.Sleep(200);
+                Thread.Sleep(400);
             }
         });
     }

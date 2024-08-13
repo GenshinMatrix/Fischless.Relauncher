@@ -48,7 +48,7 @@ internal class TrayIconManager
                 GenshinMuter.AutoMute = config.IsUseAutoMute = _itemAutoMute!.Checked;
                 Configurations.Genshin.Set(config);
                 ConfigurationManager.Save();
-                WeakReferenceMessenger.Default.Send(new AutoMuteChangedMessage());
+                WeakReferenceMessenger.Default.Send(new GenshinAutoMuteChangedMessage());
             }) as ToolStripMenuItem)!.CheckOnClick = true;
         _itemAutoRun = _icon.AddMenu("启动时自动运行 (&S)",
             (_, _) =>

@@ -96,7 +96,7 @@ public partial class GenshinSettingsViewModel : ObservableObject, IDisposable
 {
     public GenshinSettingsViewModel()
     {
-        WeakReferenceMessenger.Default.Register<AutoMuteChangedMessage>(this, (_, _) =>
+        WeakReferenceMessenger.Default.Register<GenshinAutoMuteChangedMessage>(this, (_, _) =>
         {
             isUseAutoMute = Configurations.Genshin.Get().IsUseAutoMute;
             OnPropertyChanged(nameof(IsUseAutoMute));
@@ -795,6 +795,16 @@ public partial class GenshinSettingsViewModel : ObservableObject, IDisposable
 
     partial void OnIsUseAutoClickChanged(bool value)
     {
+        if (value)
+        {
+            // Ensure GenshinMonitor is initialized
+            _ = GenshinMonitor.Instance.Value;
+        }
+        else
+        {
+            GenshinClicker.IsUseAutoClick = false;
+        }
+
         var config = Configurations.Genshin.Get();
         config.IsUseAutoClick = value;
         Configurations.Genshin.Set(config);

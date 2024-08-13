@@ -1,5 +1,5 @@
 ﻿namespace Relauncher.Models.Messages;
 
-internal sealed class AutoMuteChangedMessage
+internal sealed class GenshinMonitorMessage
 {
 }
