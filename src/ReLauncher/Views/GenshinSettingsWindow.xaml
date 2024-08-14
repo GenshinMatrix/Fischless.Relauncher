@@ -330,7 +330,7 @@
                                               MaxDecimalPlaces="0"
                                               Maximum="996"
                                               Minimum="0"
-                                              Value="{Binding ViewModel.UnlockFps, Mode=TwoWay}" />
+                                              Value="{Binding ViewModel.UnlockFps, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                                 <ui:ToggleSwitch IsChecked="{Binding ViewModel.IsUnlockFps, Mode=TwoWay}" />
                             </ws:StackPanel>
                         </Grid>

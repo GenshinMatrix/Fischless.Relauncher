@@ -305,20 +305,34 @@ internal class GenshinLauncher
             }
         }
 
-#if false // Not stabled to unlock.
-        if (launchParameter.Fps > 60)
+        if (option.Unlocker != null)
         {
-            try
+            if (option.Unlocker.IsUnlockFps)
             {
-                await new GameFpsUnlocker(gameProcess)
-                    .SetTargetFps((int)launchParameter.Fps.Value)
-                    .UnlockAsync(GameFpsUnlockerOption.Default.Value);
-            }
-            catch
-            {
+                if (option.Unlocker.UnlockFps > 60)
+                {
+                    try
+                    {
+                        if (((GenshinUnlockerOption)option.Unlocker).UnlockFpsMethod == 0)
+                        {
+                            await new GenshinFpsUnlocker(gameProcess!)
+                                .SetTargetFps((int)option.Unlocker.UnlockFps)
+                                .UnlockAsync(GenshinUnlockerOption.Default.Value);
+                        }
+                        else
+                        {
+                            //await new GenshinFpsUnlocker1(gameProcess!)
+                            //    .SetTargetFps((int)option.Unlocker.UnlockFps)
+                            //    .UnlockAsync(GenshinUnlockerOption.Default.Value);
+                        }
+                    }
+                    catch
+                    {
+                        ///
+                    }
+                }
             }
         }
-#endif
     }
 
     public static async Task<bool> TryGetProcessAsync(Func<Process?, Task> callback = null!)

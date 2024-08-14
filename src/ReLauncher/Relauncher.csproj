@@ -24,8 +24,6 @@
 		<PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="8.0.1" />
 		<PackageReference Include="Microsoft.Extensions.Logging" Version="8.0.0" />
 		<PackageReference Include="Microsoft-WindowsAPICodePack-Shell" Version="1.1.5" />
-		<PackageReference Include="SharpDX.Direct3D11" Version="4.2.0" />
-		<PackageReference Include="SharpDX.DirectInput" Version="4.2.0" />
 		<PackageReference Include="Vanara.PInvoke.DwmApi" Version="4.0.3" />
 		<PackageReference Include="Vanara.PInvoke.Kernel32" Version="4.0.3" />
 		<PackageReference Include="Vanara.PInvoke.NtDll" Version="4.0.3" />
@@ -36,9 +34,17 @@
 		<PackageReference Include="NotifyIconEx" Version="1.1.1" />
 		<PackageReference Include="WPF-UI" Version="3.0.5" />
 		<PackageReference Include="EleCho.WpfSuite" Version="0.6.2" />
-		<PackageReference Include="PresentMonFps" Version="2.0.4" />
+		<PackageReference Include="PresentMonFps" Version="2.0.5" />
 		<PackageReference Include="NAudio.Wasapi" Version="2.2.1" />
 		<PackageReference Include="MouseKeyHook" Version="5.7.1" />
+		<PackageReference Include="Fischless.UnlockerPatch" Version="4.8.0">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="Snap.Hutao.UnlockerIsland" Version="1.1.7">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
 	</ItemGroup>
 
 	<ItemGroup>
