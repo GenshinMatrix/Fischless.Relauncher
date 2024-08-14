@@ -279,10 +279,18 @@
                                                Orientation="Horizontal"
                                                Spacing="36">
                                     <ws:StackPanel Orientation="Horizontal" Spacing="8">
-                                        <Button Width="110"
-                                                Height="36"
-                                                Command="{Binding ViewModel.IdentifyMonitorsCommand}"
-                                                Content="识别显示器" />
+                                        <Button Height="36" Command="{Binding ViewModel.IdentifyMonitorsCommand}">
+                                            <Button.Content>
+                                                <ws:StackPanel Orientation="Horizontal" Spacing="4">
+                                                    <TextBlock HorizontalAlignment="Center"
+                                                               VerticalAlignment="Center"
+                                                               FontFamily="{DynamicResource SymbolThemeFontFamily}"
+                                                               FontSize="16"
+                                                               Text="{x:Static controls:FontSymbols.TVMonitor}" />
+                                                    <TextBlock Text="识别显示器" />
+                                                </ws:StackPanel>
+                                            </Button.Content>
+                                        </Button>
                                         <ComboBox Grid.Column="1"
                                                   Width="150"
                                                   ItemsSource="{Binding ViewModel.Monitors}"
@@ -431,7 +439,25 @@
                             <ws:StackPanel Grid.Column="1"
                                            Orientation="Horizontal"
                                            Spacing="8">
-                                <Button Command="{Binding ViewModel.RestoreDisnetCommand}" Content="设置" />
+                                <Button Height="36" Command="{Binding ViewModel.RestoreDisnetCommand}">
+                                    <Button.Content>
+                                        <ws:StackPanel Orientation="Horizontal" Spacing="4">
+                                            <Grid>
+                                                <TextBlock HorizontalAlignment="Center"
+                                                           VerticalAlignment="Center"
+                                                           FontFamily="{DynamicResource SymbolThemeFontFamily}"
+                                                           FontSize="16"
+                                                           Text="{x:Static controls:FontSymbols.NetworkConnected}" />
+                                                <TextBlock HorizontalAlignment="Center"
+                                                           VerticalAlignment="Center"
+                                                           FontFamily="{DynamicResource SymbolThemeFontFamily}"
+                                                           FontSize="16"
+                                                           Text="{x:Static controls:FontSymbols.NetworkConnectedCheckmark}" />
+                                            </Grid>
+                                            <TextBlock Text="恢复联网" />
+                                        </ws:StackPanel>
+                                    </Button.Content>
+                                </Button>
                             </ws:StackPanel>
                         </Grid>
                     </ws:StackPanel>
@@ -543,26 +569,28 @@
                                          Margin="16,0,0,0"
                                          HorizontalAlignment="Right"
                                          Text="{Binding ViewModel.ReShadePath, Mode=TwoWay}" />
-                                <Button Height="35"
-                                        Command="{Binding ViewModel.SelectReShadePathCommand}"
-                                        ToolTip="选择目录">
+                                <Button Height="36" Command="{Binding ViewModel.SelectReShadePathCommand}">
                                     <Button.Content>
-                                        <TextBlock HorizontalAlignment="Center"
-                                                   VerticalAlignment="Center"
-                                                   FontFamily="{DynamicResource SymbolThemeFontFamily}"
-                                                   FontSize="16"
-                                                   Text="{x:Static controls:FontSymbols.Folder}" />
+                                        <ws:StackPanel Orientation="Horizontal" Spacing="4">
+                                            <TextBlock HorizontalAlignment="Center"
+                                                       VerticalAlignment="Center"
+                                                       FontFamily="{DynamicResource SymbolThemeFontFamily}"
+                                                       FontSize="16"
+                                                       Text="{x:Static controls:FontSymbols.Folder}" />
+                                            <TextBlock Text="选择目录" />
+                                        </ws:StackPanel>
                                     </Button.Content>
                                 </Button>
-                                <Button Height="35"
-                                        Command="{Binding ViewModel.OpenLoaderFolderCommand}"
-                                        ToolTip="打开目录">
+                                <Button Height="36" Command="{Binding ViewModel.OpenLoaderFolderCommand}">
                                     <Button.Content>
-                                        <TextBlock HorizontalAlignment="Center"
-                                                   VerticalAlignment="Center"
-                                                   FontFamily="{DynamicResource SymbolThemeFontFamily}"
-                                                   FontSize="16"
-                                                   Text="{x:Static controls:FontSymbols.OpenInNewWindow}" />
+                                        <ws:StackPanel Orientation="Horizontal" Spacing="4">
+                                            <TextBlock HorizontalAlignment="Center"
+                                                       VerticalAlignment="Center"
+                                                       FontFamily="{DynamicResource SymbolThemeFontFamily}"
+                                                       FontSize="16"
+                                                       Text="{x:Static controls:FontSymbols.OpenFolderHorizontal}" />
+                                            <TextBlock Text="打开目录" />
+                                        </ws:StackPanel>
                                     </Button.Content>
                                 </Button>
                             </ws:StackPanel>
@@ -603,31 +631,33 @@
                                 <TextBlock Grid.Row="1"
                                            FontSize="11"
                                            Foreground="#D0D0D0"
-                                           Text="来自幽夜净土的模型管理器、MMD预览器" />
+                                           Text="Fischless 来自幽夜净土的模型管理器、MMD预览器" />
                             </Grid>
                             <ws:StackPanel Grid.Column="1"
                                            Orientation="Horizontal"
                                            Spacing="8">
-                                <Button Height="35"
-                                        Command="{Binding ViewModel.OpenFischlessWebsiteCommand}"
-                                        ToolTip="打开链接">
+                                <Button Height="36" Command="{Binding ViewModel.OpenFischlessWebsiteCommand}">
                                     <Button.Content>
-                                        <TextBlock HorizontalAlignment="Center"
-                                                   VerticalAlignment="Center"
-                                                   FontFamily="{DynamicResource SymbolThemeFontFamily}"
-                                                   FontSize="16"
-                                                   Text="{x:Static controls:FontSymbols.Link}" />
+                                        <ws:StackPanel Orientation="Horizontal" Spacing="4">
+                                            <TextBlock HorizontalAlignment="Center"
+                                                       VerticalAlignment="Center"
+                                                       FontFamily="{DynamicResource SymbolThemeFontFamily}"
+                                                       FontSize="16"
+                                                       Text="{x:Static controls:FontSymbols.Link}" />
+                                            <TextBlock Text="打开链接" />
+                                        </ws:StackPanel>
                                     </Button.Content>
                                 </Button>
-                                <Button Height="35"
-                                        Command="{Binding ViewModel.LaunchFischlessCommand}"
-                                        ToolTip="打开程序">
+                                <Button Height="36" Command="{Binding ViewModel.LaunchFischlessCommand}">
                                     <Button.Content>
-                                        <TextBlock HorizontalAlignment="Center"
-                                                   VerticalAlignment="Center"
-                                                   FontFamily="{DynamicResource SymbolThemeFontFamily}"
-                                                   FontSize="16"
-                                                   Text="{x:Static controls:FontSymbols.OpenInNewWindow}" />
+                                        <ws:StackPanel Orientation="Horizontal" Spacing="4">
+                                            <TextBlock HorizontalAlignment="Center"
+                                                       VerticalAlignment="Center"
+                                                       FontFamily="{DynamicResource SymbolThemeFontFamily}"
+                                                       FontSize="16"
+                                                       Text="{x:Static controls:FontSymbols.OpenInNewWindow}" />
+                                            <TextBlock Text="启动程序" />
+                                        </ws:StackPanel>
                                     </Button.Content>
                                 </Button>
                             </ws:StackPanel>
@@ -687,26 +717,28 @@
                             <ws:StackPanel Grid.Column="1"
                                            Orientation="Horizontal"
                                            Spacing="8">
-                                <Button Height="35"
-                                        Command="{Binding ViewModel.OpenBetterGIWebsiteCommand}"
-                                        ToolTip="打开链接">
+                                <Button Height="36" Command="{Binding ViewModel.OpenBetterGIWebsiteCommand}">
                                     <Button.Content>
-                                        <TextBlock HorizontalAlignment="Center"
-                                                   VerticalAlignment="Center"
-                                                   FontFamily="{DynamicResource SymbolThemeFontFamily}"
-                                                   FontSize="16"
-                                                   Text="{x:Static controls:FontSymbols.Link}" />
+                                        <ws:StackPanel Orientation="Horizontal" Spacing="4">
+                                            <TextBlock HorizontalAlignment="Center"
+                                                       VerticalAlignment="Center"
+                                                       FontFamily="{DynamicResource SymbolThemeFontFamily}"
+                                                       FontSize="16"
+                                                       Text="{x:Static controls:FontSymbols.Link}" />
+                                            <TextBlock Text="打开链接" />
+                                        </ws:StackPanel>
                                     </Button.Content>
                                 </Button>
-                                <Button Height="35"
-                                        Command="{Binding ViewModel.LaunchBetterGICommand}"
-                                        ToolTip="打开程序">
+                                <Button Height="36" Command="{Binding ViewModel.LaunchBetterGICommand}">
                                     <Button.Content>
-                                        <TextBlock HorizontalAlignment="Center"
-                                                   VerticalAlignment="Center"
-                                                   FontFamily="{DynamicResource SymbolThemeFontFamily}"
-                                                   FontSize="16"
-                                                   Text="{x:Static controls:FontSymbols.OpenInNewWindow}" />
+                                        <ws:StackPanel Orientation="Horizontal" Spacing="4">
+                                            <TextBlock HorizontalAlignment="Center"
+                                                       VerticalAlignment="Center"
+                                                       FontFamily="{DynamicResource SymbolThemeFontFamily}"
+                                                       FontSize="16"
+                                                       Text="{x:Static controls:FontSymbols.OpenInNewWindow}" />
+                                            <TextBlock Text="启动程序" />
+                                        </ws:StackPanel>
                                     </Button.Content>
                                 </Button>
                             </ws:StackPanel>
@@ -742,7 +774,7 @@
                             <TextBlock Grid.Row="1"
                                        FontSize="11"
                                        Foreground="#D0D0D0"
-                                       Text="游戏窗口启用深色模式" />
+                                       Text="Windows 10 下游戏窗口启用深色模式" />
                         </Grid>
                         <ui:ToggleSwitch Grid.Column="2"
                                          Margin="0,0,28,0"
@@ -781,7 +813,7 @@
                                          IsChecked="{Binding ViewModel.IsSquareCorner, Mode=TwoWay}" />
                     </Grid>
                 </ui:Card>
-                <ui:CardExpander IsEnabled="False">
+                <ui:CardExpander IsEnabled="true">
                     <ui:CardExpander.Header>
                         <Grid>
                             <Grid.ColumnDefinitions>
@@ -834,8 +866,30 @@
                             <ws:StackPanel Grid.Column="1"
                                            Orientation="Horizontal"
                                            Spacing="8">
-                                <Button Command="{Binding EnableWindowBorderlessCommand}" Content="生效" />
-                                <Button Command="{Binding DisableWindowBorderlessCommand}" Content="无效" />
+                                <Button Height="36" Command="{Binding EnableWindowBorderlessCommand}">
+                                    <Button.Content>
+                                        <ws:StackPanel Orientation="Horizontal" Spacing="4">
+                                            <TextBlock HorizontalAlignment="Center"
+                                                       VerticalAlignment="Center"
+                                                       FontFamily="{DynamicResource SymbolThemeFontFamily}"
+                                                       FontSize="16"
+                                                       Text="{x:Static controls:FontSymbols.Accept}" />
+                                            <TextBlock Text="生效" />
+                                        </ws:StackPanel>
+                                    </Button.Content>
+                                </Button>
+                                <Button Height="36" Command="{Binding DisableWindowBorderlessCommand}">
+                                    <Button.Content>
+                                        <ws:StackPanel Orientation="Horizontal" Spacing="4">
+                                            <TextBlock HorizontalAlignment="Center"
+                                                       VerticalAlignment="Center"
+                                                       FontFamily="{DynamicResource SymbolThemeFontFamily}"
+                                                       FontSize="16"
+                                                       Text="{x:Static controls:FontSymbols.CalculatorMultiply}" />
+                                            <TextBlock Text="无效" />
+                                        </ws:StackPanel>
+                                    </Button.Content>
+                                </Button>
                             </ws:StackPanel>
                         </Grid>
                         <Separator />
@@ -858,8 +912,30 @@
                             <ws:StackPanel Grid.Column="1"
                                            Orientation="Horizontal"
                                            Spacing="8">
-                                <Button Command="{Binding EnableWindowTopmostCommand}" Content="生效" />
-                                <Button Command="{Binding DisableWindowTopmostCommand}" Content="无效" />
+                                <Button Height="36" Command="{Binding EnableWindowTopmostCommand}">
+                                    <Button.Content>
+                                        <ws:StackPanel Orientation="Horizontal" Spacing="4">
+                                            <TextBlock HorizontalAlignment="Center"
+                                                       VerticalAlignment="Center"
+                                                       FontFamily="{DynamicResource SymbolThemeFontFamily}"
+                                                       FontSize="16"
+                                                       Text="{x:Static controls:FontSymbols.Accept}" />
+                                            <TextBlock Text="生效" />
+                                        </ws:StackPanel>
+                                    </Button.Content>
+                                </Button>
+                                <Button Height="36" Command="{Binding DisableWindowTopmostCommand}">
+                                    <Button.Content>
+                                        <ws:StackPanel Orientation="Horizontal" Spacing="4">
+                                            <TextBlock HorizontalAlignment="Center"
+                                                       VerticalAlignment="Center"
+                                                       FontFamily="{DynamicResource SymbolThemeFontFamily}"
+                                                       FontSize="16"
+                                                       Text="{x:Static controls:FontSymbols.CalculatorMultiply}" />
+                                            <TextBlock Text="无效" />
+                                        </ws:StackPanel>
+                                    </Button.Content>
+                                </Button>
                             </ws:StackPanel>
                         </Grid>
                         <Separator />
@@ -882,8 +958,30 @@
                             <ws:StackPanel Grid.Column="1"
                                            Orientation="Horizontal"
                                            Spacing="8">
-                                <Button Command="{Binding ViewModel.EnableWindowDragMoveCommand}" Content="生效" />
-                                <Button Command="{Binding ViewModel.DisableWindowDragMoveCommand}" Content="无效" />
+                                <Button Height="36" Command="{Binding ViewModel.EnableWindowDragMoveCommand}">
+                                    <Button.Content>
+                                        <ws:StackPanel Orientation="Horizontal" Spacing="4">
+                                            <TextBlock HorizontalAlignment="Center"
+                                                       VerticalAlignment="Center"
+                                                       FontFamily="{DynamicResource SymbolThemeFontFamily}"
+                                                       FontSize="16"
+                                                       Text="{x:Static controls:FontSymbols.Accept}" />
+                                            <TextBlock Text="生效" />
+                                        </ws:StackPanel>
+                                    </Button.Content>
+                                </Button>
+                                <Button Height="36" Command="{Binding ViewModel.DisableWindowDragMoveCommand}">
+                                    <Button.Content>
+                                        <ws:StackPanel Orientation="Horizontal" Spacing="4">
+                                            <TextBlock HorizontalAlignment="Center"
+                                                       VerticalAlignment="Center"
+                                                       FontFamily="{DynamicResource SymbolThemeFontFamily}"
+                                                       FontSize="16"
+                                                       Text="{x:Static controls:FontSymbols.CalculatorMultiply}" />
+                                            <TextBlock Text="无效" />
+                                        </ws:StackPanel>
+                                    </Button.Content>
+                                </Button>
                             </ws:StackPanel>
                         </Grid>
                         <Separator />
@@ -906,7 +1004,18 @@
                             <ws:StackPanel Grid.Column="1"
                                            Orientation="Horizontal"
                                            Spacing="8">
-                                <Button Command="{Binding ViewModel.EnableWindowMaximizeBoxCommand}" Content="设置" />
+                                <Button Height="36" Command="{Binding ViewModel.EnableWindowMaximizeBoxCommand}">
+                                    <Button.Content>
+                                        <ws:StackPanel Orientation="Horizontal" Spacing="4">
+                                            <TextBlock HorizontalAlignment="Center"
+                                                       VerticalAlignment="Center"
+                                                       FontFamily="{DynamicResource SymbolThemeFontFamily}"
+                                                       FontSize="16"
+                                                       Text="{x:Static controls:FontSymbols.Accept}" />
+                                            <TextBlock Text="生效" />
+                                        </ws:StackPanel>
+                                    </Button.Content>
+                                </Button>
                             </ws:StackPanel>
                         </Grid>
                         <Separator />
@@ -929,12 +1038,23 @@
                             <ws:StackPanel Grid.Column="1"
                                            Orientation="Horizontal"
                                            Spacing="8">
-                                <Button Command="{Binding ViewModel.RestoreWindowPositonCommand}" Content="设置" />
+                                <Button Height="36" Command="{Binding ViewModel.RestoreWindowPositonCommand}">
+                                    <Button.Content>
+                                        <ws:StackPanel Orientation="Horizontal" Spacing="4">
+                                            <TextBlock HorizontalAlignment="Center"
+                                                       VerticalAlignment="Center"
+                                                       FontFamily="{DynamicResource SymbolThemeFontFamily}"
+                                                       FontSize="16"
+                                                       Text="{x:Static controls:FontSymbols.Accept}" />
+                                            <TextBlock Text="生效" />
+                                        </ws:StackPanel>
+                                    </Button.Content>
+                                </Button>
                             </ws:StackPanel>
                         </Grid>
                     </ws:StackPanel>
                 </ui:CardExpander>
-                <ui:CardExpander IsEnabled="False">
+                <ui:CardExpander>
                     <ui:CardExpander.Header>
                         <Grid>
                             <Grid.ColumnDefinitions>
@@ -1045,7 +1165,18 @@
                             <ws:StackPanel Grid.Column="1"
                                            Orientation="Horizontal"
                                            Spacing="8">
-                                <Button Command="{Binding ViewModel.LaunchWindowsSettingsAppsVolumeCommand}" Content="设置" />
+                                <Button Height="36" Command="{Binding ViewModel.LaunchWindowsSettingsAppsVolumeCommand}">
+                                    <Button.Content>
+                                        <ws:StackPanel Orientation="Horizontal" Spacing="4">
+                                            <TextBlock HorizontalAlignment="Center"
+                                                       VerticalAlignment="Center"
+                                                       FontFamily="{DynamicResource SymbolThemeFontFamily}"
+                                                       FontSize="16"
+                                                       Text="{x:Static controls:FontSymbols.Settings}" />
+                                            <TextBlock Text="打开设置" />
+                                        </ws:StackPanel>
+                                    </Button.Content>
+                                </Button>
                             </ws:StackPanel>
                         </Grid>
                     </ws:StackPanel>
