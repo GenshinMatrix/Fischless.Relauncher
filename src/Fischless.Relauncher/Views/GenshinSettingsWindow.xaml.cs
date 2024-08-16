@@ -21,6 +21,7 @@ using Vanara.PInvoke;
 using Windows.System;
 using Wpf.Ui.Controls;
 using MouseButtonState = System.Windows.Input.MouseButtonState;
+using Wpf.Ui.Violeta.Controls;
 
 namespace Fischless.Relauncher.Views;
 
@@ -377,7 +378,7 @@ public partial class GenshinSettingsViewModel : ObservableObject, IDisposable
     {
         await Task.Run(() =>
         {
-            FluentProcess netsh2 = FluentProcess.Create()
+            using FluentProcess process = FluentProcess.Create()
                 .FileName("netsh")
                 .Arguments("advfirewall firewall delete rule name=\"DIS_GENSHIN_NETWORK\"")
                 .CreateNoWindow()
@@ -386,6 +387,8 @@ public partial class GenshinSettingsViewModel : ObservableObject, IDisposable
                 .Start()
                 .WaitForExit();
         });
+
+        Toast.Success("操作成功");
     }
 
     [ObservableProperty]

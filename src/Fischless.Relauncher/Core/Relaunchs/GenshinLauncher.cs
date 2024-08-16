@@ -263,7 +263,7 @@ internal class GenshinLauncher
         {
             if (option.Advance.IsDisnetLaunching)
             {
-                using FluentProcess netsh1 = FluentProcess.Create()
+                using FluentProcess process = FluentProcess.Create()
                     .FileName("netsh")
                     .Arguments($"advfirewall firewall add rule name=\"DIS_GENSHIN_NETWORK\" dir=out action=block program=\"{fileName}\"")
                     .CreateNoWindow()
@@ -276,7 +276,7 @@ internal class GenshinLauncher
                 {
                     await Task.Delay(5000);
 
-                    using FluentProcess netsh2 = FluentProcess.Create()
+                    using FluentProcess process = FluentProcess.Create()
                         .FileName("netsh")
                         .Arguments("advfirewall firewall delete rule name=\"DIS_GENSHIN_NETWORK\"")
                         .CreateNoWindow()

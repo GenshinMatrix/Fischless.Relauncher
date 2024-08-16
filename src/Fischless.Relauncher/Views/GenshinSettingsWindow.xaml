@@ -361,8 +361,8 @@
                                            Text="更改解锁帧率的工作方式" />
                             </Grid>
                             <ComboBox Grid.Column="1" SelectedIndex="{Binding ViewModel.UnlockFpsMethod, Mode=TwoWay}">
-                                <ComboBoxItem Content="GenshinMatrix/Fischless" />
-                                <ComboBoxItem Content="DGP-Studio/UnlockerIsland" IsEnabled="False" />
+                                <ComboBoxItem Content="Fischless/UnlockerPatch" />
+                                <ComboBoxItem Content="Hutao/UnlockerIsland" IsEnabled="False" />
                             </ComboBox>
                         </Grid>
                         <Separator />
