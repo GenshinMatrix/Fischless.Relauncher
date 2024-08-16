@@ -1,5 +1,5 @@
-﻿using Gma.System.MouseKeyHook;
-using Fischless.Relauncher.Models;
+﻿using Fischless.Relauncher.Models;
+using Gma.System.MouseKeyHook;
 
 namespace Fischless.Relauncher.Core.Relaunchs;
 
@@ -7,14 +7,13 @@ internal sealed class GenshinMonitor
 {
     public static Lazy<GenshinMonitor> Instance { get; } = new();
 
-    private IKeyboardMouseEvents? _globalHook;
+    public IKeyboardMouseEvents GlobalHook { get; }
 
     public GenshinMonitor()
     {
-        _globalHook = Hook.GlobalEvents();
-
-        _globalHook.KeyDown += GlobalHookKeyDown;
-        _globalHook.KeyUp += GlobalHookKeyUp;
+        GlobalHook = Hook.GlobalEvents();
+        GlobalHook.KeyDown += GlobalHookKeyDown;
+        GlobalHook.KeyUp += GlobalHookKeyUp;
     }
 
     private void GlobalHookKeyDown(object? sender, KeyEventArgs e)

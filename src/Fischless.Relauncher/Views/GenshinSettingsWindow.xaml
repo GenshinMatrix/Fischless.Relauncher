@@ -565,7 +565,7 @@
                             <ws:StackPanel Grid.Column="1"
                                            Orientation="Horizontal"
                                            Spacing="8">
-                                <TextBox MinWidth="300"
+                                <TextBox MinWidth="240"
                                          Margin="16,0,0,0"
                                          HorizontalAlignment="Right"
                                          Text="{Binding ViewModel.ReShadePath, Mode=TwoWay}" />
@@ -828,7 +828,7 @@
                                            VerticalAlignment="Center"
                                            FontFamily="{DynamicResource SymbolThemeFontFamily}"
                                            FontSize="18"
-                                           Text="{x:Static controls:FontSymbols.QuickNote}" />
+                                           Text="{x:Static controls:FontSymbols.Favicon}" />
                             </Grid>
                             <Grid Grid.Column="1">
                                 <Grid.RowDefinitions>
@@ -839,7 +839,7 @@
                                 <TextBlock Grid.Row="1"
                                            FontSize="11"
                                            Foreground="#D0D0D0"
-                                           Text="配合 -popupwindow 使用无边框游戏可获得窗口可拖动体验" />
+                                           Text="配合 -popupwindow 使无边框窗口获得可拖动体验" />
                             </Grid>
                             <Grid Grid.Column="2" Margin="0,0,12,0">
                                 <ui:ToggleSwitch IsChecked="{Binding ViewModel.IsUseBorderless, Mode=TwoWay}" />
@@ -847,52 +847,6 @@
                         </Grid>
                     </ui:CardExpander.Header>
                     <ws:StackPanel Spacing="8">
-                        <Grid Margin="42,0,28,0">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="Auto" />
-                            </Grid.ColumnDefinitions>
-                            <Grid Grid.Column="0">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="Auto" />
-                                </Grid.RowDefinitions>
-                                <TextBlock Grid.Row="0" Text="无界游戏" />
-                                <TextBlock Grid.Row="1"
-                                           FontSize="11"
-                                           Foreground="#D0D0D0"
-                                           Text="测试无界效果" />
-                            </Grid>
-                            <ws:StackPanel Grid.Column="1"
-                                           Orientation="Horizontal"
-                                           Spacing="8">
-                                <Button Height="36" Command="{Binding EnableWindowBorderlessCommand}">
-                                    <Button.Content>
-                                        <ws:StackPanel Orientation="Horizontal" Spacing="4">
-                                            <TextBlock HorizontalAlignment="Center"
-                                                       VerticalAlignment="Center"
-                                                       FontFamily="{DynamicResource SymbolThemeFontFamily}"
-                                                       FontSize="16"
-                                                       Text="{x:Static controls:FontSymbols.Accept}" />
-                                            <TextBlock Text="生效" />
-                                        </ws:StackPanel>
-                                    </Button.Content>
-                                </Button>
-                                <Button Height="36" Command="{Binding DisableWindowBorderlessCommand}">
-                                    <Button.Content>
-                                        <ws:StackPanel Orientation="Horizontal" Spacing="4">
-                                            <TextBlock HorizontalAlignment="Center"
-                                                       VerticalAlignment="Center"
-                                                       FontFamily="{DynamicResource SymbolThemeFontFamily}"
-                                                       FontSize="16"
-                                                       Text="{x:Static controls:FontSymbols.CalculatorMultiply}" />
-                                            <TextBlock Text="无效" />
-                                        </ws:StackPanel>
-                                    </Button.Content>
-                                </Button>
-                            </ws:StackPanel>
-                        </Grid>
-                        <Separator />
                         <Grid Margin="42,0,28,0">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*" />
@@ -912,7 +866,7 @@
                             <ws:StackPanel Grid.Column="1"
                                            Orientation="Horizontal"
                                            Spacing="8">
-                                <Button Height="36" Command="{Binding EnableWindowTopmostCommand}">
+                                <Button Height="36" Command="{Binding ViewModel.EnableWindowTopmostCommand}">
                                     <Button.Content>
                                         <ws:StackPanel Orientation="Horizontal" Spacing="4">
                                             <TextBlock HorizontalAlignment="Center"
@@ -924,53 +878,7 @@
                                         </ws:StackPanel>
                                     </Button.Content>
                                 </Button>
-                                <Button Height="36" Command="{Binding DisableWindowTopmostCommand}">
-                                    <Button.Content>
-                                        <ws:StackPanel Orientation="Horizontal" Spacing="4">
-                                            <TextBlock HorizontalAlignment="Center"
-                                                       VerticalAlignment="Center"
-                                                       FontFamily="{DynamicResource SymbolThemeFontFamily}"
-                                                       FontSize="16"
-                                                       Text="{x:Static controls:FontSymbols.CalculatorMultiply}" />
-                                            <TextBlock Text="无效" />
-                                        </ws:StackPanel>
-                                    </Button.Content>
-                                </Button>
-                            </ws:StackPanel>
-                        </Grid>
-                        <Separator />
-                        <Grid Margin="42,0,28,0">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="Auto" />
-                            </Grid.ColumnDefinitions>
-                            <Grid Grid.Column="0">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="Auto" />
-                                </Grid.RowDefinitions>
-                                <TextBlock Grid.Row="0" Text="窗口拖动" />
-                                <TextBlock Grid.Row="1"
-                                           FontSize="11"
-                                           Foreground="#D0D0D0"
-                                           Text="测试拖动效果" />
-                            </Grid>
-                            <ws:StackPanel Grid.Column="1"
-                                           Orientation="Horizontal"
-                                           Spacing="8">
-                                <Button Height="36" Command="{Binding ViewModel.EnableWindowDragMoveCommand}">
-                                    <Button.Content>
-                                        <ws:StackPanel Orientation="Horizontal" Spacing="4">
-                                            <TextBlock HorizontalAlignment="Center"
-                                                       VerticalAlignment="Center"
-                                                       FontFamily="{DynamicResource SymbolThemeFontFamily}"
-                                                       FontSize="16"
-                                                       Text="{x:Static controls:FontSymbols.Accept}" />
-                                            <TextBlock Text="生效" />
-                                        </ws:StackPanel>
-                                    </Button.Content>
-                                </Button>
-                                <Button Height="36" Command="{Binding ViewModel.DisableWindowDragMoveCommand}">
+                                <Button Height="36" Command="{Binding ViewModel.DisableWindowTopmostCommand}">
                                     <Button.Content>
                                         <ws:StackPanel Orientation="Horizontal" Spacing="4">
                                             <TextBlock HorizontalAlignment="Center"

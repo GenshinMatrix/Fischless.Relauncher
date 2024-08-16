@@ -7,6 +7,7 @@ using Fischless.Relauncher.Models.Messages;
 using Fischless.Relauncher.Views;
 using System.Diagnostics;
 using System.Reflection;
+using YamlDotNet.Core.Tokens;
 using Application = System.Windows.Application;
 using NotifyIcon = NotifyIconEx.NotifyIcon;
 
@@ -45,7 +46,7 @@ internal class TrayIconManager
             (_, _) =>
             {
                 var config = Configurations.Genshin.Get();
-                GenshinMuter.AutoMute = config.IsUseAutoMute = _itemAutoMute!.Checked;
+                GenshinMuter.IsEnabled = config.IsUseAutoMute = _itemAutoMute!.Checked;
                 Configurations.Genshin.Set(config);
                 ConfigurationManager.Save();
                 WeakReferenceMessenger.Default.Send(new GenshinAutoMuteChangedMessage());
@@ -67,7 +68,8 @@ internal class TrayIconManager
             _itemAutoMute!.Checked = Configurations.Genshin.Get().IsUseAutoMute;
         };
 
-        GenshinMuter.AutoMute = Configurations.Genshin.Get().IsUseAutoMute;
+        GenshinDragMove.IsEnabled = Configurations.Genshin.Get().IsUseBorderless;
+        GenshinMuter.IsEnabled = Configurations.Genshin.Get().IsUseAutoMute;
     }
 
     public static TrayIconManager GetInstance()

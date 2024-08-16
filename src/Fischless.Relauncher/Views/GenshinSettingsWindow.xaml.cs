@@ -1,8 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
-using Microsoft.WindowsAPICodePack.Dialogs;
-using NAudio.CoreAudioApi;
 using Fischless.Relauncher.Core.Configs;
 using Fischless.Relauncher.Core.Relaunchs;
 using Fischless.Relauncher.Helper;
@@ -10,6 +8,7 @@ using Fischless.Relauncher.Models;
 using Fischless.Relauncher.Models.Messages;
 using Fischless.Relauncher.Relaunchs;
 using Fischless.Relauncher.Threading;
+using Microsoft.WindowsAPICodePack.Dialogs;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
@@ -20,8 +19,8 @@ using System.Windows.Interop;
 using Vanara.PInvoke;
 using Windows.System;
 using Wpf.Ui.Controls;
-using MouseButtonState = System.Windows.Input.MouseButtonState;
 using Wpf.Ui.Violeta.Controls;
+using MouseButtonState = System.Windows.Input.MouseButtonState;
 
 namespace Fischless.Relauncher.Views;
 
@@ -579,179 +578,81 @@ public partial class GenshinSettingsViewModel : ObservableObject, IDisposable
     partial void OnIsUseBorderlessChanged(bool value)
     {
         var config = Configurations.Genshin.Get();
-        config.IsUseBorderless = value;
+        GenshinDragMove.IsEnabled = config.IsUseBorderless = value;
         Configurations.Genshin.Set(config);
         ConfigurationManager.Save();
     }
 
     [RelayCommand]
-    public async Task EnableWindowBorderlessAsync()
-    {
-        // TODO
-        await Task.CompletedTask;
-        //if (!await GILauncher.TryGetProcessAsync(async t =>
-        //{
-        //    if (!RuntimeHelper.IsElevated)
-        //    {
-        //        if (MessageBoxX.Question(MuiLanguage.Mui("UACRequestRestartHint")) == MessageBoxResult.Yes)
-        //        {
-        //            RuntimeHelper.RestartAsElevated();
-        //        }
-        //        return;
-        //    }
-
-        //    await Task.CompletedTask;
-
-        //    nint hWnd = t.MainWindowHandle;
-        //    hWnd.EnableWindowBorderless();
-        //}))
-        //{
-        //    // NO GAME PLAYING
-        //}
-    }
-
-    [RelayCommand]
-    public async Task DisableWindowBorderlessAsync()
-    {
-        // TODO
-        await Task.CompletedTask;
-        //if (!await GILauncher.TryGetProcessAsync(async t =>
-        //{
-        //    if (!RuntimeHelper.IsElevated)
-        //    {
-        //        if (MessageBoxX.Question(MuiLanguage.Mui("UACRequestRestartHint")) == MessageBoxResult.Yes)
-        //        {
-        //            RuntimeHelper.RestartAsElevated();
-        //        }
-        //        return;
-        //    }
-
-        //    await Task.CompletedTask;
-
-        //    nint hWnd = t.MainWindowHandle;
-        //    hWnd.DisableWindowBorderless();
-        //}))
-        //{
-        //    // NO GAME PLAYING
-        //}
-    }
-
-    [RelayCommand]
     public async Task EnableWindowTopmostAsync()
     {
-        // TODO
-        await Task.CompletedTask;
-        //if (!await GILauncher.TryGetProcessAsync(async t =>
-        //{
-        //    if (!RuntimeHelper.IsElevated)
-        //    {
-        //        if (MessageBoxX.Question(MuiLanguage.Mui("UACRequestRestartHint")) == MessageBoxResult.Yes)
-        //        {
-        //            RuntimeHelper.RestartAsElevated();
-        //        }
-        //        return;
-        //    }
+        if (!await GenshinLauncher.TryGetProcessAsync(async t =>
+        {
+            await Task.CompletedTask;
 
-        //    await Task.CompletedTask;
-
-        //    nint hWnd = t.MainWindowHandle;
-        //    hWnd.EnableWindowTopmost();
-        //}))
-        //{
-        //    // NO GAME PLAYING
-        //}
+            if (t != null)
+            {
+                nint hWnd = t.MainWindowHandle;
+                hWnd.EnableWindowTopmost();
+            }
+        }))
+        {
+            Toast.Warning("未找到运行中游戏");
+        }
     }
 
     [RelayCommand]
     public async Task DisableWindowTopmostAsync()
     {
-        // TODO
-        await Task.CompletedTask;
-        //if (!await GILauncher.TryGetProcessAsync(async t =>
-        //{
-        //    if (!RuntimeHelper.IsElevated)
-        //    {
-        //        if (MessageBoxX.Question(MuiLanguage.Mui("UACRequestRestartHint")) == MessageBoxResult.Yes)
-        //        {
-        //            RuntimeHelper.RestartAsElevated();
-        //        }
-        //        return;
-        //    }
+        if (!await GenshinLauncher.TryGetProcessAsync(async t =>
+        {
+            await Task.CompletedTask;
 
-        //    await Task.CompletedTask;
-
-        //    nint hWnd = t.MainWindowHandle;
-        //    hWnd.DisableWindowTopmost();
-        //}))
-        //{
-        //    // NO GAME PLAYING
-        //}
-    }
-
-    [RelayCommand]
-    public void EnableWindowDragMove()
-    {
-        // TODO
-        //DragMoveProvider.IsEnabled = true;
-    }
-
-    [RelayCommand]
-    public void DisableWindowDragMove()
-    {
-        // TODO
-        //DragMoveProvider.IsEnabled = false;
+            if (t != null)
+            {
+                nint hWnd = t.MainWindowHandle;
+                hWnd.DisableWindowTopmost();
+            }
+        }))
+        {
+            Toast.Warning("未找到运行中游戏");
+        }
     }
 
     [RelayCommand]
     public async Task EnableWindowMaximizeBoxAsync()
     {
-        // TODO
-        await Task.CompletedTask;
-        //if (!await GILauncher.TryGetProcessAsync(async t =>
-        //{
-        //    if (!RuntimeHelper.IsElevated)
-        //    {
-        //        if (MessageBoxX.Question(MuiLanguage.Mui("UACRequestRestartHint")) == MessageBoxResult.Yes)
-        //        {
-        //            RuntimeHelper.RestartAsElevated();
-        //        }
-        //        return;
-        //    }
+        if (!await GenshinLauncher.TryGetProcessAsync(async t =>
+        {
+            await Task.CompletedTask;
 
-        //    await Task.CompletedTask;
-
-        //    nint hWnd = t.MainWindowHandle;
-        //    hWnd.EnableWindowMaximizeBox();
-        //}))
-        //{
-        //    // NO GAME PLAYING
-        //}
+            if (t != null)
+            {
+                nint hWnd = t.MainWindowHandle;
+                hWnd.EnableWindowMaximizeBox();
+            }
+        }))
+        {
+            Toast.Warning("未找到运行中游戏");
+        }
     }
 
     [RelayCommand]
     public async Task RestoreWindowPositonAsync()
     {
-        // TODO
-        await Task.CompletedTask;
-        //if (!await GILauncher.TryGetProcessAsync(async t =>
-        //{
-        //    if (!RuntimeHelper.IsElevated)
-        //    {
-        //        if (MessageBoxX.Question(MuiLanguage.Mui("UACRequestRestartHint")) == MessageBoxResult.Yes)
-        //        {
-        //            RuntimeHelper.RestartAsElevated();
-        //        }
-        //        return;
-        //    }
+        if (!await GenshinLauncher.TryGetProcessAsync(async t =>
+        {
+            await Task.CompletedTask;
 
-        //    await Task.CompletedTask;
-
-        //    nint hWnd = t.MainWindowHandle;
-        //    hWnd.RestoreWindowPositon();
-        //}))
-        //{
-        //    // NO GAME PLAYING
-        //}
+            if (t != null)
+            {
+                nint hWnd = t.MainWindowHandle;
+                hWnd.RestoreWindowPositon();
+            }
+        }))
+        {
+            Toast.Warning("未找到运行中游戏");
+        }
     }
 
     [ObservableProperty]
@@ -782,7 +683,7 @@ public partial class GenshinSettingsViewModel : ObservableObject, IDisposable
     partial void OnIsUseAutoMuteChanged(bool value)
     {
         var config = Configurations.Genshin.Get();
-        GenshinMuter.AutoMute = config.IsUseAutoMute = value;
+        GenshinMuter.IsEnabled = config.IsUseAutoMute = value;
         Configurations.Genshin.Set(config);
         ConfigurationManager.Save();
     }

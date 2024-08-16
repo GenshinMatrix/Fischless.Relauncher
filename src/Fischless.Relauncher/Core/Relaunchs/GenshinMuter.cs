@@ -9,16 +9,16 @@ namespace Fischless.Relauncher.Core.Relaunchs;
 
 internal static class GenshinMuter
 {
-    private static bool autoMute = false;
+    private static bool isEnabled = false;
 
-    public static bool AutoMute
+    public static bool IsEnabled
     {
-        get => autoMute;
+        get => isEnabled;
         set
         {
-            autoMute = value;
+            isEnabled = value;
             _ = MuteGameAsync(value);
-            if (autoMute)
+            if (isEnabled)
             {
                 ForegroundWindowHelper.Initialize();
             }
@@ -47,7 +47,7 @@ internal static class GenshinMuter
 
     private static async void OnForegroundWindowChanged(ForegroundWindowHelperEventArgs e)
     {
-        if (!AutoMute)
+        if (!IsEnabled)
         {
             return;
         }
