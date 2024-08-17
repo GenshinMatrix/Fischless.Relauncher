@@ -30,7 +30,7 @@ internal sealed class GenshinMonitor
         {
             if (Configurations.Genshin.Get().IsUseAutoClick)
             {
-                GenshinClicker.IsUseAutoClick = !GenshinClicker.IsUseAutoClick;
+                GenshinClicker.IsEnabled = !GenshinClicker.IsEnabled;
             }
         }
     }

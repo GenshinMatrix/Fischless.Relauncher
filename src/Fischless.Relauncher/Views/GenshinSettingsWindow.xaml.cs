@@ -741,7 +741,7 @@ public partial class GenshinSettingsViewModel : ObservableObject, IDisposable
         }
         else
         {
-            GenshinClicker.IsUseAutoClick = false;
+            GenshinClicker.IsEnabled = false;
         }
 
         var config = Configurations.Genshin.Get();

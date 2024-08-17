@@ -4,7 +4,7 @@ namespace Fischless.Relauncher.Core.Relaunchs;
 
 internal static class GenshinClicker
 {
-    public static bool IsUseAutoClick { get; set; } = false;
+    public static bool IsEnabled { get; set; } = false;
 
     public static void LeftButtonClick(nint hWnd)
     {

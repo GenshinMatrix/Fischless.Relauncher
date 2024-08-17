@@ -4,12 +4,10 @@ using Fischless.Relauncher.Core.Relaunchs;
 using Fischless.Relauncher.Extensions;
 using Fischless.Relauncher.Models;
 using Fischless.Relauncher.Models.Messages;
-using Fischless.Relauncher.Relaunchs;
 using Fischless.Relauncher.Views;
 using System.Diagnostics;
 using System.Reflection;
 using Vanara.PInvoke;
-using Wpf.Ui.Violeta.Controls;
 using Application = System.Windows.Application;
 using NotifyIcon = NotifyIconEx.NotifyIcon;
 
@@ -102,6 +100,12 @@ internal class TrayIconManager
 
         GenshinDragMove.IsEnabled = Configurations.Genshin.Get().IsUseBorderless;
         GenshinMuter.IsEnabled = Configurations.Genshin.Get().IsUseAutoMute;
+
+        if (Configurations.Genshin.Get().IsUseAutoClick)
+        {
+            // Ensure GenshinMonitor is initialized
+            _ = GenshinMonitor.Instance.Value;
+        }
     }
 
     public static TrayIconManager GetInstance()
