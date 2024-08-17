@@ -544,13 +544,13 @@ public partial class GenshinSettingsViewModel : ObservableObject, IDisposable
     [RelayCommand]
     private async Task EnableWindowTopmostAsync()
     {
-        if (!await GenshinLauncher.TryGetProcessAsync(async t =>
+        if (!await GenshinLauncher.TryGetProcessAsync(async p =>
         {
             await Task.CompletedTask;
 
-            if (t != null)
+            if (p != null)
             {
-                nint hWnd = t.MainWindowHandle;
+                nint hWnd = p.MainWindowHandle;
                 hWnd.EnableWindowTopmost();
             }
         }))
@@ -562,13 +562,13 @@ public partial class GenshinSettingsViewModel : ObservableObject, IDisposable
     [RelayCommand]
     private async Task DisableWindowTopmostAsync()
     {
-        if (!await GenshinLauncher.TryGetProcessAsync(async t =>
+        if (!await GenshinLauncher.TryGetProcessAsync(async p =>
         {
             await Task.CompletedTask;
 
-            if (t != null)
+            if (p != null)
             {
-                nint hWnd = t.MainWindowHandle;
+                nint hWnd = p.MainWindowHandle;
                 hWnd.DisableWindowTopmost();
             }
         }))
@@ -580,13 +580,13 @@ public partial class GenshinSettingsViewModel : ObservableObject, IDisposable
     [RelayCommand]
     private async Task EnableWindowMaximizeBoxAsync()
     {
-        if (!await GenshinLauncher.TryGetProcessAsync(async t =>
+        if (!await GenshinLauncher.TryGetProcessAsync(async p =>
         {
             await Task.CompletedTask;
 
-            if (t != null)
+            if (p != null)
             {
-                nint hWnd = t.MainWindowHandle;
+                nint hWnd = p.MainWindowHandle;
                 hWnd.EnableWindowMaximizeBox();
             }
         }))
@@ -598,13 +598,13 @@ public partial class GenshinSettingsViewModel : ObservableObject, IDisposable
     [RelayCommand]
     private async Task RestoreWindowPositonAsync()
     {
-        if (!await GenshinLauncher.TryGetProcessAsync(async t =>
+        if (!await GenshinLauncher.TryGetProcessAsync(async p =>
         {
             await Task.CompletedTask;
 
-            if (t != null)
+            if (p != null)
             {
-                nint hWnd = t.MainWindowHandle;
+                nint hWnd = p.MainWindowHandle;
                 hWnd.RestoreWindowPositon();
             }
         }))
@@ -616,13 +616,13 @@ public partial class GenshinSettingsViewModel : ObservableObject, IDisposable
     [RelayCommand]
     private async Task RestoreWindowToCentralPositonAsync()
     {
-        if (!await GenshinLauncher.TryGetProcessAsync(async t =>
+        if (!await GenshinLauncher.TryGetProcessAsync(async p =>
         {
             await Task.CompletedTask;
 
-            if (t != null)
+            if (p != null)
             {
-                nint hWnd = t.MainWindowHandle;
+                nint hWnd = p.MainWindowHandle;
                 hWnd.RestoreWindowToCentralPositon();
             }
         }))
@@ -634,13 +634,13 @@ public partial class GenshinSettingsViewModel : ObservableObject, IDisposable
     [RelayCommand]
     private async Task MinimizeWindowAsync()
     {
-        if (!await GenshinLauncher.TryGetProcessAsync(async t =>
+        if (!await GenshinLauncher.TryGetProcessAsync(async p =>
         {
             await Task.CompletedTask;
 
-            if (t != null)
+            if (p != null)
             {
-                nint hWnd = t.MainWindowHandle;
+                nint hWnd = p.MainWindowHandle;
                 _ = User32.ShowWindow(hWnd, ShowWindowCommand.SW_MINIMIZE);
             }
         }))
@@ -652,13 +652,13 @@ public partial class GenshinSettingsViewModel : ObservableObject, IDisposable
     [RelayCommand]
     private async Task HideWindowAsync()
     {
-        if (!await GenshinLauncher.TryGetProcessAsync(async t =>
+        if (!await GenshinLauncher.TryGetProcessAsync(async p =>
         {
             await Task.CompletedTask;
 
-            if (t != null)
+            if (p != null)
             {
-                nint hWnd = t.MainWindowHandle;
+                nint hWnd = p.MainWindowHandle;
                 _ = User32.ShowWindow(hWnd, ShowWindowCommand.SW_HIDE);
             }
         }))
@@ -670,14 +670,14 @@ public partial class GenshinSettingsViewModel : ObservableObject, IDisposable
     [RelayCommand]
     private async Task RestoreWindowAsync()
     {
-        if (!await GenshinLauncher.TryGetProcessAsync(async t =>
+        if (!await GenshinLauncher.TryGetProcessAsync(async p =>
         {
             await Task.CompletedTask;
 
-            if (t != null)
+            if (p != null)
             {
-                nint hWnd = t.MainWindowHandle != IntPtr.Zero
-                    ? t.MainWindowHandle
+                nint hWnd = p.MainWindowHandle != IntPtr.Zero
+                    ? p.MainWindowHandle
                     : GenshinLauncher.TryGetHandleByWindowName();
 
                 _ = User32.ShowWindow(hWnd, ShowWindowCommand.SW_RESTORE);

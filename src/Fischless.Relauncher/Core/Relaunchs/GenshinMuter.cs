@@ -1,5 +1,5 @@
-﻿using NAudio.CoreAudioApi;
-using Fischless.Relauncher.Core.Loggers;
+﻿using Fischless.Relauncher.Core.Loggers;
+using NAudio.CoreAudioApi;
 using System.Diagnostics;
 using System.Text;
 using Vanara.PInvoke;
@@ -60,6 +60,7 @@ internal static class GenshinMuter
                 matchProcess = true;
             }
         }
+
         await MuteGameAsync(!matchProcess);
     }
 

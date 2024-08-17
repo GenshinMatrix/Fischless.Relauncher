@@ -28,7 +28,7 @@ internal class TrayIconManager
     {
         _icon = new NotifyIcon()
         {
-            Text = "miHoYo-reLauncher",
+            Text = "Fischless.Relauncher",
             Icon = Icon.ExtractAssociatedIcon(Process.GetCurrentProcess().MainModule?.FileName!)!,
             Visible = true
         };
@@ -46,6 +46,15 @@ internal class TrayIconManager
 
             await GenshinLauncher.LaunchAsync(delayMs: 1000, relaunchMethod: GenshinRelaunchMethod.Kill, option: GenshinLauncherOptionProvider.GetOption());
         });
+        _icon.AddMenu("退出游戏 (&K)", async (_, _) =>
+        {
+            _ = await GenshinLauncher.TryGetProcessAsync(async p =>
+            {
+                await Task.CompletedTask;
+                p?.Kill();
+            });
+        });
+        _icon.AddMenu("-");
         _icon.AddMenu("打开设置 (&O)", (_, _) =>
         {
             Application.Current.Windows.OfType<GenshinSettingsWindow>().ToList().ForEach(x => x.Close());
@@ -65,6 +74,7 @@ internal class TrayIconManager
                 ConfigurationManager.Save();
                 WeakReferenceMessenger.Default.Send(new GenshinAutoMuteChangedMessage());
             }) as ToolStripMenuItem)!.CheckOnClick = true;
+        _icon.AddMenu("-");
         _itemAutoRun = _icon.AddMenu("启动时自动运行 (&S)",
             (_, _) =>
             {
@@ -84,14 +94,14 @@ internal class TrayIconManager
 
         _icon.MouseDoubleClick += async (_, _) =>
         {
-            _ = await GenshinLauncher.TryGetProcessAsync(async t =>
+            _ = await GenshinLauncher.TryGetProcessAsync(async p =>
             {
                 await Task.CompletedTask;
 
-                if (t != null)
+                if (p != null)
                 {
-                    nint hWnd = t.MainWindowHandle != IntPtr.Zero
-                        ? t.MainWindowHandle
+                    nint hWnd = p.MainWindowHandle != IntPtr.Zero
+                        ? p.MainWindowHandle
                         : GenshinLauncher.TryGetHandleByWindowName();
 
                     if (User32.IsWindowVisible(hWnd))
