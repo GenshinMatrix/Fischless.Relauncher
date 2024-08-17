@@ -2,12 +2,14 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:Fischless.Relauncher"
-             xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml">
+             xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+             xmlns:vio="http://schemas.lepo.co/wpfui/2022/xaml/violeta">
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ui:ThemesDictionary Theme="Dark" />
                 <ui:ControlsDictionary />
+                <vio:ControlsDictionary />
                 <ResourceDictionary Source="/Views/Controls/Button/Button.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <FontFamily x:Key="DelugeLEDFontFamily">pack://application:,,,/Fischless.Relauncher;component/Assets/Fonts/deluge-led.ttf#Deluge LED</FontFamily>

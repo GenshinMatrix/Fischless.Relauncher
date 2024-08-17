@@ -349,7 +349,7 @@ internal class GenshinLauncher
 
                     foreach (Process? p in ps)
                     {
-                        await callback?.Invoke(p)!;
+                        await (callback?.Invoke(p) ?? Task.CompletedTask);
                         return true;
                     }
                 }

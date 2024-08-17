@@ -7,8 +7,10 @@ using Fischless.Relauncher.Models.Messages;
 using Fischless.Relauncher.Views;
 using System.Diagnostics;
 using System.Reflection;
+using System.Windows;
 using Vanara.PInvoke;
 using Application = System.Windows.Application;
+using MessageBox = Wpf.Ui.Violeta.Controls.MessageBox;
 using NotifyIcon = NotifyIconEx.NotifyIcon;
 
 namespace Fischless.Relauncher;
@@ -34,6 +36,14 @@ internal class TrayIconManager
         _icon.AddMenu("-");
         _icon.AddMenu("启动游戏 (&L)", async (_, _) =>
         {
+            if (await GenshinLauncher.TryGetProcessAsync())
+            {
+                if (await MessageBox.QuestionAsync("检测到游戏已启动，是否重新启动游戏？") != MessageBoxResult.Yes)
+                {
+                    return;
+                }
+            }
+
             await GenshinLauncher.LaunchAsync(delayMs: 1000, relaunchMethod: GenshinRelaunchMethod.Kill, option: GenshinLauncherOptionProvider.GetOption());
         });
         _icon.AddMenu("打开设置 (&O)", (_, _) =>
