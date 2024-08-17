@@ -172,16 +172,7 @@ internal static class GenshinDragMove
                     {
                         if (User32.IsWindow(hWnd))
                         {
-                            //SettingsContainer sc = new();
-
-                            //sc.FromReg();
-
-                            //ResolutionSettings? res = sc.Resolution;
-
-                            //if (res != null)
-                            //{
-                            //    _ = User32.SetWindowPos(hWnd, IntPtr.Zero, windowRect.X, windowRect.Y, res.Width, res.Height, User32.SetWindowPosFlags.SWP_NOZORDER);
-                            //}
+                            // TODO
                         }
                     }
                     else if (command == (uint)User32.SysCommand.SC_MINIMIZE)
@@ -344,5 +335,12 @@ internal static class BorderlessExtension
     {
         Screen screen = Screen.FromHandle(hWnd);
         _ = User32.SetWindowPos(hWnd, IntPtr.Zero, screen.Bounds.X, screen.Bounds.Y, 0, 0, User32.SetWindowPosFlags.SWP_NOZORDER | User32.SetWindowPosFlags.SWP_NOSIZE);
+    }
+
+    public static void RestoreWindowToCentralPositon(this nint hWnd)
+    {
+        Screen screen = Screen.FromHandle(hWnd);
+        _ = User32.GetWindowRect(hWnd, out RECT windowRect);
+        _ = User32.SetWindowPos(hWnd, IntPtr.Zero, screen.Bounds.X + (screen.Bounds.Width - windowRect.Width) / 2, screen.Bounds.Y + (screen.Bounds.Height - windowRect.Height) / 2, 0, 0, User32.SetWindowPosFlags.SWP_NOZORDER | User32.SetWindowPosFlags.SWP_NOSIZE);
     }
 }

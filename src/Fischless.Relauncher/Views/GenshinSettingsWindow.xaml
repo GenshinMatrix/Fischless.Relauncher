@@ -813,7 +813,39 @@
                                          IsChecked="{Binding ViewModel.IsSquareCorner, Mode=TwoWay}" />
                     </Grid>
                 </ui:Card>
-                <ui:CardExpander IsEnabled="true">
+                <ui:Card>
+                    <Grid MinHeight="35">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <Grid Grid.Column="0" Margin="0,0,12,0">
+                            <TextBlock MinWidth="26"
+                                       Margin="4,0,0,0"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"
+                                       FontFamily="{DynamicResource SymbolThemeFontFamily}"
+                                       FontSize="18"
+                                       Text="{x:Static controls:FontSymbols.Favicon}" />
+                        </Grid>
+                        <Grid Grid.Column="1">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <TextBlock Grid.Row="0" Text="无界模式" />
+                            <TextBlock Grid.Row="1"
+                                       FontSize="11"
+                                       Foreground="#D0D0D0"
+                                       Text="配合 -popupwindow 使无边框窗口获得可拖动体验" />
+                        </Grid>
+                        <ui:ToggleSwitch Grid.Column="2"
+                                         Margin="0,0,28,0"
+                                         IsChecked="{Binding ViewModel.IsUseBorderless, Mode=TwoWay}" />
+                    </Grid>
+                </ui:Card>
+                <ui:CardExpander>
                     <ui:CardExpander.Header>
                         <Grid>
                             <Grid.ColumnDefinitions>
@@ -828,22 +860,20 @@
                                            VerticalAlignment="Center"
                                            FontFamily="{DynamicResource SymbolThemeFontFamily}"
                                            FontSize="18"
-                                           Text="{x:Static controls:FontSymbols.Favicon}" />
+                                           Text="{x:Static controls:FontSymbols.AspectRatio}" />
                             </Grid>
                             <Grid Grid.Column="1">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto" />
                                     <RowDefinition Height="Auto" />
                                 </Grid.RowDefinitions>
-                                <TextBlock Grid.Row="0" Text="无界模式" />
+                                <TextBlock Grid.Row="0" Text="控制窗口" />
                                 <TextBlock Grid.Row="1"
                                            FontSize="11"
                                            Foreground="#D0D0D0"
-                                           Text="配合 -popupwindow 使无边框窗口获得可拖动体验" />
+                                           Text="对游戏窗口的奇特操作集合" />
                             </Grid>
-                            <Grid Grid.Column="2" Margin="0,0,12,0">
-                                <ui:ToggleSwitch IsChecked="{Binding ViewModel.IsUseBorderless, Mode=TwoWay}" />
-                            </Grid>
+                            <Grid Grid.Column="2" Margin="0,0,12,0" />
                         </Grid>
                     </ui:CardExpander.Header>
                     <ws:StackPanel Spacing="8">
@@ -857,27 +887,15 @@
                                     <RowDefinition Height="Auto" />
                                     <RowDefinition Height="Auto" />
                                 </Grid.RowDefinitions>
-                                <TextBlock Grid.Row="0" Text="置顶游戏" />
+                                <TextBlock Grid.Row="0" Text="置顶窗口" />
                                 <TextBlock Grid.Row="1"
                                            FontSize="11"
                                            Foreground="#D0D0D0"
-                                           Text="测试置顶效果" />
+                                           Text="调整游戏置顶效果" />
                             </Grid>
                             <ws:StackPanel Grid.Column="1"
                                            Orientation="Horizontal"
                                            Spacing="8">
-                                <Button Height="36" Command="{Binding ViewModel.EnableWindowTopmostCommand}">
-                                    <Button.Content>
-                                        <ws:StackPanel Orientation="Horizontal" Spacing="4">
-                                            <TextBlock HorizontalAlignment="Center"
-                                                       VerticalAlignment="Center"
-                                                       FontFamily="{DynamicResource SymbolThemeFontFamily}"
-                                                       FontSize="16"
-                                                       Text="{x:Static controls:FontSymbols.Accept}" />
-                                            <TextBlock Text="生效" />
-                                        </ws:StackPanel>
-                                    </Button.Content>
-                                </Button>
                                 <Button Height="36" Command="{Binding ViewModel.DisableWindowTopmostCommand}">
                                     <Button.Content>
                                         <ws:StackPanel Orientation="Horizontal" Spacing="4">
@@ -885,8 +903,104 @@
                                                        VerticalAlignment="Center"
                                                        FontFamily="{DynamicResource SymbolThemeFontFamily}"
                                                        FontSize="16"
-                                                       Text="{x:Static controls:FontSymbols.CalculatorMultiply}" />
-                                            <TextBlock Text="无效" />
+                                                       Text="{x:Static controls:FontSymbols.Unpin}" />
+                                            <TextBlock Text="取消" />
+                                        </ws:StackPanel>
+                                    </Button.Content>
+                                </Button>
+                                <Button Height="36" Command="{Binding ViewModel.EnableWindowTopmostCommand}">
+                                    <Button.Content>
+                                        <ws:StackPanel Orientation="Horizontal" Spacing="4">
+                                            <TextBlock HorizontalAlignment="Center"
+                                                       VerticalAlignment="Center"
+                                                       FontFamily="{DynamicResource SymbolThemeFontFamily}"
+                                                       FontSize="16"
+                                                       Text="{x:Static controls:FontSymbols.Pin}" />
+                                            <TextBlock Text="设置" />
+                                        </ws:StackPanel>
+                                    </Button.Content>
+                                </Button>
+                            </ws:StackPanel>
+                        </Grid>
+                        <Separator />
+                        <Grid Margin="42,0,28,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <Grid Grid.Column="0">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <TextBlock Grid.Row="0" Text="最小化窗口" />
+                                <TextBlock Grid.Row="1"
+                                           FontSize="11"
+                                           Foreground="#D0D0D0"
+                                           Text="最小化游戏窗口，无界模式下很有用" />
+                            </Grid>
+                            <ws:StackPanel Grid.Column="1"
+                                           Orientation="Horizontal"
+                                           Spacing="8">
+                                <Button Height="36" Command="{Binding ViewModel.MinimizeWindowCommand}">
+                                    <Button.Content>
+                                        <ws:StackPanel Orientation="Horizontal" Spacing="4">
+                                            <TextBlock HorizontalAlignment="Center"
+                                                       VerticalAlignment="Center"
+                                                       FontFamily="{DynamicResource SymbolThemeFontFamily}"
+                                                       FontSize="16"
+                                                       Text="{x:Static controls:FontSymbols.NewWindow}">
+                                                <TextBlock.RenderTransform>
+                                                    <RotateTransform Angle="180" CenterX="8" CenterY="8" />
+                                                </TextBlock.RenderTransform>
+                                            </TextBlock>
+                                            <TextBlock Text="最小化" />
+                                        </ws:StackPanel>
+                                    </Button.Content>
+                                </Button>
+                            </ws:StackPanel>
+                        </Grid>
+                        <Separator />
+                        <Grid Margin="42,0,28,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <Grid Grid.Column="0">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <TextBlock Grid.Row="0" Text="托盘化窗口" />
+                                <TextBlock Grid.Row="1"
+                                           FontSize="11"
+                                           Foreground="#D0D0D0"
+                                           Text="双击托盘图标能显示/隐藏游戏窗口" />
+                            </Grid>
+                            <ws:StackPanel Grid.Column="1"
+                                           Orientation="Horizontal"
+                                           Spacing="8">
+                                <Button Height="36" Command="{Binding ViewModel.RestoreWindowCommand}">
+                                    <Button.Content>
+                                        <ws:StackPanel Orientation="Horizontal" Spacing="4">
+                                            <TextBlock HorizontalAlignment="Center"
+                                                       VerticalAlignment="Center"
+                                                       FontFamily="{DynamicResource SymbolThemeFontFamily}"
+                                                       FontSize="16"
+                                                       Text="{x:Static controls:FontSymbols.RedEye}" />
+                                            <TextBlock Text="显示" />
+                                        </ws:StackPanel>
+                                    </Button.Content>
+                                </Button>
+                                <Button Height="36" Command="{Binding ViewModel.HideWindowCommand}">
+                                    <Button.Content>
+                                        <ws:StackPanel Orientation="Horizontal" Spacing="4">
+                                            <TextBlock HorizontalAlignment="Center"
+                                                       VerticalAlignment="Center"
+                                                       FontFamily="{DynamicResource SymbolThemeFontFamily}"
+                                                       FontSize="16"
+                                                       Text="{x:Static controls:FontSymbols.Hide}" />
+                                            <TextBlock Text="隐藏" />
                                         </ws:StackPanel>
                                     </Button.Content>
                                 </Button>
@@ -907,7 +1021,7 @@
                                 <TextBlock Grid.Row="1"
                                            FontSize="11"
                                            Foreground="#D0D0D0"
-                                           Text="测试窗口功能" />
+                                           Text="调整窗口最大化按钮是否可用，无界模式下没什么用" />
                             </Grid>
                             <ws:StackPanel Grid.Column="1"
                                            Orientation="Horizontal"
@@ -941,12 +1055,46 @@
                                 <TextBlock Grid.Row="1"
                                            FontSize="11"
                                            Foreground="#D0D0D0"
-                                           Text="测试窗口功能" />
+                                           Text="调整窗口位置，无界模式下很有用" />
                             </Grid>
                             <ws:StackPanel Grid.Column="1"
                                            Orientation="Horizontal"
                                            Spacing="8">
                                 <Button Height="36" Command="{Binding ViewModel.RestoreWindowPositonCommand}">
+                                    <Button.Content>
+                                        <ws:StackPanel Orientation="Horizontal" Spacing="4">
+                                            <TextBlock HorizontalAlignment="Center"
+                                                       VerticalAlignment="Center"
+                                                       FontFamily="{DynamicResource SymbolThemeFontFamily}"
+                                                       FontSize="16"
+                                                       Text="{x:Static controls:FontSymbols.Accept}" />
+                                            <TextBlock Text="生效" />
+                                        </ws:StackPanel>
+                                    </Button.Content>
+                                </Button>
+                            </ws:StackPanel>
+                        </Grid>
+                        <Separator />
+                        <Grid Margin="42,0,28,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <Grid Grid.Column="0">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <TextBlock Grid.Row="0" Text="恢复到屏幕居中" />
+                                <TextBlock Grid.Row="1"
+                                           FontSize="11"
+                                           Foreground="#D0D0D0"
+                                           Text="调整窗口位置，无界模式下很有用" />
+                            </Grid>
+                            <ws:StackPanel Grid.Column="1"
+                                           Orientation="Horizontal"
+                                           Spacing="8">
+                                <Button Height="36" Command="{Binding ViewModel.RestoreWindowToCentralPositonCommand}">
                                     <Button.Content>
                                         <ws:StackPanel Orientation="Horizontal" Spacing="4">
                                             <TextBlock HorizontalAlignment="Center"
@@ -1006,11 +1154,11 @@
                                     <RowDefinition Height="Auto" />
                                     <RowDefinition Height="Auto" />
                                 </Grid.RowDefinitions>
-                                <TextBlock Grid.Row="0" Text="隐藏游戏 UID" />
+                                <TextBlock Grid.Row="0" Text="隐藏身份" />
                                 <TextBlock Grid.Row="1"
                                            FontSize="11"
                                            Foreground="#D0D0D0"
-                                           Text="截图中自动隐藏游戏 UID" />
+                                           Text="截图隐藏游戏 UID" />
                             </Grid>
                             <ws:StackPanel Grid.Column="1"
                                            Orientation="Horizontal"

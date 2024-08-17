@@ -6,7 +6,6 @@ using Fischless.Relauncher.Core.Relaunchs;
 using Fischless.Relauncher.Helper;
 using Fischless.Relauncher.Models;
 using Fischless.Relauncher.Models.Messages;
-using Fischless.Relauncher.Relaunchs;
 using Fischless.Relauncher.Threading;
 using Microsoft.WindowsAPICodePack.Dialogs;
 using System.Collections.ObjectModel;
@@ -111,48 +110,7 @@ public partial class GenshinSettingsViewModel : ObservableObject, IDisposable
     [RelayCommand]
     private async Task LaunchAsync()
     {
-        GenshinConfigurations config = Configurations.Genshin.Get();
-        GenshinLauncherOption option = new()
-        {
-            GamePath = null,
-            WorkingDirectory = null,
-            Account = null!, // TODO: Not supported
-            Arguments = new GenshinArgumentsOption()
-            {
-                IsUseArguments = config.IsUseArguments,
-                IsUseWindowModeExclusive = config.IsUseWindowModeExclusive,
-                IsScreenFullscreen = config.IsScreenFullscreen,
-                IsPopupwindow = config.IsPopupwindow,
-                IsPlatformTypeCloudThirdPartyMobile = config.IsPlatformTypeCloudThirdPartyMobile,
-                IsScreenWidth = config.IsScreenWidth,
-                ScreenWidth = config.ScreenWidth,
-                IsScreenHeight = config.IsScreenHeight,
-                ScreenHeight = config.ScreenHeight,
-                IsMonitor = config.IsMonitor,
-                Monitor = config.Monitor,
-            },
-            Advance = new GenshinAdvanceOption()
-            {
-                IsDisnetLaunching = config.IsDisnetLaunching,
-                IsUseHDR = config.IsUseHDR,
-            },
-            Linkage = new GenshinLinkageOption()
-            {
-                ReShadePath = config.ReShadePath,
-                IsUseReShade = config.IsUseReShade,
-                IsUseReShadeSilent = config.IsUseReShadeSilent,
-                IsUseBetterGI = config.IsUseBetterGI,
-            },
-            Region = null,
-            Unlocker = new GenshinUnlockerOption()
-            {
-                IsUnlockFps = config.IsUnlockFps,
-                UnlockFps = config.UnlockFps,
-                UnlockFpsMethod = config.UnlockFpsMethod,
-            },
-        };
-
-        await GenshinLauncher.LaunchAsync(delayMs: 1000, relaunchMethod: GenshinRelaunchMethod.Kill, option: option);
+        await GenshinLauncher.LaunchAsync(delayMs: 1000, relaunchMethod: GenshinRelaunchMethod.Kill, option: GenshinLauncherOptionProvider.GetOption());
     }
 
     [ObservableProperty]
@@ -584,7 +542,7 @@ public partial class GenshinSettingsViewModel : ObservableObject, IDisposable
     }
 
     [RelayCommand]
-    public async Task EnableWindowTopmostAsync()
+    private async Task EnableWindowTopmostAsync()
     {
         if (!await GenshinLauncher.TryGetProcessAsync(async t =>
         {
@@ -602,7 +560,7 @@ public partial class GenshinSettingsViewModel : ObservableObject, IDisposable
     }
 
     [RelayCommand]
-    public async Task DisableWindowTopmostAsync()
+    private async Task DisableWindowTopmostAsync()
     {
         if (!await GenshinLauncher.TryGetProcessAsync(async t =>
         {
@@ -620,7 +578,7 @@ public partial class GenshinSettingsViewModel : ObservableObject, IDisposable
     }
 
     [RelayCommand]
-    public async Task EnableWindowMaximizeBoxAsync()
+    private async Task EnableWindowMaximizeBoxAsync()
     {
         if (!await GenshinLauncher.TryGetProcessAsync(async t =>
         {
@@ -638,7 +596,7 @@ public partial class GenshinSettingsViewModel : ObservableObject, IDisposable
     }
 
     [RelayCommand]
-    public async Task RestoreWindowPositonAsync()
+    private async Task RestoreWindowPositonAsync()
     {
         if (!await GenshinLauncher.TryGetProcessAsync(async t =>
         {
@@ -648,6 +606,83 @@ public partial class GenshinSettingsViewModel : ObservableObject, IDisposable
             {
                 nint hWnd = t.MainWindowHandle;
                 hWnd.RestoreWindowPositon();
+            }
+        }))
+        {
+            Toast.Warning("未找到运行中游戏");
+        }
+    }
+
+    [RelayCommand]
+    private async Task RestoreWindowToCentralPositonAsync()
+    {
+        if (!await GenshinLauncher.TryGetProcessAsync(async t =>
+        {
+            await Task.CompletedTask;
+
+            if (t != null)
+            {
+                nint hWnd = t.MainWindowHandle;
+                hWnd.RestoreWindowToCentralPositon();
+            }
+        }))
+        {
+            Toast.Warning("未找到运行中游戏");
+        }
+    }
+
+    [RelayCommand]
+    private async Task MinimizeWindowAsync()
+    {
+        if (!await GenshinLauncher.TryGetProcessAsync(async t =>
+        {
+            await Task.CompletedTask;
+
+            if (t != null)
+            {
+                nint hWnd = t.MainWindowHandle;
+                _ = User32.ShowWindow(hWnd, ShowWindowCommand.SW_MINIMIZE);
+            }
+        }))
+        {
+            Toast.Warning("未找到运行中游戏");
+        }
+    }
+
+    [RelayCommand]
+    private async Task HideWindowAsync()
+    {
+        if (!await GenshinLauncher.TryGetProcessAsync(async t =>
+        {
+            await Task.CompletedTask;
+
+            if (t != null)
+            {
+                nint hWnd = t.MainWindowHandle;
+                _ = User32.ShowWindow(hWnd, ShowWindowCommand.SW_HIDE);
+            }
+        }))
+        {
+            Toast.Warning("未找到运行中游戏");
+        }
+    }
+
+    [RelayCommand]
+    private async Task RestoreWindowAsync()
+    {
+        if (!await GenshinLauncher.TryGetProcessAsync(async t =>
+        {
+            await Task.CompletedTask;
+
+            if (t != null)
+            {
+                nint hWnd = t.MainWindowHandle != IntPtr.Zero
+                    ? t.MainWindowHandle
+                    : GenshinLauncher.TryGetHandleByWindowName();
+
+                _ = User32.ShowWindow(hWnd, ShowWindowCommand.SW_RESTORE);
+                _ = User32.ShowWindow(hWnd, ShowWindowCommand.SW_SHOW);
+                _ = User32.SetActiveWindow(hWnd);
             }
         }))
         {
@@ -689,7 +724,7 @@ public partial class GenshinSettingsViewModel : ObservableObject, IDisposable
     }
 
     [RelayCommand]
-    public async Task LaunchWindowsSettingsAppsVolumeAsync()
+    private async Task LaunchWindowsSettingsAppsVolumeAsync()
     {
         _ = await Launcher.LaunchUriAsync(new Uri("ms-settings:apps-volume"));
     }

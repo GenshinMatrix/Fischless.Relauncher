@@ -4,10 +4,12 @@ using Fischless.Relauncher.Core.Relaunchs;
 using Fischless.Relauncher.Extensions;
 using Fischless.Relauncher.Models;
 using Fischless.Relauncher.Models.Messages;
+using Fischless.Relauncher.Relaunchs;
 using Fischless.Relauncher.Views;
 using System.Diagnostics;
 using System.Reflection;
-using YamlDotNet.Core.Tokens;
+using Vanara.PInvoke;
+using Wpf.Ui.Violeta.Controls;
 using Application = System.Windows.Application;
 using NotifyIcon = NotifyIconEx.NotifyIcon;
 
@@ -32,6 +34,10 @@ internal class TrayIconManager
         };
         _icon.AddMenu($"v{Assembly.GetExecutingAssembly().GetName().Version!.ToString("A.B.C")}").Enabled = false;
         _icon.AddMenu("-");
+        _icon.AddMenu("启动游戏 (&L)", async (_, _) =>
+        {
+            await GenshinLauncher.LaunchAsync(delayMs: 1000, relaunchMethod: GenshinRelaunchMethod.Kill, option: GenshinLauncherOptionProvider.GetOption());
+        });
         _icon.AddMenu("打开设置 (&O)", (_, _) =>
         {
             Application.Current.Windows.OfType<GenshinSettingsWindow>().ToList().ForEach(x => x.Close());
@@ -66,6 +72,32 @@ internal class TrayIconManager
         {
             _itemAutoRun!.Checked = AutoStartupHelper.IsAutorun();
             _itemAutoMute!.Checked = Configurations.Genshin.Get().IsUseAutoMute;
+        };
+
+        _icon.MouseDoubleClick += async (_, _) =>
+        {
+            _ = await GenshinLauncher.TryGetProcessAsync(async t =>
+            {
+                await Task.CompletedTask;
+
+                if (t != null)
+                {
+                    nint hWnd = t.MainWindowHandle != IntPtr.Zero
+                        ? t.MainWindowHandle
+                        : GenshinLauncher.TryGetHandleByWindowName();
+
+                    if (User32.IsWindowVisible(hWnd))
+                    {
+                        _ = User32.ShowWindow(hWnd, ShowWindowCommand.SW_HIDE);
+                    }
+                    else
+                    {
+                        _ = User32.ShowWindow(hWnd, ShowWindowCommand.SW_RESTORE);
+                        _ = User32.ShowWindow(hWnd, ShowWindowCommand.SW_SHOW);
+                        _ = User32.SetActiveWindow(hWnd);
+                    }
+                }
+            });
         };
 
         GenshinDragMove.IsEnabled = Configurations.Genshin.Get().IsUseBorderless;

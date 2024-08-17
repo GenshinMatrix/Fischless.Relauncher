@@ -361,6 +361,30 @@ internal class GenshinLauncher
         });
     }
 
+    public static nint TryGetHandleByWindowName()
+    {
+        HWND handle = User32.FindWindow("UnityWndClass", "原神");
+
+        if (handle != 0)
+        {
+            return (nint)handle;
+        }
+
+        handle = User32.FindWindow("UnityWndClass", "Genshin Impact");
+        if (handle != 0)
+        {
+            return (nint)handle;
+        }
+
+        handle = User32.FindWindow("Qt5152QWindowIcon", "云·原神");
+        if (handle != 0)
+        {
+            return (nint)handle;
+        }
+
+        return IntPtr.Zero;
+    }
+
     public static async Task<bool> TryCloseAsync()
     {
         return await TryGetProcessAsync(p =>
