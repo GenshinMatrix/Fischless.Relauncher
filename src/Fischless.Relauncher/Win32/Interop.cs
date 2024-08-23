@@ -2,7 +2,6 @@
 using System.Runtime.InteropServices;
 using System.Text;
 using Vanara.PInvoke;
-using YamlDotNet.Core.Tokens;
 
 namespace Fischless.Relauncher.Win32;
 

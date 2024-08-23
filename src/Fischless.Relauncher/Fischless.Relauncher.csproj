@@ -33,8 +33,8 @@
 		<PackageReference Include="YamlDotNet" Version="16.0.0" />
 		<PackageReference Include="NotifyIconEx" Version="1.1.2" />
 		<PackageReference Include="WPF-UI" Version="3.0.5" />
-		<PackageReference Include="WPF-UI.Violeta" Version="3.0.5.2" />
-		<PackageReference Include="EleCho.WpfSuite" Version="0.6.5" />
+		<PackageReference Include="WPF-UI.Violeta" Version="3.0.5.5" />
+		<PackageReference Include="EleCho.WpfSuite" Version="0.7.1" />
 		<PackageReference Include="PresentMonFps" Version="2.0.5" />
 		<PackageReference Include="NAudio.Wasapi" Version="2.2.1" />
 		<PackageReference Include="MouseKeyHook" Version="5.7.1" />
