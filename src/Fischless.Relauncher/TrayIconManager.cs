@@ -32,7 +32,7 @@ internal class TrayIconManager
             Icon = Icon.ExtractAssociatedIcon(Process.GetCurrentProcess().MainModule?.FileName!)!,
             Visible = true
         };
-        _icon.AddMenu($"v{Assembly.GetExecutingAssembly().GetName().Version!.ToString("A.B.C")}").Enabled = false;
+        _icon.AddMenu($"v{Assembly.GetExecutingAssembly().GetName().Version!.ToString(3)}").Enabled = false;
         _icon.AddMenu("-");
         _icon.AddMenu("启动游戏 (&L)", async (_, _) =>
         {
