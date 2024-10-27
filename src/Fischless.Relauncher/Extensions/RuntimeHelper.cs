@@ -3,7 +3,6 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Security.Principal;
-using Application = System.Windows.Application;
 
 namespace Fischless.Relauncher.Extensions;
 

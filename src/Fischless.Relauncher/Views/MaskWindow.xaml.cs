@@ -5,7 +5,6 @@ using Fischless.Relauncher.Threading;
 using System.Windows;
 using System.Windows.Interop;
 using Vanara.PInvoke;
-using Application = System.Windows.Application;
 
 namespace Fischless.Relauncher.Views;
 

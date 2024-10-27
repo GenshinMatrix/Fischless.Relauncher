@@ -1,7 +1,6 @@
 ﻿using System.IO;
 using System.IO.Packaging;
 using System.Windows.Resources;
-using Application = System.Windows.Application;
 
 namespace Fischless.Relauncher.Extensions;
 

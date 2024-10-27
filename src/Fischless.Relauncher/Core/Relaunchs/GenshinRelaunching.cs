@@ -8,7 +8,6 @@ using System.Diagnostics;
 using System.IO;
 using System.Windows;
 using Vanara.PInvoke;
-using Application = System.Windows.Application;
 
 namespace Fischless.Relauncher.Core.Relaunchs;
 

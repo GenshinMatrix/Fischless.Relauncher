@@ -9,9 +9,6 @@ using System.Diagnostics;
 using System.Reflection;
 using System.Windows;
 using Vanara.PInvoke;
-using Application = System.Windows.Application;
-using MessageBox = Wpf.Ui.Violeta.Controls.MessageBox;
-using NotifyIcon = NotifyIconEx.NotifyIcon;
 
 namespace Fischless.Relauncher;
 
