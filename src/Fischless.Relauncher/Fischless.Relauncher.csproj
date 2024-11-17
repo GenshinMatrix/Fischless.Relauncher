@@ -16,25 +16,25 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
-		<PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.0" />
-		<PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="8.0.0" />
-		<PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.122" />
-		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
-		<PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="8.0.1" />
-		<PackageReference Include="Microsoft.Extensions.Logging" Version="8.0.0" />
+		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.3.2" />
+		<PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="9.0.0" />
+		<PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.135" />
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="9.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Logging" Version="9.0.0" />
 		<PackageReference Include="Microsoft-WindowsAPICodePack-Shell" Version="1.1.5" />
-		<PackageReference Include="Vanara.PInvoke.DwmApi" Version="4.0.3" />
-		<PackageReference Include="Vanara.PInvoke.Kernel32" Version="4.0.3" />
-		<PackageReference Include="Vanara.PInvoke.NtDll" Version="4.0.3" />
-		<PackageReference Include="Vanara.PInvoke.SHCore" Version="4.0.3" />
-		<PackageReference Include="Vanara.PInvoke.User32" Version="4.0.3" />
-		<PackageReference Include="Vanara.PInvoke.UxTheme" Version="4.0.3" />
-		<PackageReference Include="YamlDotNet" Version="16.0.0" />
+		<PackageReference Include="Vanara.PInvoke.DwmApi" Version="4.0.4" />
+		<PackageReference Include="Vanara.PInvoke.Kernel32" Version="4.0.4" />
+		<PackageReference Include="Vanara.PInvoke.NtDll" Version="4.0.4" />
+		<PackageReference Include="Vanara.PInvoke.SHCore" Version="4.0.4" />
+		<PackageReference Include="Vanara.PInvoke.User32" Version="4.0.4" />
+		<PackageReference Include="Vanara.PInvoke.UxTheme" Version="4.0.4" />
+		<PackageReference Include="YamlDotNet" Version="16.2.0" />
 		<PackageReference Include="NotifyIconEx" Version="1.1.2" />
 		<PackageReference Include="WPF-UI" Version="3.0.5" />
-		<PackageReference Include="WPF-UI.Violeta" Version="3.0.5.5" />
-		<PackageReference Include="EleCho.WpfSuite" Version="0.7.1" />
+		<PackageReference Include="WPF-UI.Violeta" Version="3.0.5.23" />
+		<PackageReference Include="EleCho.WpfSuite" Version="0.9.7" />
 		<PackageReference Include="PresentMonFps" Version="2.0.5" />
 		<PackageReference Include="NAudio.Wasapi" Version="2.2.1" />
 		<PackageReference Include="MouseKeyHook" Version="5.7.1" />
@@ -42,7 +42,7 @@
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
 		</PackageReference>
-		<PackageReference Include="Snap.Hutao.UnlockerIsland" Version="1.1.7">
+		<PackageReference Include="Snap.Hutao.UnlockerIsland" Version="1.1.24">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
