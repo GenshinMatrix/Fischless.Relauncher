@@ -1,8 +1,8 @@
-﻿using Microsoft.Win32;
-using Fischless.Relauncher.Core.Loggers;
+﻿using Fischless.Logger;
 using Fischless.Relauncher.Extensions;
 using Fischless.Relauncher.Relaunchs;
 using Fischless.Relauncher.Threading;
+using Microsoft.Win32;
 using System.Diagnostics;
 using System.IO;
 using System.Text;

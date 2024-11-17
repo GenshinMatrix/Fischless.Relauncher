@@ -1,4 +1,4 @@
-﻿using Fischless.Relauncher.Core.Loggers;
+﻿using Fischless.Logger;
 using System.Diagnostics;
 using Vanara.PInvoke;
 

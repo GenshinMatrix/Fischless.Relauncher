@@ -1,7 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using Fischless.Relauncher.Core.Loggers;
 using Fischless.Relauncher.Core.Relaunchs;
 using Fischless.Relauncher.Extensions;
 using Fischless.Relauncher.Views;
@@ -9,6 +7,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Windows;
 using Fischless.Configuration;
+using Fischless.Logger;
 
 namespace Fischless.Relauncher;
 

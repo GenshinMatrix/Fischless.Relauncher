@@ -1,4 +1,4 @@
-﻿using Fischless.Relauncher.Core.Loggers;
+﻿using Fischless.Logger;
 using NAudio.CoreAudioApi;
 using System.Diagnostics;
 using System.Text;
