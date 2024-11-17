@@ -38,6 +38,8 @@
 		<PackageReference Include="PresentMonFps" Version="2.0.5" />
 		<PackageReference Include="NAudio.Wasapi" Version="2.2.1" />
 		<PackageReference Include="MouseKeyHook" Version="5.7.1" />
+		<PackageReference Include="Fischless.Configuration" Version="1.0.0" />
+		<PackageReference Include="Fischless.Configuration.Yaml" Version="1.0.0" />
 		<PackageReference Include="Fischless.UnlockerPatch" Version="4.8.0">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>

@@ -1,7 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using Fischless.Relauncher.Core.Configs;
 using Fischless.Relauncher.Core.Loggers;
 using Fischless.Relauncher.Core.Relaunchs;
 using Fischless.Relauncher.Extensions;
@@ -9,6 +8,7 @@ using Fischless.Relauncher.Views;
 using System.Diagnostics;
 using System.IO;
 using System.Windows;
+using Fischless.Configuration;
 
 namespace Fischless.Relauncher;
 
@@ -33,6 +33,7 @@ public partial class App : System.Windows.Application
                 )
                 .CreateLogger();
 
+            ConfigurationManager.ConfigurationSerializer = new YamlConfigurationSerializer();
             ConfigurationManager.Setup(SpecialPathHelper.GetPath("config.yaml"));
             _ = DpiAwareHelper.SetProcessDpiAwareness();
             TrayIconManager.GetInstance();

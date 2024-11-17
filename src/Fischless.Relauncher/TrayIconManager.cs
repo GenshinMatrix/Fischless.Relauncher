@@ -1,5 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.Messaging;
-using Fischless.Relauncher.Core.Configs;
+using Fischless.Configuration;
 using Fischless.Relauncher.Core.Relaunchs;
 using Fischless.Relauncher.Extensions;
 using Fischless.Relauncher.Models;

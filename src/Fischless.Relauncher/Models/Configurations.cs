@@ -1,4 +1,4 @@
-﻿using Fischless.Relauncher.Core.Configs;
+﻿using Fischless.Configuration;
 using System.Reflection;
 
 namespace Fischless.Relauncher.Models;

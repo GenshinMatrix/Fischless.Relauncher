@@ -1,7 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
-using Fischless.Relauncher.Core.Configs;
+using Fischless.Configuration;
 using Fischless.Relauncher.Core.Relaunchs;
 using Fischless.Relauncher.Helper;
 using Fischless.Relauncher.Models;
