@@ -1,5 +1,3 @@
 ﻿namespace Fischless.Relauncher.Models.Messages;
 
-internal sealed class GenshinMonitorMessage
-{
-}
+internal sealed class GenshinMonitorMessage;
