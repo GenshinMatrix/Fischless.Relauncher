@@ -64,7 +64,7 @@ internal static class GenshinDragMove
 
         if (GenshinLauncher.TryGetProcess(out Process? p))
         {
-            hWnd = p.MainWindowHandle;
+            hWnd = p!.MainWindowHandle;
         }
         else
         {
@@ -158,7 +158,7 @@ internal static class GenshinDragMove
                     _ = User32.EnableMenuItem(hMenu, (uint)User32.SysCommand.SC_MOVE, User32.MenuFlags.MF_ENABLED);
                     _ = User32.EnableMenuItem(hMenu, (uint)User32.SysCommand.SC_MINIMIZE, User32.MenuFlags.MF_ENABLED);
                     _ = User32.EnableMenuItem(hMenu, (uint)User32.SysCommand.SC_MAXIMIZE, User32.MenuFlags.MF_ENABLED);
-                    uint command = User32.TrackPopupMenuEx(hMenu, User32.TrackPopupMenuFlags.TPM_RETURNCMD, pt.X, pt.Y, Process.GetCurrentProcess().MainWindowHandle, default);
+                    uint command = User32.TrackPopupMenuEx(hMenu, User32.TrackPopupMenuFlags.TPM_RETURNCMD, pt.X, pt.Y, Process.GetCurrentProcess().MainWindowHandle, default!);
 
                     if (command == (uint)User32.SysCommand.SC_MOVE)
                     {

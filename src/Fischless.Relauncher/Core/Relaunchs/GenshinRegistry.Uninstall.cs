@@ -75,17 +75,17 @@ public static partial class GenshinRegistry
 
             using (key)
             {
-                info.DisplayIcon = key.GetValue(SKEY_DISPLAY_ICON)?.ToString();
-                info.DisplayName = key.GetValue(SKEY_DISPLAY_NAME)?.ToString();
-                info.DisplayVersion = key.GetValue(SKEY_DISPLAY_VERSION)?.ToString();
-                info.EstimatedSize = key.GetValue(SKEY_ESTIMATED_SIZE);
-                info.ExeName = key.GetValue(SKEY_EXE_NAME)?.ToString();
-                info.InstallPath = key.GetValue(SKEY_INSTALL_PATH)?.ToString();
-                info.NetworkType = key.GetValue(SKEY_NETWORK_TYPE)?.ToString();
-                info.Publisher = key.GetValue(SKEY_PUBLISHER)?.ToString();
-                info.UninstallString = key.GetValue(SKEY_UNINSTALL_STRING)?.ToString();
-                info.URLInfoAbout = key.GetValue(SKEY_URL_INFO_ABOUT)?.ToString();
-                info.UUID = key.GetValue(SKEY_UUID)?.ToString();
+                info.DisplayIcon = key.GetValue(SKEY_DISPLAY_ICON)?.ToString()!;
+                info.DisplayName = key.GetValue(SKEY_DISPLAY_NAME)?.ToString()!;
+                info.DisplayVersion = key.GetValue(SKEY_DISPLAY_VERSION)?.ToString()!;
+                info.EstimatedSize = key.GetValue(SKEY_ESTIMATED_SIZE)!;
+                info.ExeName = key.GetValue(SKEY_EXE_NAME)?.ToString()!;
+                info.InstallPath = key.GetValue(SKEY_INSTALL_PATH)?.ToString()!;
+                info.NetworkType = key.GetValue(SKEY_NETWORK_TYPE)?.ToString()!;
+                info.Publisher = key.GetValue(SKEY_PUBLISHER)?.ToString()!;
+                info.UninstallString = key.GetValue(SKEY_UNINSTALL_STRING)?.ToString()!;
+                info.URLInfoAbout = key.GetValue(SKEY_URL_INFO_ABOUT)?.ToString()!;
+                info.UUID = key.GetValue(SKEY_UUID)?.ToString()!;
             }
             return info;
         }
