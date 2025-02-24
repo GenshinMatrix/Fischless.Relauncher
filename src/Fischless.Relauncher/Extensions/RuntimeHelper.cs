@@ -72,14 +72,14 @@ internal static class RuntimeHelper
 
         try
         {
-            Process process = new()
+            using Process process = new()
             {
                 StartInfo = new ProcessStartInfo()
                 {
-                    FileName = fileName ?? Path.Combine(dir ?? AppDomain.CurrentDomain.BaseDirectory, AppDomain.CurrentDomain.FriendlyName),
+                    FileName = fileName ?? Path.Combine(dir ?? AppDomain.CurrentDomain.BaseDirectory, AppDomain.CurrentDomain.FriendlyName + ".exe"),
                     WorkingDirectory = dir ?? Environment.CurrentDirectory,
                     UseShellExecute = true,
-                    Verb = "runas"
+                    Verb = "runas" // ReLauncher only works with UAC permission
                 },
             };
             process.Start();
