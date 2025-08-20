@@ -1,4 +1,5 @@
-﻿using Fischless.Relauncher.Extensions;
+﻿using Fischless.Relauncher.Core.WindowsInput;
+using Fischless.Relauncher.Extensions;
 using Fischless.Relauncher.Helper;
 using Fischless.Relauncher.Models;
 using Fischless.Relauncher.Relaunchs;
@@ -246,6 +247,7 @@ public static class GenshinRelaunching
                             if (process != null)
                             {
                                 GenshinClicker.LeftButtonClickBackground(process.MainWindowHandle);
+                                WeakReferenceInputSimulator.Keyboard.KeyPress(User32.VK.VK_F);
                             }
                         }
                     }
