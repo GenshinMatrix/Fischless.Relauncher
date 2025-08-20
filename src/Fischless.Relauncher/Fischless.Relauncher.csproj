@@ -8,7 +8,7 @@
 		<UseWPF>true</UseWPF>
 		<UseWindowsForms>true</UseWindowsForms>
 		<AllowUnsafeBlocks>True</AllowUnsafeBlocks>
-		<LangVersion>latest</LangVersion>
+		<LangVersion>preview</LangVersion>
 		<ApplicationIcon>Assets\Icons\i2Q2r-284hK1yT3cSix-ir.ico</ApplicationIcon>
 		<AssemblyVersion>0.2.0.0</AssemblyVersion>
 		<FileVersion>0.2.0.0</FileVersion>
@@ -18,37 +18,31 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<None Remove="Assets\Icons\*.ico" />
-		<None Remove="Assets\Images\*.png" />
-		<None Remove="Assets\Fonts\*.ttf" />
-	</ItemGroup>
-
-	<ItemGroup>
 		<Resource Include="Assets\Icons\*.ico" />
 		<Resource Include="Assets\Images\*.png" />
 		<Resource Include="Assets\Fonts\*.ttf" />
 	</ItemGroup>
 	
 	<ItemGroup>
-		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.3.2" />
-		<PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.0" />
-		<PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="9.0.0" />
+		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
+		<PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.8" />
+		<PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="9.0.8" />
 		<PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.135" />
-		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.0" />
-		<PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="9.0.0" />
-		<PackageReference Include="Microsoft.Extensions.Logging" Version="9.0.0" />
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.8" />
+		<PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="9.0.8" />
+		<PackageReference Include="Microsoft.Extensions.Logging" Version="9.0.8" />
 		<PackageReference Include="Microsoft-WindowsAPICodePack-Shell" Version="1.1.5" />
-		<PackageReference Include="Vanara.PInvoke.DwmApi" Version="4.0.4" />
-		<PackageReference Include="Vanara.PInvoke.Kernel32" Version="4.0.4" />
-		<PackageReference Include="Vanara.PInvoke.NtDll" Version="4.0.4" />
-		<PackageReference Include="Vanara.PInvoke.SHCore" Version="4.0.4" />
-		<PackageReference Include="Vanara.PInvoke.User32" Version="4.0.4" />
-		<PackageReference Include="Vanara.PInvoke.UxTheme" Version="4.0.4" />
-		<PackageReference Include="YamlDotNet" Version="16.2.0" />
+		<PackageReference Include="Vanara.PInvoke.DwmApi" Version="4.1.6" />
+		<PackageReference Include="Vanara.PInvoke.Kernel32" Version="4.1.6" />
+		<PackageReference Include="Vanara.PInvoke.NtDll" Version="4.1.6" />
+		<PackageReference Include="Vanara.PInvoke.SHCore" Version="4.1.6" />
+		<PackageReference Include="Vanara.PInvoke.User32" Version="4.1.6" />
+		<PackageReference Include="Vanara.PInvoke.UxTheme" Version="4.1.6" />
+		<PackageReference Include="YamlDotNet" Version="16.3.0" />
 		<PackageReference Include="NotifyIconEx" Version="1.1.2" />
-		<PackageReference Include="WPF-UI" Version="3.0.5" />
-		<PackageReference Include="WPF-UI.Violeta" Version="3.0.5.26" />
-		<PackageReference Include="EleCho.WpfSuite" Version="0.9.10" />
+		<PackageReference Include="WPF-UI" Version="4.0.3" />
+		<PackageReference Include="WPF-UI.Violeta" Version="4.0.3.2" />
+		<PackageReference Include="EleCho.WpfSuite" Version="0.10.20" />
 		<PackageReference Include="PresentMonFps" Version="2.0.5" />
 		<PackageReference Include="NAudio.Wasapi" Version="2.2.1" />
 		<PackageReference Include="MouseKeyHook" Version="5.7.1" />
@@ -59,7 +53,7 @@
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
 		</PackageReference>
-		<PackageReference Include="Snap.Hutao.UnlockerIsland" Version="1.1.24">
+		<PackageReference Include="Snap.Hutao.UnlockerIsland" Version="1.4.0">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
