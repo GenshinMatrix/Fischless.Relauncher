@@ -49,14 +49,7 @@
 		<PackageReference Include="Fischless.Logger" Version="1.0.0" />
 		<PackageReference Include="Fischless.Configuration" Version="1.0.0" />
 		<PackageReference Include="Fischless.Configuration.Yaml" Version="1.0.0" />
-		<PackageReference Include="Fischless.UnlockerPatch" Version="4.8.0">
-			<PrivateAssets>all</PrivateAssets>
-			<IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
-		</PackageReference>
-		<PackageReference Include="Snap.Hutao.UnlockerIsland" Version="1.4.0">
-			<PrivateAssets>all</PrivateAssets>
-			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-		</PackageReference>
+		<PackageReference Include="Fischless.UnlockerPatch" Version="5.8.0.3" />
 	</ItemGroup>
 
 </Project>

@@ -1,12 +1,14 @@
 ﻿using Fischless.Relauncher.Relaunchs;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
+using UnlockerPatch;
 
 namespace Fischless.Relauncher.Core.Relaunchs;
 
-internal sealed class GenshinFpsUnlocker(Process gameProcess)
+internal sealed class GenshinFpsUnlocker(string gamePath, string? cli = null)
 {
-    private readonly Process gameProcess = gameProcess;
+    private readonly string gamePath = gamePath;
+    private readonly string? cli = cli;
     private int unlockFps;
 
     public GenshinFpsUnlocker SetTargetFps(int unlockFps)
@@ -18,33 +20,26 @@ internal sealed class GenshinFpsUnlocker(Process gameProcess)
     public async Task UnlockAsync(GenshinUnlockerOption options, CancellationTokenSource cts = null!)
     {
         options.UnlockFps = unlockFps;
-        await Task.Run(() => GameFpsUnlockerImpl.Start(options, pid: (uint)gameProcess.Id, cts: cts));
+        await Task.Run(() => GameFpsUnlockerImpl.Start(options, gamePath, cli, cts: cts));
     }
 }
 
 internal sealed partial class GameFpsUnlockerImpl
 {
-    private static partial class Interop
-    {
-        [LibraryImport(@".\runtimes\win-x64\native\Fischless.UnlockerPatch.dll", EntryPoint = "unlock")]
-        public static partial int Unlock(int pid, int targetFPS);
-    }
-
-    public static unsafe void Start(GenshinUnlockerOption option, string? gamePath = null, uint? pid = null, CancellationTokenSource? cts = null)
+    public static void Start(GenshinUnlockerOption option, string? gamePath = null, string? cli = null, CancellationTokenSource? cts = null)
     {
         if (!option.UnlockFps.HasValue)
         {
             return;
         }
 
-        if (string.IsNullOrWhiteSpace(gamePath) && pid == null)
+        if (string.IsNullOrWhiteSpace(gamePath))
         {
             return;
         }
 
-        int targetPid = (int)pid!.Value;
         int targetFps = option.UnlockFps.Value;
-        int ret = Interop.Unlock(targetPid, targetFps);
+        bool ret = UnlockerLauncher.Start(gamePath, targetFps, cli);
 
         Debug.WriteLine("[Unlocker] Unlock ret is " + ret);
     }

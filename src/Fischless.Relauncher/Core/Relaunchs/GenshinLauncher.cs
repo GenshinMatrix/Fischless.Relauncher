@@ -288,21 +288,16 @@ internal class GenshinLauncher
             }
         }
 
-        using Process? gameProcess = Process.Start(new ProcessStartInfo()
+        if (option.Unlocker == null)
         {
-            UseShellExecute = true,
-            FileName = fileName,
-            Arguments = option.Arguments?.ToArguments(),
-            WorkingDirectory = option.WorkingDirectory ?? new FileInfo(fileName).DirectoryName,
-            Verb = "runas",
-        });
-
-        if (option.Linkage != null)
-        {
-            if (option.Linkage.IsUseBetterGI)
+            using Process? gameProcess = Process.Start(new ProcessStartInfo()
             {
-                await Launcher.LaunchUriAsync(new Uri("bettergi://start"));
-            }
+                UseShellExecute = true,
+                FileName = fileName,
+                Arguments = option.Arguments?.ToArguments(),
+                WorkingDirectory = option.WorkingDirectory ?? Path.GetDirectoryName(fileName),
+                Verb = "runas",
+            });
         }
 
         if (option.Unlocker != null)
@@ -315,15 +310,12 @@ internal class GenshinLauncher
                     {
                         if (((GenshinUnlockerOption)option.Unlocker).UnlockFpsMethod == 0)
                         {
-                            await new GenshinFpsUnlocker(gameProcess!)
+                            await new GenshinFpsUnlocker(fileName, option.Arguments?.ToArguments())
                                 .SetTargetFps((int)option.Unlocker.UnlockFps)
                                 .UnlockAsync(GenshinUnlockerOption.Default.Value);
                         }
                         else
                         {
-                            //await new GenshinFpsUnlocker1(gameProcess!)
-                            //    .SetTargetFps((int)option.Unlocker.UnlockFps)
-                            //    .UnlockAsync(GenshinUnlockerOption.Default.Value);
                         }
                     }
                     catch
@@ -331,6 +323,14 @@ internal class GenshinLauncher
                         ///
                     }
                 }
+            }
+        }
+
+        if (option.Linkage != null)
+        {
+            if (option.Linkage.IsUseBetterGI)
+            {
+                await Launcher.LaunchUriAsync(new Uri("bettergi://start"));
             }
         }
     }
