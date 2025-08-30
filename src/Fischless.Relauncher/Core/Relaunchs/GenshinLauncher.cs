@@ -288,7 +288,26 @@ internal class GenshinLauncher
             }
         }
 
-        if (option.Unlocker == null)
+        if (option.Unlocker?.IsUnlockFps == true)
+        {
+            try
+            {
+                if (((GenshinUnlockerOption)option.Unlocker!).UnlockFpsMethod == 0)
+                {
+                    await new GenshinFpsUnlocker(fileName, option.Arguments?.ToArguments())
+                        .SetTargetFps((int)option.Unlocker.UnlockFps!)
+                        .UnlockAsync(GenshinUnlockerOption.Default.Value);
+                }
+                else
+                {
+                }
+            }
+            catch
+            {
+                ///
+            }
+        }
+        else
         {
             using Process? gameProcess = Process.Start(new ProcessStartInfo()
             {
@@ -298,32 +317,6 @@ internal class GenshinLauncher
                 WorkingDirectory = option.WorkingDirectory ?? Path.GetDirectoryName(fileName),
                 Verb = "runas",
             });
-        }
-
-        if (option.Unlocker != null)
-        {
-            if (option.Unlocker.IsUnlockFps)
-            {
-                if (option.Unlocker.UnlockFps > 60)
-                {
-                    try
-                    {
-                        if (((GenshinUnlockerOption)option.Unlocker).UnlockFpsMethod == 0)
-                        {
-                            await new GenshinFpsUnlocker(fileName, option.Arguments?.ToArguments())
-                                .SetTargetFps((int)option.Unlocker.UnlockFps)
-                                .UnlockAsync(GenshinUnlockerOption.Default.Value);
-                        }
-                        else
-                        {
-                        }
-                    }
-                    catch
-                    {
-                        ///
-                    }
-                }
-            }
         }
 
         if (option.Linkage != null)
