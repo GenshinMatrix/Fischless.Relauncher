@@ -1,13 +1,15 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
+﻿using Fischless.Configuration;
+using Fischless.Logger;
 using Fischless.Relauncher.Core.Relaunchs;
 using Fischless.Relauncher.Extensions;
 using Fischless.Relauncher.Views;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using System.Diagnostics;
 using System.IO;
 using System.Windows;
-using Fischless.Configuration;
-using Fischless.Logger;
+using Wpf.Ui.Appearance;
+using Wpf.Ui.Violeta.Appearance;
 
 namespace Fischless.Relauncher;
 
@@ -51,6 +53,7 @@ public partial class App : Application
 
         try
         {
+            SystemMenuThemeManager.Apply(SystemMenuTheme.Dark);
             await _host.StartAsync();
             GetService<MainWindow>()?.Show();
             Log.Information("Welcome to reLauncher.");
