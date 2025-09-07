@@ -10,9 +10,9 @@
 		<AllowUnsafeBlocks>True</AllowUnsafeBlocks>
 		<LangVersion>preview</LangVersion>
 		<ApplicationIcon>Assets\Icons\i2Q2r-284hK1yT3cSix-ir.ico</ApplicationIcon>
-		<AssemblyVersion>0.3.1.0</AssemblyVersion>
-		<FileVersion>0.3.1.0</FileVersion>
-		<Version>$(VersionPrefix)0.3.1.0</Version>
+		<AssemblyVersion>0.3.2.0</AssemblyVersion>
+		<FileVersion>0.3.2.0</FileVersion>
+		<Version>$(VersionPrefix)0.3.2.0</Version>
 		<DebugType>embedded</DebugType>
 		<Platforms>x64</Platforms>
 	</PropertyGroup>
