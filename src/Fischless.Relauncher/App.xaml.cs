@@ -11,7 +11,7 @@ using Fischless.Logger;
 
 namespace Fischless.Relauncher;
 
-public partial class App : System.Windows.Application
+public partial class App : Application
 {
     // The.NET Generic Host provides dependency injection, configuration, logging, and other services.
     // https://docs.microsoft.com/dotnet/core/extensions/generic-host
