@@ -25,19 +25,19 @@
 
 	<ItemGroup>
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
-		<PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.8" />
-		<PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="9.0.8" />
+		<PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.9" />
+		<PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="9.0.9" />
 		<PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.135" />
-		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.8" />
-		<PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="9.0.8" />
-		<PackageReference Include="Microsoft.Extensions.Logging" Version="9.0.8" />
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.9" />
+		<PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="9.0.9" />
+		<PackageReference Include="Microsoft.Extensions.Logging" Version="9.0.9" />
 		<PackageReference Include="Microsoft-WindowsAPICodePack-Shell" Version="1.1.5" />
-		<PackageReference Include="Vanara.PInvoke.DwmApi" Version="4.2.0" />
-		<PackageReference Include="Vanara.PInvoke.Kernel32" Version="4.2.0" />
-		<PackageReference Include="Vanara.PInvoke.NtDll" Version="4.2.0" />
-		<PackageReference Include="Vanara.PInvoke.SHCore" Version="4.2.0" />
-		<PackageReference Include="Vanara.PInvoke.User32" Version="4.2.0" />
-		<PackageReference Include="Vanara.PInvoke.UxTheme" Version="4.2.0" />
+		<PackageReference Include="Vanara.PInvoke.DwmApi" Version="4.2.1" />
+		<PackageReference Include="Vanara.PInvoke.Kernel32" Version="4.2.1" />
+		<PackageReference Include="Vanara.PInvoke.NtDll" Version="4.2.1" />
+		<PackageReference Include="Vanara.PInvoke.SHCore" Version="4.2.1" />
+		<PackageReference Include="Vanara.PInvoke.User32" Version="4.2.1" />
+		<PackageReference Include="Vanara.PInvoke.UxTheme" Version="4.2.1" />
 		<PackageReference Include="YamlDotNet" Version="16.3.0" />
 		<PackageReference Include="WPF-UI.Violeta" Version="4.0.3.6" />
 		<PackageReference Include="EleCho.WpfSuite" Version="0.10.20" />
@@ -45,8 +45,8 @@
 		<PackageReference Include="NAudio.Wasapi" Version="2.2.1" />
 		<PackageReference Include="MouseKeyHook" Version="5.7.1" />
 		<PackageReference Include="Fischless.Logger" Version="1.0.0" />
-		<PackageReference Include="Fischless.Configuration" Version="1.0.0" />
-		<PackageReference Include="Fischless.Configuration.Yaml" Version="1.0.0" />
+		<PackageReference Include="Fischless.Configuration" Version="1.1.0" />
+		<PackageReference Include="Fischless.Configuration.Yaml" Version="1.1.0" />
 		<PackageReference Include="Fischless.UnlockerPatch" Version="5.8.0.3" />
 	</ItemGroup>
 
