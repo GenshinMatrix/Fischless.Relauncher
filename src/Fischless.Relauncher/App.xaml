@@ -11,6 +11,7 @@
                 <ui:ControlsDictionary />
                 <vio:ControlsDictionary />
                 <ResourceDictionary Source="/Views/Controls/Button/Button.xaml" />
+                <ResourceDictionary Source="/Views/Controls/Tooltip/Tooltip.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <FontFamily x:Key="DelugeLEDFontFamily">pack://application:,,,/Fischless.Relauncher;component/Assets/Fonts/deluge-led.ttf#Deluge LED</FontFamily>
             <FontFamily x:Key="SymbolThemeFontFamily">pack://application:,,,/Fischless.Relauncher;component/Assets/Fonts/Segoe Fluent Icons.ttf#Segoe Fluent Icons</FontFamily>

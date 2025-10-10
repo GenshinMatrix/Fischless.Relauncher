@@ -19,6 +19,9 @@
                 VerticalAlignment="Top"
                 Command="{Binding OpenSettingsCommand}"
                 Style="{StaticResource BorderlessButtonStyle}">
+            <Button.ToolTip>
+                <ToolTip Content="重启动设置" Style="{StaticResource BalloonToolTip}" />
+            </Button.ToolTip>
             <Button.Content>
                 <Border Padding="5.5">
                     <Image Width="16"
