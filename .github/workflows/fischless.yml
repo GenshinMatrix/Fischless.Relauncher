@@ -1,4 +1,4 @@
-name: MicaSetup
+name: build
 
 on:
   release:
