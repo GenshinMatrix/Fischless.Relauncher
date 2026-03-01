@@ -97,7 +97,7 @@ public partial class GenshinSettingsViewModel : ObservableObject, IDisposable
     {
         WeakReferenceMessenger.Default.Register<GenshinAutoMuteChangedMessage>(this, (_, _) =>
         {
-            isUseAutoMute = Configurations.Genshin.Get().IsUseAutoMute;
+            IsUseAutoMute = Configurations.Genshin.Get().IsUseAutoMute;
             OnPropertyChanged(nameof(IsUseAutoMute));
         });
     }
@@ -114,7 +114,7 @@ public partial class GenshinSettingsViewModel : ObservableObject, IDisposable
     }
 
     [ObservableProperty]
-    private bool isUseArguments = Configurations.Genshin.Get().IsUseArguments;
+    public partial bool IsUseArguments { get; set; } = Configurations.Genshin.Get().IsUseArguments;
 
     partial void OnIsUseArgumentsChanged(bool value)
     {
@@ -125,8 +125,8 @@ public partial class GenshinSettingsViewModel : ObservableObject, IDisposable
     }
 
     [ObservableProperty]
-    [property: Description("-window-mode exclusive")]
-    private bool isUseWindowModeExclusive = Configurations.Genshin.Get().IsUseWindowModeExclusive;
+    [Description("-window-mode exclusive")]
+    public partial bool IsUseWindowModeExclusive { get; set; } = Configurations.Genshin.Get().IsUseWindowModeExclusive;
 
     partial void OnIsUseWindowModeExclusiveChanged(bool value)
     {
@@ -137,8 +137,8 @@ public partial class GenshinSettingsViewModel : ObservableObject, IDisposable
     }
 
     [ObservableProperty]
-    [property: Description("-screen-fullscreen")]
-    private bool isScreenFullscreen = Configurations.Genshin.Get().IsScreenFullscreen;
+    [Description("-screen-fullscreen")]
+    public partial bool IsScreenFullscreen { get; set; } = Configurations.Genshin.Get().IsScreenFullscreen;
 
     partial void OnIsScreenFullscreenChanged(bool value)
     {
@@ -149,8 +149,8 @@ public partial class GenshinSettingsViewModel : ObservableObject, IDisposable
     }
 
     [ObservableProperty]
-    [property: Description("-popupwindow")]
-    private bool isPopupwindow = Configurations.Genshin.Get().IsPopupwindow;
+    [Description("-popupwindow")]
+    public partial bool IsPopupwindow { get; set; } = Configurations.Genshin.Get().IsPopupwindow;
 
     partial void OnIsPopupwindowChanged(bool value)
     {
@@ -161,8 +161,8 @@ public partial class GenshinSettingsViewModel : ObservableObject, IDisposable
     }
 
     [ObservableProperty]
-    [property: Description("-platform_type CLOUD_THIRD_PARTY_MOBILE")]
-    private bool isPlatformTypeCloudThirdPartyMobile = Configurations.Genshin.Get().IsPlatformTypeCloudThirdPartyMobile;
+    [Description("-platform_type CLOUD_THIRD_PARTY_MOBILE")]
+    public partial bool IsPlatformTypeCloudThirdPartyMobile { get; set; } = Configurations.Genshin.Get().IsPlatformTypeCloudThirdPartyMobile;
 
     partial void OnIsPlatformTypeCloudThirdPartyMobileChanged(bool value)
     {
@@ -173,12 +173,10 @@ public partial class GenshinSettingsViewModel : ObservableObject, IDisposable
     }
 
     [ObservableProperty]
-    private ObservableCollection<string> screenPreset =
-    [
-    ];
+    public partial ObservableCollection<string> ScreenPreset { get; set; } = [];
 
     [ObservableProperty]
-    private object screenPresetValue = "";
+    public partial object ScreenPresetValue { get; set; } = string.Empty;
 
     partial void OnScreenPresetValueChanged(object value)
     {
@@ -193,8 +191,8 @@ public partial class GenshinSettingsViewModel : ObservableObject, IDisposable
     }
 
     [ObservableProperty]
-    [property: Description("-screen-width")]
-    private bool isScreenWidth = Configurations.Genshin.Get().IsScreenWidth;
+    [Description("-screen-width")]
+    public partial bool IsScreenWidth { get; set; } = Configurations.Genshin.Get().IsScreenWidth;
 
     partial void OnIsScreenWidthChanged(bool value)
     {
@@ -205,8 +203,8 @@ public partial class GenshinSettingsViewModel : ObservableObject, IDisposable
     }
 
     [ObservableProperty]
-    [property: Description("-screen-width")]
-    private int screenWidth = Configurations.Genshin.Get().ScreenWidth;
+    [Description("-screen-width")]
+    public partial int ScreenWidth { get; set; } = Configurations.Genshin.Get().ScreenWidth;
 
     partial void OnScreenWidthChanged(int value)
     {
@@ -217,8 +215,8 @@ public partial class GenshinSettingsViewModel : ObservableObject, IDisposable
     }
 
     [ObservableProperty]
-    [property: Description("-screen-width")]
-    private bool isScreenHeight = Configurations.Genshin.Get().IsScreenHeight;
+    [Description("-screen-width")]
+    public partial bool IsScreenHeight { get; set; } = Configurations.Genshin.Get().IsScreenHeight;
 
     partial void OnIsScreenHeightChanged(bool value)
     {
@@ -229,8 +227,8 @@ public partial class GenshinSettingsViewModel : ObservableObject, IDisposable
     }
 
     [ObservableProperty]
-    [property: Description("-screen-height")]
-    private int screenHeight = Configurations.Genshin.Get().ScreenHeight;
+    [Description("-screen-height")]
+    public partial int ScreenHeight { get; set; } = Configurations.Genshin.Get().ScreenHeight;
 
     partial void OnScreenHeightChanged(int value)
     {
@@ -241,8 +239,8 @@ public partial class GenshinSettingsViewModel : ObservableObject, IDisposable
     }
 
     [ObservableProperty]
-    [property: Description("-monitor")]
-    private bool isMonitor = Configurations.Genshin.Get().IsMonitor;
+    [Description("-monitor")]
+    public partial bool IsMonitor { get; set; } = Configurations.Genshin.Get().IsMonitor;
 
     partial void OnIsMonitorChanged(bool value)
     {
@@ -253,9 +251,9 @@ public partial class GenshinSettingsViewModel : ObservableObject, IDisposable
     }
 
     [ObservableProperty]
-    [Description("[TEMP] Monitor ID - 1 = Monitor Index")]
-    [property: Description("-monitor")]
-    private int monitor = Configurations.Genshin.Get().Monitor - 1;
+    [field: Description("[TEMP] Monitor ID - 1 = Monitor Index")]
+    [Description("-monitor")]
+    public partial int Monitor { get; set; } = Configurations.Genshin.Get().Monitor - 1;
 
     partial void OnMonitorChanged(int value)
     {
@@ -266,8 +264,8 @@ public partial class GenshinSettingsViewModel : ObservableObject, IDisposable
     }
 
     [ObservableProperty]
-    [Description("[TEMP] Monitor Index + 1 = Monitor ID")]
-    private ObservableCollection<string> monitors = new(IdentifyMonitorWindow.GetAllMonitors().Select((m, i) => (i + 1).ToString()));
+    [field: Description("[TEMP] Monitor Index + 1 = Monitor ID")]
+    public partial ObservableCollection<string> Monitors { get; set; } = new(IdentifyMonitorWindow.GetAllMonitors().Select((m, i) => (i + 1).ToString()));
 
     [RelayCommand]
     private async Task IdentifyMonitorsAsync()
@@ -276,7 +274,7 @@ public partial class GenshinSettingsViewModel : ObservableObject, IDisposable
     }
 
     [ObservableProperty]
-    private bool isUnlockFps = Configurations.Genshin.Get().IsUnlockFps;
+    public partial bool IsUnlockFps { get; set; } = Configurations.Genshin.Get().IsUnlockFps;
 
     partial void OnIsUnlockFpsChanged(bool value)
     {
@@ -287,7 +285,7 @@ public partial class GenshinSettingsViewModel : ObservableObject, IDisposable
     }
 
     [ObservableProperty]
-    private int unlockFps = Configurations.Genshin.Get().UnlockFps;
+    public partial int UnlockFps { get; set; } = Configurations.Genshin.Get().UnlockFps;
 
     partial void OnUnlockFpsChanged(int value)
     {
@@ -298,7 +296,7 @@ public partial class GenshinSettingsViewModel : ObservableObject, IDisposable
     }
 
     [ObservableProperty]
-    private int unlockFpsMethod = Configurations.Genshin.Get().UnlockFpsMethod;
+    public partial int UnlockFpsMethod { get; set; } = Configurations.Genshin.Get().UnlockFpsMethod;
 
     partial void OnUnlockFpsMethodChanged(int value)
     {
@@ -309,7 +307,7 @@ public partial class GenshinSettingsViewModel : ObservableObject, IDisposable
     }
 
     [ObservableProperty]
-    private bool isShowFps = Configurations.Genshin.Get().IsShowFps;
+    public partial bool IsShowFps { get; set; } = Configurations.Genshin.Get().IsShowFps;
 
     partial void OnIsShowFpsChanged(bool value)
     {
@@ -320,7 +318,7 @@ public partial class GenshinSettingsViewModel : ObservableObject, IDisposable
     }
 
     [ObservableProperty]
-    private bool isDisnetLaunching = Configurations.Genshin.Get().IsDisnetLaunching;
+    public partial bool IsDisnetLaunching { get; set; } = Configurations.Genshin.Get().IsDisnetLaunching;
 
     partial void OnIsDisnetLaunchingChanged(bool value)
     {
@@ -349,7 +347,7 @@ public partial class GenshinSettingsViewModel : ObservableObject, IDisposable
     }
 
     [ObservableProperty]
-    private bool isSquareCorner = Configurations.Genshin.Get().IsSquareCorner;
+    public partial bool IsSquareCorner { get; set; } = Configurations.Genshin.Get().IsSquareCorner;
 
     partial void OnIsSquareCornerChanged(bool value)
     {
@@ -360,7 +358,7 @@ public partial class GenshinSettingsViewModel : ObservableObject, IDisposable
     }
 
     [ObservableProperty]
-    private bool isDarkMode = Configurations.Genshin.Get().IsDarkMode;
+    public partial bool IsDarkMode { get; set; } = Configurations.Genshin.Get().IsDarkMode;
 
     partial void OnIsDarkModeChanged(bool value)
     {
@@ -371,7 +369,7 @@ public partial class GenshinSettingsViewModel : ObservableObject, IDisposable
     }
 
     [ObservableProperty]
-    private bool isUseHDR = Configurations.Genshin.Get().IsUseHDR;
+    public partial bool IsUseHDR { get; set; } = Configurations.Genshin.Get().IsUseHDR;
 
     partial void OnIsUseHDRChanged(bool value)
     {
@@ -382,7 +380,7 @@ public partial class GenshinSettingsViewModel : ObservableObject, IDisposable
     }
 
     [ObservableProperty]
-    private string reShadePath = Configurations.Genshin.Get().ReShadePath ?? string.Empty;
+    public partial string ReShadePath { get; set; } = Configurations.Genshin.Get().ReShadePath ?? string.Empty;
 
     partial void OnReShadePathChanged(string value)
     {
@@ -474,7 +472,7 @@ public partial class GenshinSettingsViewModel : ObservableObject, IDisposable
     }
 
     [ObservableProperty]
-    private bool isUseReShade = Configurations.Genshin.Get().IsUseReShade;
+    public partial bool IsUseReShade { get; set; } = Configurations.Genshin.Get().IsUseReShade;
 
     partial void OnIsUseReShadeChanged(bool value)
     {
@@ -485,7 +483,7 @@ public partial class GenshinSettingsViewModel : ObservableObject, IDisposable
     }
 
     [ObservableProperty]
-    private bool isUseReShadeSilent = Configurations.Genshin.Get().IsUseReShadeSilent;
+    public partial bool IsUseReShadeSilent { get; set; } = Configurations.Genshin.Get().IsUseReShadeSilent;
 
     partial void OnIsUseReShadeSilentChanged(bool value)
     {
@@ -508,7 +506,7 @@ public partial class GenshinSettingsViewModel : ObservableObject, IDisposable
     }
 
     [ObservableProperty]
-    private bool isUseBetterGI = Configurations.Genshin.Get().IsUseBetterGI;
+    public partial bool IsUseBetterGI { get; set; } = Configurations.Genshin.Get().IsUseBetterGI;
 
     partial void OnIsUseBetterGIChanged(bool value)
     {
@@ -531,7 +529,7 @@ public partial class GenshinSettingsViewModel : ObservableObject, IDisposable
     }
 
     [ObservableProperty]
-    private bool isUseBorderless = Configurations.Genshin.Get().IsUseBorderless;
+    public partial bool IsUseBorderless { get; set; } = Configurations.Genshin.Get().IsUseBorderless;
 
     partial void OnIsUseBorderlessChanged(bool value)
     {
@@ -691,7 +689,7 @@ public partial class GenshinSettingsViewModel : ObservableObject, IDisposable
     }
 
     [ObservableProperty]
-    private bool isUseQuickScreenshot = Configurations.Genshin.Get().IsUseQuickScreenshot;
+    public partial bool IsUseQuickScreenshot { get; set; } = Configurations.Genshin.Get().IsUseQuickScreenshot;
 
     partial void OnIsUseQuickScreenshotChanged(bool value)
     {
@@ -702,7 +700,7 @@ public partial class GenshinSettingsViewModel : ObservableObject, IDisposable
     }
 
     [ObservableProperty]
-    private bool isUseQuickScreenshotHideUID = Configurations.Genshin.Get().IsUseQuickScreenshotHideUID;
+    public partial bool IsUseQuickScreenshotHideUID { get; set; } = Configurations.Genshin.Get().IsUseQuickScreenshotHideUID;
 
     partial void OnIsUseQuickScreenshotHideUIDChanged(bool value)
     {
@@ -713,7 +711,7 @@ public partial class GenshinSettingsViewModel : ObservableObject, IDisposable
     }
 
     [ObservableProperty]
-    private bool isUseAutoMute = Configurations.Genshin.Get().IsUseAutoMute;
+    public partial bool IsUseAutoMute { get; set; } = Configurations.Genshin.Get().IsUseAutoMute;
 
     partial void OnIsUseAutoMuteChanged(bool value)
     {
@@ -730,7 +728,7 @@ public partial class GenshinSettingsViewModel : ObservableObject, IDisposable
     }
 
     [ObservableProperty]
-    private bool isUseAutoClick = Configurations.Genshin.Get().IsUseAutoClick;
+    public partial bool IsUseAutoClick { get; set; } = Configurations.Genshin.Get().IsUseAutoClick;
 
     partial void OnIsUseAutoClickChanged(bool value)
     {
