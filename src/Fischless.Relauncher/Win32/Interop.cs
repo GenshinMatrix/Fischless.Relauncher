@@ -50,6 +50,52 @@ public static class Interop
         return windowTitle;
     }
 
+    public static nint GetLargestWindowHandleByProcessName(string processName)
+    {
+        Process[] processes = Process.GetProcessesByName(processName);
+        if (processes.Length == 0)
+        {
+            return IntPtr.Zero;
+        }
+
+        try
+        {
+            HashSet<uint> pids = [.. processes.Select(p => (uint)p.Id)];
+            nint largestHwnd = IntPtr.Zero;
+            long largestArea = 0;
+
+            User32.EnumWindows((hWnd, lParam) =>
+            {
+                _ = User32.GetWindowThreadProcessId(hWnd, out uint processId);
+                if (!pids.Contains(processId) || !User32.IsWindowVisible(hWnd))
+                {
+                    return true;
+                }
+
+                if (User32.GetWindowRect(hWnd, out RECT rect))
+                {
+                    long area = (long)rect.Width * rect.Height;
+                    if (area > largestArea)
+                    {
+                        largestArea = area;
+                        largestHwnd = (nint)hWnd;
+                    }
+                }
+
+                return true;
+            }, IntPtr.Zero);
+
+            return largestHwnd;
+        }
+        finally
+        {
+            foreach (Process process in processes)
+            {
+                process.Dispose();
+            }
+        }
+    }
+
     public static uint GetProcessIdByName(string processName)
     {
         uint pid = 0;

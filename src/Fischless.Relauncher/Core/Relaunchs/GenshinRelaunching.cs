@@ -30,12 +30,11 @@ public static class GenshinRelaunching
                 {
                     // HYP: Inject UI
                     {
-                        using Process? process = Process.GetProcessesByName("HYP").FirstOrDefault();
+                        nint targetHWnd = Interop.GetLargestWindowHandleByProcessName("HYP");
 
-                        if (process != null)
+                        if (targetHWnd != IntPtr.Zero)
                         {
                             nint hWnd = maskWin.Handle;
-                            nint targetHWnd = process.MainWindowHandle;
 
                             if (hWnd == IntPtr.Zero)
                             {
