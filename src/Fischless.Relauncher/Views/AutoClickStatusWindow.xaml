@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="AutoClickStatusWindow"
         Width="180"
-        Height="54"
+        Height="50"
         AllowsTransparency="True"
         Background="Transparent"
         ShowActivated="False"

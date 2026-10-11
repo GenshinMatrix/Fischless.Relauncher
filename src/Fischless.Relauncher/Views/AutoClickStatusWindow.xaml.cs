@@ -131,7 +131,7 @@ public partial class AutoClickStatusWindow : Window
         _ = User32.GetWindowRect(hWnd, out RECT windowRect);
 
         int left = screen.WorkingArea.Left + (screen.WorkingArea.Width - windowRect.Width) / 2;
-        int top = screen.WorkingArea.Bottom - windowRect.Height - 64;
+        int top = screen.WorkingArea.Bottom - windowRect.Height - 16;
 
         _ = User32.SetWindowPos(
             hWnd,
