@@ -12,7 +12,7 @@ public partial class AutoClickStatusWindow : Window
     private const int AnimationDurationMilliseconds = 180;
 
     private static AutoClickStatusWindow? _instance;
-    private CancellationTokenSource? _hideCancellation;
+    private long _displayVersion;
 
     private AutoClickStatusWindow()
     {
@@ -42,9 +42,7 @@ public partial class AutoClickStatusWindow : Window
 
     protected override void OnClosed(EventArgs e)
     {
-        _hideCancellation?.Cancel();
-        _hideCancellation?.Dispose();
-        _hideCancellation = null;
+        _displayVersion++;
         _instance = null;
 
         base.OnClosed(e);
@@ -52,9 +50,7 @@ public partial class AutoClickStatusWindow : Window
 
     private void ShowStatusCore(bool isEnabled)
     {
-        _hideCancellation?.Cancel();
-        _hideCancellation?.Dispose();
-        _hideCancellation = new CancellationTokenSource();
+        long displayVersion = ++_displayVersion;
 
         UpdateStatus(isEnabled);
 
@@ -75,7 +71,7 @@ public partial class AutoClickStatusWindow : Window
 
         PositionOnActiveScreen();
         AnimateIn();
-        _ = HideAfterDelayAsync(_hideCancellation.Token);
+        _ = HideAfterDelayAsync(displayVersion);
     }
 
     private void UpdateStatus(bool isEnabled)
@@ -162,38 +158,40 @@ public partial class AutoClickStatusWindow : Window
         });
     }
 
-    private async Task HideAfterDelayAsync(CancellationToken token)
+    private async Task HideAfterDelayAsync(long displayVersion)
     {
-        try
+        await Task.Delay(DisplayDurationMilliseconds);
+        if (displayVersion != _displayVersion || !IsVisible)
         {
-            await Task.Delay(DisplayDurationMilliseconds, token);
-
-            var duration = TimeSpan.FromMilliseconds(AnimationDurationMilliseconds);
-            var easing = new CubicEase { EasingMode = EasingMode.EaseIn };
-
-            BeginAnimation(OpacityProperty, new DoubleAnimation
-            {
-                To = 0,
-                Duration = duration,
-                EasingFunction = easing
-            });
-            ContentTranslate.BeginAnimation(System.Windows.Media.TranslateTransform.YProperty, new DoubleAnimation
-            {
-                To = 16,
-                Duration = duration,
-                EasingFunction = easing
-            });
-
-            await Task.Delay(AnimationDurationMilliseconds, token);
-            Hide();
-            StopWindowAnimations();
-            Opacity = 0;
-            ContentTranslate.Y = 16;
+            return;
         }
-        catch (OperationCanceledException)
+
+        var duration = TimeSpan.FromMilliseconds(AnimationDurationMilliseconds);
+        var easing = new CubicEase { EasingMode = EasingMode.EaseIn };
+
+        BeginAnimation(OpacityProperty, new DoubleAnimation
         {
-            // A newer key press restarts the display timer.
+            To = 0,
+            Duration = duration,
+            EasingFunction = easing
+        });
+        ContentTranslate.BeginAnimation(System.Windows.Media.TranslateTransform.YProperty, new DoubleAnimation
+        {
+            To = 16,
+            Duration = duration,
+            EasingFunction = easing
+        });
+
+        await Task.Delay(AnimationDurationMilliseconds);
+        if (displayVersion != _displayVersion)
+        {
+            return;
         }
+
+        Hide();
+        StopWindowAnimations();
+        Opacity = 0;
+        ContentTranslate.Y = 16;
     }
 
     private void StopWindowAnimations()

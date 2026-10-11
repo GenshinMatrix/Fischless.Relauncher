@@ -19,20 +19,22 @@ internal static class RuntimeHelper
 
     public static void CheckSingleInstance(string instanceName, Action<bool> callback = null!)
     {
-        EventWaitHandle? handle;
+        EventWaitHandle handle = new(
+            false,
+            EventResetMode.AutoReset,
+            instanceName,
+            out bool createdNew);
 
-        try
+        if (!createdNew)
         {
-            handle = EventWaitHandle.OpenExisting(instanceName);
             handle.Set();
             callback?.Invoke(false);
+            handle.Dispose();
             Environment.Exit(0xFFFF);
+            return;
         }
-        catch (WaitHandleCannotBeOpenedException)
-        {
-            callback?.Invoke(true);
-            handle = new EventWaitHandle(false, EventResetMode.AutoReset, instanceName);
-        }
+
+        callback?.Invoke(true);
         GC.KeepAlive(handle);
         GC.KeepAlive(Task.Factory.StartNew(() =>
         {
