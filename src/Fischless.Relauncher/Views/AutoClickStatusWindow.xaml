@@ -1,0 +1,75 @@
+<Window x:Class="Fischless.Relauncher.Views.AutoClickStatusWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="AutoClickStatusWindow"
+        Width="180"
+        Height="54"
+        AllowsTransparency="True"
+        Background="Transparent"
+        ShowActivated="False"
+        ShowInTaskbar="False"
+        SizeToContent="Manual"
+        Topmost="True"
+        WindowStartupLocation="Manual"
+        WindowStyle="None">
+    <Grid x:Name="ContentRoot"
+          RenderTransformOrigin="0.5,0.5">
+        <Grid.RenderTransform>
+            <TranslateTransform x:Name="ContentTranslate" />
+        </Grid.RenderTransform>
+
+        <Border Background="#F225272B"
+                BorderBrush="#33FFFFFF"
+                BorderThickness="1"
+                CornerRadius="12">
+            <Grid Margin="16,6,12,9">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="24" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <Viewbox Width="22"
+                         Height="22"
+                         HorizontalAlignment="Left"
+                         VerticalAlignment="Center">
+                    <Canvas Width="24"
+                            Height="24">
+                        <Path Data="M7.25 7A3.25 3.25 0 0 0 4 10.25v7.5C4 19.55 5.46 21 7.25 21h9.5c1.8 0 3.25-1.46 3.25-3.25v-7.5C20 8.45 18.54 7 16.75 7H7.25Zm0 1.5h9.5c.97 0 1.75.78 1.75 1.75v7.5c0 .97-.78 1.75-1.75 1.75h-9.5c-.97 0-1.75-.78-1.75-1.75v-7.5c0-.97.78-1.75 1.75-1.75Z"
+                              Fill="#F2FFFFFF" />
+                        <Path Data="M12 15.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Z"
+                              Fill="#F2FFFFFF" />
+                        <Path Data="M8 7V5a4 4 0 0 1 8 0v2h-1.5V5a2.5 2.5 0 0 0-5 0v2H8Z"
+                              Fill="#F2FFFFFF">
+                            <Path.RenderTransform>
+                                <RotateTransform x:Name="ShackleRotation"
+                                                 CenterX="16"
+                                                 CenterY="7" />
+                            </Path.RenderTransform>
+                        </Path>
+                    </Canvas>
+                </Viewbox>
+
+                <TextBlock x:Name="StatusText"
+                           Grid.Column="1"
+                           Margin="10,0,0,1"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"
+                           FontFamily="Microsoft YaHei UI"
+                           FontSize="14"
+                           FontWeight="Medium"
+                           Foreground="#F2FFFFFF"
+                           Text="自动连点 已关闭" />
+            </Grid>
+        </Border>
+
+        <Border x:Name="StatusIndicator"
+                Width="36"
+                Height="3"
+                Margin="0,0,0,6"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Bottom"
+                Background="#60CDFF"
+                CornerRadius="2"
+                Opacity="0.2" />
+    </Grid>
+</Window>

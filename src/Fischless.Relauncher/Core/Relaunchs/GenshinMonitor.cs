@@ -1,4 +1,5 @@
 ﻿using Fischless.Relauncher.Models;
+using Fischless.Relauncher.Views;
 using Gma.System.MouseKeyHook;
 
 namespace Fischless.Relauncher.Core.Relaunchs;
@@ -31,6 +32,7 @@ internal sealed class GenshinMonitor
             if (Configurations.Genshin.Get().IsUseAutoClick)
             {
                 GenshinClicker.IsEnabled = !GenshinClicker.IsEnabled;
+                AutoClickStatusWindow.ShowStatus(GenshinClicker.IsEnabled);
             }
         }
     }
